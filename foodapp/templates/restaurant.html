@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Restaurants — OneClickFood</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">🍴 <span>OneClickFood</span></div>
+    <nav class="nav">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'restaurant' %}" class="active">Restaurants</a>
+      <a href="{% url 'menu' %}">Menu</a>
+      <a href="{% url 'offers' %}">Offers</a>
+      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+  </header>
+
+  <main class="main container">
+    <section class="filters">
+      <input id="searchBox" placeholder="Search by city/area/cuisine">
+      <select id="filterSort">
+        <option value="rating">Sort: Rating</option>
+        <option value="time">Sort: Delivery time</option>
+        <option value="cost">Sort: Cost</option>
+      </select>
+    </section>
+
+    <section id="restaurantGrid" class="restaurant-grid">
+      <!-- JS will populate sample restaurant cards -->
+    </section>
+
+    <section class="restaurants-description">
+      <h3>Page guide — Restaurant listing</h3>
+      <p>Design notes: each restaurant card should show a thumbnail, name, cuisine tags, rating, delivery time, cost-for-two and action "View Menu". Provide filter chips for city, veg/non-veg, offers and sorting. For many restaurants use server-side pagination with AJAX.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>© 2025 OneClickFood</div>
+  </footer>
+
+  <script src="{% static 'foodapp/js/main.js' %}"></script>
+  <script src="{% static 'foodapp/js/cart.js' %}"></script>
+</body>
+</html>
+
+

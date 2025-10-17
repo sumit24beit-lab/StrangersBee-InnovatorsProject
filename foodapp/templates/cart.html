@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Cart — OneClickFood</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">🍴 <span>OneClickFood</span></div>
+    <nav class="nav">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'restaurant' %}">Restaurants</a>
+      <a href="{% url 'menu' %}">Menu</a>
+      <a href="{% url 'offers' %}">Offers</a>
+      <a href="{% url 'cart' %}" class="active">Cart (<span id="cartCount">0</span>)</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+  </header>
+
+  <main class="main container cart-page">
+    <h2>Your Cart</h2>
+    <div class="cart-layout">
+      <div class="cart-items" id="cartItems"></div>
+      <aside class="cart-summary" id="cartSummary">
+        <h3>Order Summary</h3>
+        <div id="summaryDetails"></div>
+        <div class="coupon">
+          <input id="couponInput" placeholder="Coupon code"/>
+          <button id="applyCoupon">Apply</button>
+        </div>
+        <button class="btn primary" id="checkoutBtn">Proceed to Delivery</button>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>© 2025 OneClickFood</div>
+  </footer>
+
+  <script src="{% static 'foodapp/js/main.js' %}"></script>
+  <script src="{% static 'foodapp/js/cart.js' %}"></script>
+</body>
+</html>
+
+

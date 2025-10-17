@@ -1,0 +1,78 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Delivery — OneClickFood</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">🍴 <span>OneClickFood</span></div>
+    <nav class="nav">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'restaurant' %}">Restaurants</a>
+      <a href="{% url 'menu' %}">Menu</a>
+      <a href="{% url 'offers' %}">Offers</a>
+      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+  </header>
+
+  <main class="main container">
+    <h2>Delivery Details</h2>
+    <div class="delivery-grid">
+      <div class="delivery-card form-card">
+        <h3>Delivery Information</h3>
+        <form id="deliveryForm">
+          <div class="row">
+            <input id="custName" placeholder="Full Name" required />
+            <input id="custPhone" placeholder="Phone number" required />
+          </div>
+          <div class="row">
+            <input id="custAddr" placeholder="Delivery address (start typing...)" required />
+          </div>
+          <div class="row small-chips">
+            <button type="button" class="chip small" data-type="Home">Home</button>
+            <button type="button" class="chip small" data-type="Work">Work</button>
+            <button type="button" class="chip small" data-type="Other">Other</button>
+          </div>
+
+          <h4>Choose Delivery Time</h4>
+          <div class="time-carousel">
+            <button type="button" class="time-btn selected" data-time="ASAP">ASAP</button>
+            <button type="button" class="time-btn" data-time="30">In 30 mins</button>
+            <button type="button" class="time-btn" data-time="60">In 60 mins</button>
+            <button type="button" class="time-btn" data-time="schedule">Schedule</button>
+          </div>
+
+          <h4>Payment Method</h4>
+          <div class="payment-tiles">
+            <div class="tile selected" data-pay="cash">Cash</div>
+            <div class="tile" data-pay="card">Card</div>
+            <div class="tile" data-pay="upi">UPI</div>
+          </div>
+
+          <div style="margin-top:14px">
+            <button class="btn primary" type="submit">Place Order</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="delivery-card summary-card" id="deliverySummary">
+        <h3>Order Summary</h3>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>© 2025 OneClickFood</div>
+  </footer>
+
+  <script src="{% static 'foodapp/js/main.js' %}"></script>
+  <script src="{% static 'foodapp/js/cart.js' %}"></script>
+</body>
+</html>
+
