@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 echo "# OneClickFood 🍽️  
 
 A Zomato-style food ordering Django app with HTML, CSS, JS frontend and PostgreSQL/SQLite backend.
@@ -30,3 +31,7 @@ A Zomato-style food ordering Django app with HTML, CSS, JS frontend and PostgreS
 
 
 
+=======
+# StrangersBee-InnovatorsProject
+A collaborative web development project by Team StrangersBee Innovators, focusing on building creative and impactful digital solutions using Django.
+>>>>>>> 7ce21a0c3e72f2e5afbc0dfe9ea04a02b6c2d1fd
