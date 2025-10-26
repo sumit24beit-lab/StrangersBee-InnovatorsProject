@@ -92,3 +92,101 @@ a{color:inherit;text-decoration:none}
   .hero{height:280px}
 }
 
+/* ======= Login Page ======= */
+.login-page {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: #f8f8f8;
+}
+
+.login-container {
+  display: flex;
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.login-left, .login-right {
+  flex: 1;
+  padding: 40px;
+}
+
+.login-left {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left form input[type="text"],
+.login-left form input[type="email"],
+.login-left form input[type="password"] {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.login-right {
+  background: #e23744;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.spoon-animation {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.spoon {
+  width: 100px;
+  height: 200px;
+  background: #e23744;
+  border-radius: 50% 50% 10% 10%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.spoon.left {
+  left: 40%;
+  animation: leftSpoon 2s forwards;
+}
+
+.spoon.right {
+  right: 40%;
+  animation: rightSpoon 2s forwards;
+}
+
+@keyframes leftSpoon {
+  0% {transform: translate(-50%, -50%) rotate(0);}
+  100% {transform: translate(-200%, -50%) rotate(-45deg);}
+}
+
+@keyframes rightSpoon {
+  0% {transform: translate(50%, -50%) rotate(0);}
+  100% {transform: translate(200%, -50%) rotate(45deg);}
+}
+
+/* ======= Footer ======= */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #e23744;
+  color: white;
+}
+

@@ -1,0 +1,18 @@
+/* auth.css - styles for login/signup split-screen */
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#fff7f7}
+.auth-wrap{display:flex;height:100vh;align-items:stretch}
+.auth-left,.auth-right{flex:1;display:flex;align-items:center;justify-content:center;padding:40px}
+.auth-white{background:#fff}
+.auth-red{background:#e23b3b;color:#fff}
+.auth-left h1{font-size:32px;margin-bottom:18px;color:#111}
+.auth-right-inner{max-width:300px;text-align:center}
+.auth-right-inner h2{margin-bottom:8px}
+.auth-right-inner p{opacity:0.9;margin-bottom:18px}
+.auth-btn{padding:12px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+.auth-btn.primary{background:#e23b3b;color:#fff}
+.auth-btn.outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.18)}
+form input{width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #eee}
+label.tc{display:block;margin:8px 0;color:#555}
+.small-row{text-align:right;margin-bottom:8px}
+@media (max-width:800px){.auth-wrap{flex-direction:column}.auth-right{padding:24px}.auth-left{padding:24px}}

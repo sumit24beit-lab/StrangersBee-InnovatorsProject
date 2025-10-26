@@ -1,0 +1,36 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Login — OneClickFood</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'foodapp/css/auth.css' %}">
+  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-left auth-white">
+      <h1>Login</h1>
+      <form id="loginForm">
+        <input id="loginEmail" type="text" placeholder="Username or Email" required>
+        <input id="loginPass" type="password" placeholder="Password" required>
+        <div class="small-row">
+          <a href="#" id="forgotLink">Forgot Password?</a>
+        </div>
+        <button type="submit" class="auth-btn primary">Login</button>
+      </form>
+    </div>
+
+    <div class="auth-right auth-red">
+      <div class="auth-right-inner">
+        <h2>Don't have an account?</h2>
+        <p>Create your account to order delicious food in seconds.</p>
+        <button id="toSignup" class="auth-btn outline">Sign Up</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'foodapp/js/auth.js' %}"></script>
+</body>
+</html>

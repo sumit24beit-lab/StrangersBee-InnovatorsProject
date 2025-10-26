@@ -2,77 +2,132 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Delivery — OneClickFood</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+    <meta charset="utf-8" />
+    <title>Delivery — OneClickFood</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>OneClickFood</span></div>
-    <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}">Restaurants</a>
-      <a href="{% url 'menu' %}">Menu</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="{% url 'contact' %}">Contact</a>
-    </nav>
-  </header>
+    <header class="site-header">
+        <div class="brand">🍴 <span>OneClickFood</span></div>
+        <nav class="nav">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'restaurant' %}">Restaurants</a>
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'offers' %}">Offers</a>
+            <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+    </header>
 
-  <main class="main container">
-    <h2>Delivery Details</h2>
-    <div class="delivery-grid">
-      <div class="delivery-card form-card">
-        <h3>Delivery Information</h3>
-        <form id="deliveryForm">
-          <div class="row">
-            <input id="custName" placeholder="Full Name" required />
-            <input id="custPhone" placeholder="Phone number" required />
-          </div>
-          <div class="row">
-            <input id="custAddr" placeholder="Delivery address (start typing...)" required />
-          </div>
-          <div class="row small-chips">
-            <button type="button" class="chip small" data-type="Home">Home</button>
-            <button type="button" class="chip small" data-type="Work">Work</button>
-            <button type="button" class="chip small" data-type="Other">Other</button>
-          </div>
+    <main class="main container">
+        <h2>Delivery Details & Payment</h2>
+        <div class="delivery-grid">
+            <div class="delivery-card form-card">
+                <h3>Delivery Information</h3>
+                <form id="deliveryForm"> 
+                    <h4>Contact Details</h4>
+                    <div class="row">
+                        <input id="custName" name="customer_name" placeholder="Full Name" required type="text" />
+                        <input id="custPhone" name="customer_phone" placeholder="Phone number" required type="tel" />
+                    </div>
+                    <div class="row">
+                        <input id="custEmail" name="customer_email" placeholder="Email address" required type="email" />
+                    </div>
 
-          <h4>Choose Delivery Time</h4>
-          <div class="time-carousel">
-            <button type="button" class="time-btn selected" data-time="ASAP">ASAP</button>
-            <button type="button" class="time-btn" data-time="30">In 30 mins</button>
-            <button type="button" class="time-btn" data-time="60">In 60 mins</button>
-            <button type="button" class="time-btn" data-time="schedule">Schedule</button>
-          </div>
+                    <h4>Delivery Address</h4>
+                    <div class="row">
+                        <input id="custAddr" name="delivery_address_line1" placeholder="Delivery address (Street, Building...)" required type="text" />
+                    </div>
+                    <div class="row">
+                        <input id="custApt" name="delivery_apartment" placeholder="Apartment / Suite (Optional)" type="text" />
+                    </div>
+                    <div class="row">
+                      <input id="postcode" name="zip_code" placeholder="Postal Code" type="text">
+                  </div>
+              
+                    
+                    <input type="hidden" id="addrTypeHidden" name="address_type" value="Other">
+                    <div class="row small-chips">
+                        <button type="button" class="chip small selected" data-type="Home">Home</button>
+                        <button type="button" class="chip small" data-type="Work">Work</button>
+                        <button type="button" class="chip small" data-type="Other">Other</button>
+                    </div>
 
-          <h4>Payment Method</h4>
-          <div class="payment-tiles">
-            <div class="tile selected" data-pay="cash">Cash</div>
-            <div class="tile" data-pay="card">Card</div>
-            <div class="tile" data-pay="upi">UPI</div>
-          </div>
+                    <h4>Choose Delivery Time</h4>
+                    <input type="hidden" id="deliveryTimeHidden" name="delivery_time" value="ASAP">
+                    <div class="time-carousel">
+                        <button type="button" class="time-btn selected" data-time="ASAP">ASAP</button>
+                        <button type="button" class="time-btn" data-time="30_mins">In 30 mins</button>
+                        <button type="button" class="time-btn" data-time="schedule">Schedule</button>
+                    </div>
 
-          <div style="margin-top:14px">
-            <button class="btn primary" type="submit">Place Order</button>
-          </div>
-        </form>
-      </div>
+                    <h4>Payment Method</h4>
+                    <input type="hidden" id="paymentMethodHidden" name="payment_method" value="cash">
+                    <div class="payment-tiles">
+                        <div class="tile selected" data-pay="cash">Cash</div>
+                        <div class="tile" data-pay="card">Card</div>
+                        <div class="tile" data-pay="upi">UPI</div>
+                    </div>
+                    
+                    <div id="onlinePaymentFields" style="display:none; margin-top: 10px;">
+                        <input name="card_number" placeholder="Card Number" type="text" />
+                        <input name="card_expiry" placeholder="MM/YY" type="text" />
+                    </div>
 
-      <div class="delivery-card summary-card" id="deliverySummary">
-        <h3>Order Summary</h3>
-      </div>
-    </div>
-  </main>
+                    <div style="margin-top:20px">
+                         <input type="checkbox" id="termsAgree" name="terms_agreed" required>
+                        <label for="termsAgree">I agree to the Terms & Conditions</label>
+                    </div>
 
-  <footer class="site-footer">
-    <div>© 2025 OneClickFood</div>
-  </footer>
+                    <div style="margin-top:14px">
+                        <button class="btn primary" type="submit">Place Order</button>
+                    </div>
+                </form>
+            </div>
 
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
+            <div class="delivery-card summary-card" id="deliverySummary">
+                <h3>Order Summary</h3>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div>© 2025 OneClickFood</div>
+    </footer>
+    <script>
+        // JS to update hidden inputs when buttons/tiles are clicked
+        document.querySelectorAll('.small-chips .chip').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('addrTypeHidden').value = btn.getAttribute('data-type');
+                // Logic to visually select chip here
+            });
+        });
+
+        document.querySelectorAll('.time-carousel .time-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('deliveryTimeHidden').value = btn.getAttribute('data-time');
+                // Logic to visually select time button here
+            });
+        });
+
+        document.querySelectorAll('.payment-tiles .tile').forEach(tile => {
+            tile.addEventListener('click', () => {
+                const method = tile.getAttribute('data-pay');
+                document.getElementById('paymentMethodHidden').value = method;
+                // Logic to show/hide online payment fields based on method
+                if (method === 'card' || method === 'upi') {
+                    document.getElementById('onlinePaymentFields').style.display = 'block';
+                } else {
+                    document.getElementById('onlinePaymentFields').style.display = 'none';
+                }
+                // Logic to visually select tile here
+            });
+        });
+    </script>
+    <script src="{% static 'foodapp/js/main.js' %}"></script>
+    <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>
 </html>
 

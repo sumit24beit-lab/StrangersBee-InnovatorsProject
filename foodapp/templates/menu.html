@@ -2,18 +2,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Menu — OneClickFood</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+  <meta charset="utf-8">
+  <title>Menu — OneClickFood (Upgraded)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
 </head>
 <body>
   <header class="site-header">
     <div class="brand">🍴 <span>OneClickFood</span></div>
     <nav class="nav">
       <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}">Restaurants</a>
+      <a href="{% url 'restaurants' %}">Restaurants</a>
       <a href="{% url 'menu' %}" class="active">Menu</a>
       <a href="{% url 'offers' %}">Offers</a>
       <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
@@ -22,15 +22,57 @@
   </header>
 
   <main class="main container">
-    <h2>Maharashtrian Delights & International Favorites</h2>
-    <p class="muted">Authentic local recipes alongside popular global dishes. Click "Add to Cart" to add items.</p>
+    <h2>Menu — Browse & Filter</h2>
+    <p class="muted">Use the filters below to narrow down items. You can combine multiple filters.</p>
 
-    <div id="menuGrid" class="menu-grid"></div>
+    <section class="filters-panel">
+      <div class="filter-group">
+        <h4>Nutrient Function</h4>
+        <label><input type="checkbox" name="nutri" value="fruits"> Fruits & Vegetables</label>
+        <label><input type="checkbox" name="nutri" value="starchy"> Starchy Carbs</label>
+        <label><input type="checkbox" name="nutri" value="protein"> Protein</label>
+        <label><input type="checkbox" name="nutri" value="dairy"> Dairy & Alternatives</label>
+        <label><input type="checkbox" name="nutri" value="fats"> Fats & Oils</label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Meal Time</h4>
+        <label><input type="checkbox" name="meal" value="breakfast"> Morning (Breakfast)</label>
+        <label><input type="checkbox" name="meal" value="lunch"> Lunch</label>
+        <label><input type="checkbox" name="meal" value="dinner"> Dinner</label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Type</h4>
+        <label><input type="checkbox" name="type" value="liquid"> Juices/Tea/Coffee</label>
+        <label><input type="checkbox" name="type" value="light"> Light Food</label>
+        <label><input type="checkbox" name="type" value="heavy"> Heavy Food</label>
+        <label><input type="checkbox" name="type" value="solid"> Solid</label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Spice Level</h4>
+        <label><input type="checkbox" name="spice" value="spicy"> Spicy</label>
+        <label><input type="checkbox" name="spice" value="normal"> Normal</label>
+        <label><input type="checkbox" name="spice" value="not"> Not Spicy</label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Price</h4>
+        <label><input type="radio" name="priceSort" value="asc"> Price: Low → High</label>
+        <label><input type="radio" name="priceSort" value="desc"> Price: High → Low</label>
+      </div>
+
+      <div style="margin-top:12px">
+        <button id="applyFilters" class="btn primary">Apply Filters</button>
+        <button id="clearFilters" class="btn">Clear</button>
+      </div>
+    </section>
+
+    <div id="menuGrid" class="menu-grid" style="margin-top:18px"></div>
   </main>
 
-  <footer class="site-footer">
-    <div>© 2025 OneClickFood</div>
-  </footer>
+  <footer class="site-footer"><div>© 2025 OneClickFood</div></footer>
 
   <script src="{% static 'foodapp/js/main.js' %}"></script>
   <script src="{% static 'foodapp/js/cart.js' %}"></script>
