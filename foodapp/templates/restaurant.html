@@ -1,14 +1,18 @@
+{% load i18n %}
 {% load static %}
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <title>Restaurants — OneClickFood</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
 </head>
 <body>
+  <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
+  <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
+  <button>{% trans "Explore Menu" %}</button>
   <header class="site-header">
     <div class="brand">🍴 <span>OneClickFood</span></div>
     <nav class="nav">
@@ -22,22 +26,30 @@
   </header>
 
   <main class="main container">
-    <section class="filters">
-      <input id="searchBox" placeholder="Search by city/area/cuisine">
-      <select id="filterSort">
-        <option value="rating">Sort: Rating</option>
-        <option value="time">Sort: Delivery time</option>
-        <option value="cost">Sort: Cost</option>
-      </select>
+    <h2>Restaurants — Add your real entries below</h2>
+
+    <section class="filters" style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
+      <div>
+        <label><input type="radio" name="restPriceSort" value="asc"> Price: Low → High</label>
+        <label><input type="radio" name="restPriceSort" value="desc"> Price: High → Low</label>
+      </div>
+      <div>
+        <label><input type="radio" name="luxurySort" value="high"> Luxury First</label>
+        <label><input type="radio" name="luxurySort" value="low"> Budget First</label>
+      </div>
+      <div>
+        <button id="restSortBtn" class="btn">Sort</button>
+        <button id="restClearBtn" class="btn">Clear</button>
+      </div>
     </section>
 
-    <section id="restaurantGrid" class="restaurant-grid">
-      <!-- JS will populate sample restaurant cards -->
+    <section class="restaurant-grid" id="restaurantGrid">
+      <!-- 12 placeholder cards (you can add content later) -->
     </section>
 
     <section class="restaurants-description">
-      <h3>Page guide — Restaurant listing</h3>
-      <p>Design notes: each restaurant card should show a thumbnail, name, cuisine tags, rating, delivery time, cost-for-two and action "View Menu". Provide filter chips for city, veg/non-veg, offers and sorting. For many restaurants use server-side pagination with AJAX.</p>
+      <h3>Design notes</h3>
+      <p>Below are placeholders for 12 restaurants. Replace image and text with real restaurant details in your Django data later.</p>
     </section>
   </main>
 
@@ -45,9 +57,38 @@
     <div>© 2025 OneClickFood</div>
   </footer>
 
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
+  <script>
+    // create 12 placeholders dynamically
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const grid = document.getElementById('restaurantGrid');
+      const sample = [];
+      for(let i=1;i<=12;i++){
+        sample.push({id:i, name:'Restaurant Name (add later)', cuisine:'Cuisine', rating:4.0, cost:200 + i*10, time:'25-35 min', img:'restaurant.jpg', luxury: (i%3===0 ? 'high' : (i%3===1 ? 'low' : 'medium'))});
+      }
+      grid.innerHTML = '';
+      sample.forEach(r=>{
+        const card = document.createElement('div'); card.className='card';
+        const img = document.createElement('img'); img.src = `/static/onestopapp/images/${r.img}`; img.alt = r.name; img.style.width='180px';
+        const info = document.createElement('div');
+        const h = document.createElement('h4'); h.textContent = r.name;
+        const p = document.createElement('p'); p.className='muted'; p.textContent = `${r.cuisine} • ₹${r.cost} for two • ${r.time}`;
+        info.appendChild(h); info.appendChild(p);
+        card.appendChild(img); card.appendChild(info);
+        grid.appendChild(card);
+      });
+
+      document.getElementById('restSortBtn').addEventListener('click', ()=>{
+        alert('Sort applied (prototype) — replace with server-side sorting when integrating backend.');
+      });
+      document.getElementById('restClearBtn').addEventListener('click', ()=> {
+        // simply reload placeholders
+        location.reload();
+      });
+    });
+  </script>
+
 </body>
 </html>
+
 
 

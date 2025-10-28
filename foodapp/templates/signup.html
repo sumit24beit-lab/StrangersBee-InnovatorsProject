@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -9,6 +10,9 @@
   <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
 </head>
 <body>
+  <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
+  <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
+  <button>{% trans "Explore Menu" %}</button>
   <div class="auth-wrap">
     <div class="auth-left auth-white">
       <h1>Sign Up</h1>

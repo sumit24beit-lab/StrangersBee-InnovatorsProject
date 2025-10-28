@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-29 02:11+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\foodapp\templates\animation.html:22 .\foodapp\templates\cart.html:13
+#: .\foodapp\templates\contact.html:13 .\foodapp\templates\delivery.html:13
+#: .\foodapp\templates\home.html:13 .\foodapp\templates\login.html:13
+#: .\foodapp\templates\menu.html:13 .\foodapp\templates\offers.html:13
+#: .\foodapp\templates\restaurant.html:13 .\foodapp\templates\signup.html:13
+msgid "Welcome to OneClickFood Hub"
+msgstr ""
+
+#: .\foodapp\templates\animation.html:23 .\foodapp\templates\cart.html:14
+#: .\foodapp\templates\contact.html:14 .\foodapp\templates\delivery.html:14
+#: .\foodapp\templates\home.html:14 .\foodapp\templates\login.html:14
+#: .\foodapp\templates\menu.html:14 .\foodapp\templates\offers.html:14
+#: .\foodapp\templates\restaurant.html:14 .\foodapp\templates\signup.html:14
+msgid "Order your favorite food from top restaurants near you!"
+msgstr ""
+
+#: .\foodapp\templates\animation.html:24 .\foodapp\templates\cart.html:15
+#: .\foodapp\templates\contact.html:15 .\foodapp\templates\delivery.html:15
+#: .\foodapp\templates\home.html:15 .\foodapp\templates\login.html:15
+#: .\foodapp\templates\menu.html:15 .\foodapp\templates\offers.html:15
+#: .\foodapp\templates\restaurant.html:15 .\foodapp\templates\signup.html:15
+msgid "Explore Menu"
+msgstr "मेनू"

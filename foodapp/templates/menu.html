@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -9,11 +10,14 @@
   <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
 </head>
 <body>
+  <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
+  <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
+  <button>{% trans "Explore Menu" %}</button>
   <header class="site-header">
     <div class="brand">🍴 <span>OneClickFood</span></div>
     <nav class="nav">
       <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurants' %}">Restaurants</a>
+      <a href="{% url 'restaurant' %}">Restaurants</a>
       <a href="{% url 'menu' %}" class="active">Menu</a>
       <a href="{% url 'offers' %}">Offers</a>
       <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>

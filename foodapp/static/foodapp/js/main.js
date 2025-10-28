@@ -68,7 +68,7 @@ function renderMenuList(data){
   grid.innerHTML = '';
   data.forEach(item => {
     const card = el('div','menu-item');
-    const img = el('img'); img.src = `/static/onestopapp/images/${item.img}`; img.alt = item.name;
+    const img = el('img'); img.src = `/static/foodapp/images/${item.img}`; img.alt = item.name;
     const meta = el('div','menu-meta');
     const title = el('h4'); title.textContent = item.name;
     const rest = el('div'); rest.className='muted'; rest.textContent = `${item.nutrients} • ₹${item.price}`;

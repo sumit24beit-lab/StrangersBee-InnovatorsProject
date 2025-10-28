@@ -1,7 +1,9 @@
-from django.urls import path
-from .views import home_page_view, cart_page_view, menu_page_view, restaurant_page_view, delivery_page_view, contact_page_view, offers_page_view
+from django.urls import include
+from .views import signup_page_view,login_page_view,home_page_view, cart_page_view, menu_page_view, restaurant_page_view, delivery_page_view, contact_page_view, offers_page_view
 
-urlpatterns = [ 
+urlpatterns = [
+    path('signup/',signup_page_view,name='signup'),
+    path('login/',login_page_view,name='login'),
     path('home/',home_page_view,name='home'),
     path('cart/',cart_page_view,name='cart'),
     path('menu/',menu_page_view,name='menu'),

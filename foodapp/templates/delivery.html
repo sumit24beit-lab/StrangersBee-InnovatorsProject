@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -9,6 +10,9 @@
     <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
 </head>
 <body>
+    <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
+    <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
+    <button>{% trans "Explore Menu" %}</button>
     <header class="site-header">
         <div class="brand">🍴 <span>OneClickFood</span></div>
         <nav class="nav">
@@ -104,28 +108,6 @@
                 // Logic to visually select chip here
             });
         });
-
-        document.querySelectorAll('.time-carousel .time-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.getElementById('deliveryTimeHidden').value = btn.getAttribute('data-time');
-                // Logic to visually select time button here
-            });
-        });
-
-        document.querySelectorAll('.payment-tiles .tile').forEach(tile => {
-            tile.addEventListener('click', () => {
-                const method = tile.getAttribute('data-pay');
-                document.getElementById('paymentMethodHidden').value = method;
-                // Logic to show/hide online payment fields based on method
-                if (method === 'card' || method === 'upi') {
-                    document.getElementById('onlinePaymentFields').style.display = 'block';
-                } else {
-                    document.getElementById('onlinePaymentFields').style.display = 'none';
-                }
-                // Logic to visually select tile here
-            });
-        });
-    </script>
     <script src="{% static 'foodapp/js/main.js' %}"></script>
     <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>
