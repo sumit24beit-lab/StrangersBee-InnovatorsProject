@@ -87,7 +87,7 @@
 
 <body>
   <header class="site-header">
-    <div class="brand">🍴 <span>{% trans "OneClickFood" %}</span></div>
+    <div class="brand">🍴 <span>OneClickFood</span></div>
     <nav class="nav">
       <a href="{% url 'home' %}" class="active">{% trans "Home" %}</a>
       <a href="{% url 'restaurant' %}">{% trans "Restaurants" %}</a>
@@ -96,6 +96,20 @@
       <a href="{% url 'cart' %}">{% trans "Cart" %} (<span id="cartCount">0</span>)</a>
       <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
     </nav>
+    <div class="language-buttons">
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input type="hidden" name="language" value="en">
+        <button class="language-btn">🇬🇧 EN</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+          <input type="hidden" name="language" value="hi">
+          <button class="language-btn">🇮🇳 HI</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+          <input type="hidden" name="language" value="mr">
+          <button class="language-btn">🇮🇳 MR</button>
+      </form>
+      </div>
   </header>
 
   <main class="main container">
@@ -165,3 +179,4 @@
   <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>
 </html>
+

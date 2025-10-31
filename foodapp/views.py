@@ -33,9 +33,7 @@ def contact_page_view(request):
 def offers_page_view(request):
     return render(request,'offers.html')
 
-def restaurant_list_view(request):
-    restaurants = Restaurant.objects.all()
-    return render(request, 'restaurant.html', {'restaurants': restaurants})
-
+def chatbot_page_view(request):
+    return render(request,'chatbot.html')
 
 

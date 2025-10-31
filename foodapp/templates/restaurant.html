@@ -143,6 +143,31 @@
 
     <div id="restaurantGrid" class="menu-grid"></div>
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const grid = document.getElementById('restaurantGrid');
+      const sample = [];
+      for(let i=1;i<=12;i++){
+        sample.push({id:i, name:`Restaurant ${i} (add name)`, cuisine:'Multi', rating:(4 + ((i%3)/10)).toFixed(1), cost:200 + i*20, time:'25-35 min', img:'restaurant.jpg', luxury: (i%3===0 ? 'high' : (i%3===1 ? 'low' : 'medium'))});
+      }
+      grid.innerHTML = '';
+      sample.forEach(r=>{
+        const card = document.createElement('div'); card.className='card';
+        const img = document.createElement('img'); img.src = `../static/images/${r.img}`; img.alt = r.name; img.style.width='180px';
+        const info = document.createElement('div');
+        const h = document.createElement('h4'); h.textContent = r.name;
+        const p = document.createElement('p'); p.className='muted'; p.textContent = `${r.cuisine} • ₹${r.cost} for two • ${r.time}`;
+        info.appendChild(h); info.appendChild(p);
+        card.appendChild(img); card.appendChild(info);
+        grid.appendChild(card);
+      });
+
+      document.getElementById('restSortBtn').addEventListener('click', ()=>{
+        alert('Sorting (prototype) — replace with server-side logic for production.');
+      });
+      document.getElementById('restClearBtn').addEventListener('click', ()=> location.reload());
+    });
+  </script>
 
   <footer class="site-footer">
     <div>© 2025 OneClickFood</div>
@@ -150,6 +175,7 @@
   
   <script src="{% static 'foodapp/js/main.js' %}"></script>
   <script src="{% static 'foodapp/js/cart.js' %}"></script>
+
 </body>
 </html>
 

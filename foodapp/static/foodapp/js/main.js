@@ -87,46 +87,11 @@ function renderFeatured(){
     list.appendChild(a);
   });
 }
-/* ---------- RENDER: restaurants grid ---------- */
-function renderRestaurantsGrid(){
-  const grid = document.getElementById('restaurantGrid');
-  if (!grid) return;
-  const R = [
-    {name:'Spice Empire', cuisine:'Maharashtrian', rating:4.6, cost:350, time:'25-30 min'},
-    {name:'Pav & Co', cuisine:'Street Food', rating:4.4, cost:150, time:'20-25 min'},
-    {name:'Malvani Seas', cuisine:'Seafood', rating:4.7, cost:550, time:'35-40 min'},
-    {name:'Urban Pizza', cuisine:'Italian', rating:4.3, cost:450, time:'25-30 min'}
-  ];
-  grid.innerHTML = '';
-  R.forEach(r=>{
-    const card = el('div','card restaurant-card');
-    const img = el('img'); 
-    img.src = `/static/foodapp/images/restaurant.jpg`; 
-    img.alt = r.name; 
-    img.style.width='180px';
-
-    const info = el('div');
-    const h = el('h4'); h.textContent = r.name;
-    const p = el('p'); p.className='muted'; 
-    p.textContent = `${r.cuisine} • ₹${r.cost} for two • ${r.time}`;
-    const btn = el('button','btn'); 
-    btn.textContent = 'View Menu'; 
-    btn.onclick = ()=> location.href='/menu/';
-    
-    info.appendChild(h); 
-    info.appendChild(p); 
-    info.appendChild(btn);
-    card.appendChild(img); 
-    card.appendChild(info);
-    grid.appendChild(card);
-  });
-}
-/*------------------RENDER: menu -------------*/
-function renderMenu(data){
+function renderMenu(){
   const container = document.getElementById('menuGrid');
   if (!container) return;
   container.innerHTML = '';
-  data.forEach(item=>{
+  MENU_DATA.forEach(item=>{
     const card = el('div','menu-item');
     const img = el('img'); img.src = `/static/foodapp/images/${item.img}`; img.alt=item.name;
     const meta = el('div','menu-meta');
@@ -144,79 +109,55 @@ function renderMenu(data){
     container.appendChild(card);
   });
 }
-/* ---------- RENDER: offers ---------- */
 function renderOffers(){
   const grid = document.getElementById('offersGrid');
   if (!grid) return;
   grid.innerHTML = '';
-  OFFER_DATA.forEach(o => {
-  const src = MENU_DATA.find(m => m.id === o.itemId);
-  if (!src) return;
-  const offerItem = {
-    ...src,
-    offerPrice: Math.round(src.price * (1 - o.discountPercent / 100)),
-    discountPercent: o.discountPercent
-  };
-
-  const card = el('div', 'menu-item');
-  const img = el('img');
-  img.src = `/static/foodapp/images/${offerItem.img}`;
-  img.alt = offerItem.name;
-
-  const meta = el('div', 'menu-meta');
-  const title = el('h4');
-  title.textContent = offerItem.name;
-
-  const mrow = el('div', 'meta-row');
-  mrow.textContent = `${offerItem.calories} kcal • ${offerItem.nutrients}`;
-
-  const ing = el('div');
-  ing.className = 'muted';
-  ing.textContent = offerItem.ingredients;
-
-  const bottom = el('div');
-  bottom.style.display = 'flex';
-  bottom.style.justifyContent = 'space-between';
-  bottom.style.alignItems = 'center';
-  bottom.style.marginTop = '8px';
-
-  const priceWrap = el('div');
-  priceWrap.innerHTML = `
-    <span style="text-decoration:line-through;color:#999;margin-right:8px">₹${offerItem.price}</span>
-    <span style="font-weight:700;color:var(--brand)">₹${offerItem.offerPrice}</span>`;
-
-  const add = el('button', 'add-btn');
-  add.textContent = 'Add to Cart';
-  add.onclick = () => addToCart({
-    id: offerItem.id,
-    name: offerItem.name,
-    price: offerItem.offerPrice,
-    img: offerItem.img
+  OFFER_DATA.forEach(o=>{
+    const src = MENU_DATA.find(m=>m.id===o.itemId);
+    if (!src) return;
+    const item = {...src, offerPrice: Math.round(src.price * (1 - o.discountPercent/100)), discountPercent: o.discountPercent};
+    const card = el('div','menu-item');
+    const img = el('img'); img.src = `/static/foodapp/images/${item.img}`; img.alt=item.name;
+    const meta = el('div','menu-meta');
+    const title = el('h4'); title.textContent = item.name;
+    const mrow = el('div','meta-row'); mrow.textContent = `${item.calories} kcal • ${item.nutrients}`;
+    const ing = el('div'); ing.className='muted'; ing.textContent = item.ingredients;
+    const bottom = el('div'); bottom.style.display='flex'; bottom.style.justifyContent='space-between'; bottom.style.alignItems='center'; bottom.style.marginTop='8px';
+    const priceWrap = el('div'); priceWrap.innerHTML = `<span style="text-decoration:line-through;color:#999;margin-right:8px">₹${item.price}</span><span style="font-weight:700;color:var(--brand)">₹${item.offerPrice}</span>`;
+    const add = el('button','add-btn'); add.textContent='Add to Cart'; add.onclick = ()=> addToCart({id:item.id,name:item.name,price:item.offerPrice,img:item.img});
+    bottom.appendChild(priceWrap); bottom.appendChild(add);
+    const badge = el('div','offer-badge'); badge.textContent = `${item.discountPercent}% OFF`;
+    meta.appendChild(title); meta.appendChild(mrow); meta.appendChild(ing); meta.appendChild(bottom);
+    const wrapper = el('div'); wrapper.style.position='relative';
+    wrapper.appendChild(badge);
+    card.appendChild(img); card.appendChild(meta);
+    wrapper.appendChild(card);
+    grid.appendChild(wrapper);
   });
-
-  bottom.appendChild(priceWrap);
-  bottom.appendChild(add);
-
-  const badge = el('div', 'offer-badge');
-  badge.textContent = `${offerItem.discountPercent}% OFF`;
-
-  meta.appendChild(title);
-  meta.appendChild(mrow);
-  meta.appendChild(img);
-  meta.appendChild(bottom);
-
-  const wrapper = el('div');
-  wrapper.style.position = 'relative';
-  wrapper.appendChild(badge);
-  wrapper.appendChild(card);
-
-  card.appendChild(img);
-  card.appendChild(meta);
-  grid.appendChild(wrapper);
-});
-
 }
-
+function renderRestaurantsGrid(){
+  const grid = document.getElementById('restaurantGrid');
+  if (!grid) return;
+  const R = [
+    {name:'Spice Empire', cuisine:'Maharashtrian', rating:4.6, cost:350, time:'25-30 min'},
+    {name:'Pav & Co', cuisine:'Street Food', rating:4.4, cost:150, time:'20-25 min'},
+    {name:'Malvani Seas', cuisine:'Seafood', rating:4.7, cost:550, time:'35-40 min'},
+    {name:'Urban Pizza', cuisine:'Italian', rating:4.3, cost:450, time:'25-30 min'}
+  ];
+  grid.innerHTML = '';
+  R.forEach(r=>{
+    const card = el('div','card restaurant-card');
+    const img = el('img'); img.src = `/static/foodapp/images/restaurant.jpg`; img.alt=r.name; img.style.width='180px';
+    const info = el('div','');
+    const h = el('h4'); h.textContent = r.name;
+    const p = el('p'); p.className='muted'; p.textContent = `${r.cuisine} • ₹${r.cost} for two • ${r.time}`;
+    const btn = el('button','btn'); btn.textContent = 'View Menu'; btn.onclick = ()=> location.href='/menu/';
+    info.appendChild(h); info.appendChild(p); info.appendChild(btn);
+    card.appendChild(img); card.appendChild(info);
+    grid.appendChild(card);
+  });
+}
 /* ---------- FILTERING LOGIC ---------- */
 function gatherFilters(){
   const nutri = Array.from(document.querySelectorAll('input[name="nutri"]:checked')).map(i=>i.value);
@@ -231,80 +172,70 @@ function applyFilters(){
   const f = gatherFilters();
   let result = MENU_DATA.slice();
 
-  // Filter section
-  if (f.nutri.length) result = result.filter(it => f.nutri.includes(it.nutri));
-  if (f.meal.length) result = result.filter(it => f.meal.includes(it.meal));
-  if (f.type.length) result = result.filter(it => f.type.includes(it.type));
-  if (f.spice.length) result = result.filter(it => f.spice.includes(it.spice));
-
-  // ----- SORTING SECTION -----
-  const sortSelect = document.getElementById('menuSort'); // dropdown ID from HTML
-  const sortValue = sortSelect ? sortSelect.value : (f.priceSort || null);
-
-  const mealOrder = ['breakfast', 'lunch', 'dinner', 'dessert', 'snack'];
-  const typeOrder = ['light', 'liquid', 'heavy'];
-  const spiceOrder = ['not', 'normal', 'spicy'];
-
-  if (sortValue === 'nutrient') result.sort((a,b)=>a.nutri.localeCompare(b.nutri));
-  else if (sortValue === 'meal') result.sort((a,b)=>mealOrder.indexOf(a.meal) - mealOrder.indexOf(b.meal));
-  else if (sortValue === 'type') result.sort((a,b)=>typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type));
-  else if (sortValue === 'spice') result.sort((a,b)=>spiceOrder.indexOf(a.spice) - spiceOrder.indexOf(b.spice));
-  
-  if (f.priceSort === 'asc') {
-  result.sort((a,b)=>a.price-b.price);
-} else if (f.priceSort === 'desc') {
-  result.sort((a,b)=>b.price-a.price);
-}
+  // Nutrient filter (map input names to item.nutri)
+  if (f.nutri.length){
+    result = result.filter(it => f.nutri.includes(it.nutri));
+  }
+  // Meal
+  if (f.meal.length){
+    result = result.filter(it => f.meal.includes(it.meal));
+  }
+  // Type
+  if (f.type.length){
+    result = result.filter(it => f.type.includes(it.type));
+  }
+  // Spice
+  if (f.spice.length){
+    result = result.filter(it => f.spice.includes(it.spice));
+  }
+  // Price sort
+  if (f.priceSort === 'asc') result.sort((a,b)=>a.price-b.price);
+  else if (f.priceSort === 'desc') result.sort((a,b)=>b.price-a.price);
 
   renderMenu(result);
 }
 
-
-/* ---------- SEARCH & HERO CHIPS ---------- */
-function initSearch(){
-  const search = document.getElementById('globalSearch');
-  const btn = document.getElementById('searchBtn');
-  if (btn && search){
-    btn.addEventListener('click', ()=> {
-      const q = search.value.trim().toLowerCase();
-      if (!q){ alert('Type a search term. Try "Misal", "Pizza"'); return; }
-      location.href = '/menu/';
-      setTimeout(()=> {
-        // highlight naive: scroll to first matching element
-        const elMatch = Array.from(document.querySelectorAll('.menu-meta h4')).find(h => h.textContent.toLowerCase().includes(q));
-        if (elMatch) elMatch.scrollIntoView({behavior:'smooth',block:'center'});
-      }, 300);
-    });
-  }
-
-  document.querySelectorAll('.chip').forEach(ch=>{
-    ch.addEventListener('click', ()=> location.href='/menu/');
-  });
-
-  const vo = document.getElementById('viewOffers');
-  if (vo) vo.addEventListener('click', ()=> location.href='/offers/');
-}
-
 /* ---------- INIT ---------- */
 document.addEventListener('DOMContentLoaded', ()=>{
+  const buttons = document.querySelectorAll(".filter-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const options = document.getElementById(targetId);
+
+      // Close other open filters
+      document.querySelectorAll(".filter-options").forEach(opt => {
+        if (opt !== options) opt.classList.remove("show");
+      });
+      document.querySelectorAll(".filter-btn").forEach(b => {
+        if (b !== btn) b.classList.remove("active");
+      });
+
+      // Toggle current one
+      btn.classList.toggle("active");
+      options.classList.toggle("show");
+    });
+  });
+
+  // initial full render
   renderMenu(MENU_DATA);
-  const applyBtn = document.getElementById('applyFilters'); 
+
+  const applyBtn = document.getElementById('applyFilters');
   const clearBtn = document.getElementById('clearFilters');
   if (applyBtn) applyBtn.addEventListener('click', applyFilters);
   if (clearBtn) clearBtn.addEventListener('click', ()=>{
     document.querySelectorAll('input[type="checkbox"]').forEach(i=>i.checked=false);
     document.querySelectorAll('input[name="priceSort"]').forEach(i=>i.checked=false);
-  renderMenu(MENU_DATA);
+    renderMenu(MENU_DATA);
   });
+
+  // keep previous behaviors: featured & restaurants & offers if present
+  if (typeof renderFeatured === 'function') try{ renderFeatured(); }catch(e){}
+  if (typeof renderRestaurantsGrid === 'function') try{ renderRestaurantsGrid(); }catch(e){}
+  if (typeof renderOffers === 'function') try{ renderOffers(); }catch(e){}
   renderFeatured();
   renderRestaurantsGrid();
   renderOffers();
   initSearch();
 });
-
-
-
-
-
-
-
