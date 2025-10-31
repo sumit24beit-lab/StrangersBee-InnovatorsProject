@@ -1,0 +1,91 @@
+.chatbot {
+  position: fixed;
+  z-index: 1000;
+}
+.chatbot.advisor { bottom: 20px; left: 20px; }
+.chatbot.order { bottom: 20px; right: 20px; }
+
+.chatbot-toggle {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  border: none;
+  cursor: pointer;
+}
+.chatbot-toggle img { width: 35px; height: 35px; }
+
+.chatbox {
+  display: none;
+  position: absolute;
+  bottom: 70px;
+  width: 280px;
+  height: 350px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  background: #fff;
+  flex-direction: column;
+  overflow: hidden;
+}
+.chat-header {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+}
+.red-bg { background-color: #E23744; }
+.black-bg { background-color: #222; }
+
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+.chat-body p {
+  margin: 8px 0;
+}
+.chat-input {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+}
+.chat-input button {
+  background: #E23744;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+/* --- Welcome Popup Animations --- */
+.chat-popup {
+  position: fixed;
+  bottom: 100px;
+  font-size: 14px;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  opacity: 0;
+  animation: fadeInOut 6s ease-in-out;
+  z-index: 2000;
+}
+.chat-popup.red {
+  left: 90px;
+  background-color: #E23744;
+}
+.chat-popup.black {
+  right: 90px;
+  background-color: #222;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(10px); }
+}

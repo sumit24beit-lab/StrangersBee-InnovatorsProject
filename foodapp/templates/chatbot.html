@@ -1,0 +1,29 @@
+<!-- Advisor Chatbot (bottom-left) -->
+<div class="chatbot advisor">
+  <button class="chatbot-toggle advisor-btn">
+    <img src="static/images/bot-icon-advisor.png" alt="Advisor Bot">
+  </button>
+  <div class="chatbox advisor-box">
+    <div class="chat-header red-bg">🍽 Smart Advisor</div>
+    <div class="chat-body" id="advisor-chat"></div>
+    <div class="chat-input">
+      <input type="text" id="advisor-input" placeholder="Ask about menu, offers...">
+      <button onclick="sendAdvisorMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- Order Chatbot (bottom-right) -->
+<div class="chatbot order">
+  <button class="chatbot-toggle order-btn">
+    <img src="static/images/bot-icon-order.png" alt="Order Bot">
+  </button>
+  <div class="chatbox order-box">
+    <div class="chat-header black-bg">🚴 Order Assistant</div>
+    <div class="chat-body" id="order-chat"></div>
+    <div class="chat-input">
+      <input type="text" id="order-input" placeholder="Track or modify your order...">
+      <button onclick="sendOrderMessage()">Send</button>
+    </div>
+  </div>
+</div>
