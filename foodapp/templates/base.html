@@ -1,10 +1,118 @@
 {% load i18n %}
-<form action="{% url 'set_language' %}" method="post">
-  {% csrf_token %}
-  <select name="language">
-    <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-    <option value="hi" {% if LANGUAGE_CODE == 'hi' %}selected{% endif %}>हिन्दी</option>
-    <option value="mr" {% if LANGUAGE_CODE == 'mr' %}selected{% endif %}>मराठी</option>
-  </select>
-  <button type="submit">{% trans "Change" %}</button>
-</form>
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "OneClickFood" %}{% endblock %}</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        header {
+            background-color: #111827;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .language-buttons form {
+            display: inline;
+        }
+
+        .language-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .language-btn:hover {
+            background: #1d4ed8;
+        }
+
+        main {
+            text-align: center;
+            margin-top: 70px;
+            min-height: 70vh;
+        }
+
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">{% trans "OneClickFood" %}</div>
+
+        <nav>
+            <a href="{% url 'home' %}">{% trans "Home" %}</a>
+            <a href="{% url 'menu' %}">{% trans "Menu" %}</a>
+            <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
+        </nav>
+
+        <div class="language-buttons">
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="language" value="en">
+                <button class="language-btn">🇬🇧 EN</button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="language" value="hi">
+                <button class="language-btn">🇮🇳 HI</button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="language" value="mr">
+                <button class="language-btn">🇮🇳 MR</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Page-specific content goes here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>{% trans "© 2025 OneClickFood. All Rights Reserved." %}</p>
+    </footer>
+</body>
+</html>
+

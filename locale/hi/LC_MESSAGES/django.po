@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-29 02:11+0530\n"
+"POT-Creation-Date: 2025-10-29 20:01+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,26 +17,148 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\foodapp\templates\animation.html:22 .\foodapp\templates\cart.html:13
-#: .\foodapp\templates\contact.html:13 .\foodapp\templates\delivery.html:13
-#: .\foodapp\templates\home.html:13 .\foodapp\templates\login.html:13
-#: .\foodapp\templates\menu.html:13 .\foodapp\templates\offers.html:13
-#: .\foodapp\templates\restaurant.html:13 .\foodapp\templates\signup.html:13
+
+#: .\foodapp\templates\animation.html:22 .\foodapp\templates\signup.html:13
 msgid "Welcome to OneClickFood Hub"
 msgstr ""
 
-#: .\foodapp\templates\animation.html:23 .\foodapp\templates\cart.html:14
-#: .\foodapp\templates\contact.html:14 .\foodapp\templates\delivery.html:14
-#: .\foodapp\templates\home.html:14 .\foodapp\templates\login.html:14
-#: .\foodapp\templates\menu.html:14 .\foodapp\templates\offers.html:14
-#: .\foodapp\templates\restaurant.html:14 .\foodapp\templates\signup.html:14
+#: .\foodapp\templates\animation.html:23 .\foodapp\templates\signup.html:14
 msgid "Order your favorite food from top restaurants near you!"
 msgstr ""
 
-#: .\foodapp\templates\animation.html:24 .\foodapp\templates\cart.html:15
-#: .\foodapp\templates\contact.html:15 .\foodapp\templates\delivery.html:15
-#: .\foodapp\templates\home.html:15 .\foodapp\templates\login.html:15
-#: .\foodapp\templates\menu.html:15 .\foodapp\templates\offers.html:15
-#: .\foodapp\templates\restaurant.html:15 .\foodapp\templates\signup.html:15
+#: .\foodapp\templates\animation.html:24 .\foodapp\templates\signup.html:15
 msgid "Explore Menu"
 msgstr "मेनू"
+
+#: .\foodapp\templates\base.html:7 .\foodapp\templates\base.html:83
+#: .\foodapp\templates\home.html:14
+msgid "OneClickFood"
+msgstr ""
+
+#: .\foodapp\templates\base.html:86 .\foodapp\templates\cart.html:16
+#: .\foodapp\templates\contact.html:16 .\foodapp\templates\delivery.html:16
+#: .\foodapp\templates\home.html:17 .\foodapp\templates\menu.html:16
+#: .\foodapp\templates\offers.html:16 .\foodapp\templates\restaurant.html:16
+msgid "Home"
+msgstr ""
+
+#: .\foodapp\templates\base.html:87 .\foodapp\templates\cart.html:18
+#: .\foodapp\templates\contact.html:18 .\foodapp\templates\delivery.html:18
+#: .\foodapp\templates\home.html:19 .\foodapp\templates\menu.html:18
+#: .\foodapp\templates\offers.html:18 .\foodapp\templates\restaurant.html:18
+msgid "Menu"
+msgstr ""
+
+#: .\foodapp\templates\base.html:88 .\foodapp\templates\cart.html:21
+#: .\foodapp\templates\contact.html:21 .\foodapp\templates\delivery.html:21
+#: .\foodapp\templates\home.html:22 .\foodapp\templates\menu.html:21
+#: .\foodapp\templates\offers.html:21 .\foodapp\templates\restaurant.html:21
+msgid "Contact"
+msgstr ""
+
+#: .\foodapp\templates\base.html:114 .\foodapp\templates\home.html:90
+msgid "© 2025 OneClickFood. All Rights Reserved."
+msgstr ""
+
+#: .\foodapp\templates\cart.html:17 .\foodapp\templates\contact.html:17
+#: .\foodapp\templates\delivery.html:17 .\foodapp\templates\home.html:18
+#: .\foodapp\templates\menu.html:17 .\foodapp\templates\offers.html:17
+#: .\foodapp\templates\restaurant.html:17
+msgid "Restaurants"
+msgstr ""
+
+#: .\foodapp\templates\cart.html:19 .\foodapp\templates\contact.html:19
+#: .\foodapp\templates\delivery.html:19 .\foodapp\templates\home.html:20
+#: .\foodapp\templates\home.html:68 .\foodapp\templates\menu.html:19
+#: .\foodapp\templates\offers.html:19 .\foodapp\templates\restaurant.html:19
+msgid "Offers"
+msgstr ""
+
+#: .\foodapp\templates\cart.html:20 .\foodapp\templates\contact.html:20
+#: .\foodapp\templates\delivery.html:20 .\foodapp\templates\home.html:21
+#: .\foodapp\templates\menu.html:20 .\foodapp\templates\offers.html:20
+#: .\foodapp\templates\restaurant.html:20
+msgid "Cart"
+msgstr ""
+
+#: .\foodapp\templates\home.html:7
+msgid "OneClickFood — Home"
+msgstr ""
+
+#: .\foodapp\templates\home.html:29 .\oneclick\settings.py:106
+msgid "English"
+msgstr ""
+
+#: .\foodapp\templates\home.html:33 .\oneclick\settings.py:107
+msgid "Hindi"
+msgstr ""
+
+#: .\foodapp\templates\home.html:37 .\oneclick\settings.py:108
+msgid "Marathi"
+msgstr ""
+
+#: .\foodapp\templates\home.html:45
+msgid "Delicious food — delivered fast. <span>OneClick</span>."
+msgstr ""
+
+#: .\foodapp\templates\home.html:46
+msgid ""
+"Explore Maharashtrian classics, pizzas, Chinese & more from local kitchens."
+msgstr ""
+
+#: .\foodapp\templates\home.html:49
+msgid "Search restaurants, dishes or city (e.g. Pune, Misal Pav)"
+msgstr ""
+
+#: .\foodapp\templates\home.html:50
+msgid "Search"
+msgstr ""
+
+#: .\foodapp\templates\home.html:54 .\foodapp\templates\home.html:79
+msgid "Maharashtrian"
+msgstr ""
+
+#: .\foodapp\templates\home.html:55 .\foodapp\templates\home.html:80
+msgid "Pizza"
+msgstr ""
+
+#: .\foodapp\templates\home.html:56 .\foodapp\templates\home.html:81
+msgid "Chinese"
+msgstr ""
+
+#: .\foodapp\templates\home.html:57
+msgid "Beverages"
+msgstr ""
+
+#: .\foodapp\templates\home.html:58 .\foodapp\templates\home.html:83
+msgid "Desserts"
+msgstr ""
+
+#: .\foodapp\templates\home.html:63
+msgid "Featured restaurants"
+msgstr ""
+
+#: .\foodapp\templates\home.html:70
+#, python-format
+msgid "Hot Offers — Up to 50%% OFF"
+msgstr ""
+
+#: .\foodapp\templates\home.html:71
+msgid "Tap to see today's best discounts across cuisines."
+msgstr ""
+
+#: .\foodapp\templates\home.html:72
+msgid "View Offers"
+msgstr ""
+
+#: .\foodapp\templates\home.html:77
+msgid "Quick categories"
+msgstr ""
+
+#: .\foodapp\templates\home.html:82
+msgid "Burgers"
+msgstr ""
+
+#: templates/home.html:20
+
+

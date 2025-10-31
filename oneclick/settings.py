@@ -63,11 +63,14 @@ WSGI_APPLICATION = 'oneclick.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "oneclickfoodDB",        # <--- replace with your DB name
+        "USER": "postgres",      # <--- replace with your DB user
+        "PASSWORD": "309Vidya",# <--- replace with your password
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 

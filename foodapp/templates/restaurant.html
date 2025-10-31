@@ -8,85 +8,148 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
+  <style>
+    /* === FILTER BAR LAYOUT === */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .filter-btn {
+      background: #f0f0f0;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(90deg, #ff4d4d, #ff6666);
+      color: white;
+      border-color: #ff4d4d;
+      box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
+    }
+
+    /* === DROPDOWN FILTER OPTIONS === */
+    .filter-options {
+      display: none;
+      margin: 12px auto;
+      max-width: 600px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px 20px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .filter-options.show {
+      display: block;
+    }
+
+    .filter-options h4 {
+      margin-bottom: 8px;
+      color: #ff4d4d;
+    }
+
+    .filter-options label {
+      display: block;
+      margin: 6px 0;
+      cursor: pointer;
+    }
+
+    /* === ANIMATION === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      margin-top: 10px;
+    }
+
+    .btn.primary {
+      background: #ff4d4d;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-  <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
-  <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
-  <button>{% trans "Explore Menu" %}</button>
   <header class="site-header">
     <div class="brand">🍴 <span>OneClickFood</span></div>
     <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}" class="active">Restaurants</a>
-      <a href="{% url 'menu' %}">Menu</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="{% url 'contact' %}">Contact</a>
+      <a href="{% url 'home' %}" class="active">{% trans "Home" %}</a>
+      <a href="{% url 'restaurant' %}">{% trans "Restaurants" %}</a>
+      <a href="{% url 'menu' %}">{% trans "Menu" %}</a>
+      <a href="{% url 'offers' %}">{% trans "Offers" %}</a>
+      <a href="{% url 'cart' %}">{% trans "Cart" %} (<span id="cartCount">0</span>)</a>
+      <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
     </nav>
+    <div class="language-buttons">
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input type="hidden" name="language" value="en">
+        <button class="language-btn">🇬🇧 EN</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+          <input type="hidden" name="language" value="hi">
+          <button class="language-btn">🇮🇳 HI</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+          <input type="hidden" name="language" value="mr">
+          <button class="language-btn">🇮🇳 MR</button>
+      </form>
+      </div>
+  </header>
   </header>
 
   <main class="main container">
     <h2>Restaurants — Add your real entries below</h2>
+    <h2>Menu — Browse & Filter</h2>
+    <p class="muted">Tap on a category below to filter your food selection.</p>
 
-    <section class="filters" style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
-      <div>
-        <label><input type="radio" name="restPriceSort" value="asc"> Price: Low → High</label>
-        <label><input type="radio" name="restPriceSort" value="desc"> Price: High → Low</label>
-      </div>
-      <div>
-        <label><input type="radio" name="luxurySort" value="high"> Luxury First</label>
-        <label><input type="radio" name="luxurySort" value="low"> Budget First</label>
-      </div>
-      <div>
-        <button id="restSortBtn" class="btn">Sort</button>
-        <button id="restClearBtn" class="btn">Clear</button>
-      </div>
-    </section>
+ <div class="filter-bar">
+      <button class="filter-btn" data-target="price">Price</button>
+      <button class="filter-btn" data-target="restaurant">Restaurant</button>
+    </div>
 
-    <section class="restaurant-grid" id="restaurantGrid">
-      <!-- 12 placeholder cards (you can add content later) -->
-    </section>
+    <!-- FILTER OPTIONS -->
+    <div id="price" class="filter-options">
+      <h4>Price</h4>
+      <label><input type="radio" name="priceSort" value="asc"> Price: Low → High</label>
+      <label><input type="radio" name="priceSort" value="desc"> Price: High → Low</label>
+    </div>
 
-    <section class="restaurants-description">
-      <h3>Design notes</h3>
-      <p>Below are placeholders for 12 restaurants. Replace image and text with real restaurant details in your Django data later.</p>
-    </section>
+    <div id="restaurant" class="filter-options">
+      <h4>Restaurant</h4>
+      <label><input type="radio" name="luxurySort" value="high"> Luxury First</label>
+      <label><input type="radio" name="luxurySort" value="low"> Budget First</label>
+    </div>
+
+    <div>
+      <button id="applyFilters1" class="btn primary">Sort</button>
+      <button id="clearFilters1" class="btn">Clear</button>
+    </div>
+  </section>
+
+    <div id="restaurantGrid" class="menu-grid"></div>
   </main>
 
   <footer class="site-footer">
     <div>© 2025 OneClickFood</div>
   </footer>
-
-  <script>
-    // create 12 placeholders dynamically
-    document.addEventListener('DOMContentLoaded', ()=>{
-      const grid = document.getElementById('restaurantGrid');
-      const sample = [];
-      for(let i=1;i<=12;i++){
-        sample.push({id:i, name:'Restaurant Name (add later)', cuisine:'Cuisine', rating:4.0, cost:200 + i*10, time:'25-35 min', img:'restaurant.jpg', luxury: (i%3===0 ? 'high' : (i%3===1 ? 'low' : 'medium'))});
-      }
-      grid.innerHTML = '';
-      sample.forEach(r=>{
-        const card = document.createElement('div'); card.className='card';
-        const img = document.createElement('img'); img.src = `/static/onestopapp/images/${r.img}`; img.alt = r.name; img.style.width='180px';
-        const info = document.createElement('div');
-        const h = document.createElement('h4'); h.textContent = r.name;
-        const p = document.createElement('p'); p.className='muted'; p.textContent = `${r.cuisine} • ₹${r.cost} for two • ${r.time}`;
-        info.appendChild(h); info.appendChild(p);
-        card.appendChild(img); card.appendChild(info);
-        grid.appendChild(card);
-      });
-
-      document.getElementById('restSortBtn').addEventListener('click', ()=>{
-        alert('Sort applied (prototype) — replace with server-side sorting when integrating backend.');
-      });
-      document.getElementById('restClearBtn').addEventListener('click', ()=> {
-        // simply reload placeholders
-        location.reload();
-      });
-    });
-  </script>
-
+  
+  <script src="{% static 'foodapp/js/main.js' %}"></script>
+  <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>
 </html>
 

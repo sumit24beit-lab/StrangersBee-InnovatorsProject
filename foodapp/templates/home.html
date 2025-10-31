@@ -1,83 +1,96 @@
 {% load i18n %}
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
   <meta charset="utf-8" />
-  <title>OneClickFood — Home</title>
+  <title>{% block title %}{% trans "OneClickFood — Home" %}{% endblock %}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
   <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
 </head>
 <body>
-  <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
-  <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
-  <button>{% trans "Explore Menu" %}</button>
   <header class="site-header">
-    <div class="brand">🍴 <span>OneClickFood</span></div>
+    <div class="brand">🍴 <span>{% trans "OneClickFood" %}</span></div>
+
     <nav class="nav">
-      <a href="{% url 'home' %}" class="active">Home</a>
-      <a href="{% url 'restaurant' %}">Restaurants</a>
-      <a href="{% url 'menu' %}">Menu</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="{% url 'contact' %}">Contact</a>
+      <a href="{% url 'home' %}" class="active">{% trans "Home" %}</a>
+      <a href="{% url 'restaurant' %}">{% trans "Restaurants" %}</a>
+      <a href="{% url 'menu' %}">{% trans "Menu" %}</a>
+      <a href="{% url 'offers' %}">{% trans "Offers" %}</a>
+      <a href="{% url 'cart' %}">{% trans "Cart" %} (<span id="cartCount">0</span>)</a>
+      <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
     </nav>
+
+    <!-- Language Switch Buttons -->
+    <div class="language-buttons">
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input type="hidden" name="language" value="en">
+        <button class="language-btn">🇬🇧 {% trans "English" %}</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input type="hidden" name="language" value="hi">
+        <button class="language-btn">🇮🇳 {% trans "Hindi" %}</button>
+      </form>
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input type="hidden" name="language" value="mr">
+        <button class="language-btn">🇮🇳 {% trans "Marathi" %}</button>
+      </form>
+    </div>
   </header>
 
   <main class="main">
+    {% block content %}
       <div class="hero-inner">
-        <h1>Delicious food — delivered fast. <span>OneClick</span>.</h1>
-        <p class="sub">Explore Maharashtrian classics, pizzas, Chinese & more from local kitchens.</p>
+        <h1>{% blocktrans %}Delicious food — delivered fast. <span>OneClick</span>.{% endblocktrans %}</h1>
+        <p class="sub">{% trans "Explore Maharashtrian classics, pizzas, Chinese & more from local kitchens." %}</p>
 
         <div class="hero-search">
-          <input id="globalSearch" placeholder="Search restaurants, dishes or city (e.g. Pune, Misal Pav)" />
-          <button id="searchBtn">Search</button>
+          <input id="globalSearch" placeholder="{% trans 'Search restaurants, dishes or city (e.g. Pune, Misal Pav)' %}" />
+          <button id="searchBtn">{% trans "Search" %}</button>
         </div>
 
         <div class="hero-quick">
-          <button class="chip" data-cat="Maharashtrian">Maharashtrian</button>
-          <button class="chip" data-cat="Pizza">Pizza</button>
-          <button class="chip" data-cat="Chinese">Chinese</button>
-          <button class="chip" data-cat="Beverages">Beverages</button>
-          <button class="chip" data-cat="Desserts">Desserts</button>
+          <button class="chip" data-cat="Maharashtrian">{% trans "Maharashtrian" %}</button>
+          <button class="chip" data-cat="Pizza">{% trans "Pizza" %}</button>
+          <button class="chip" data-cat="Chinese">{% trans "Chinese" %}</button>
+          <button class="chip" data-cat="Beverages">{% trans "Beverages" %}</button>
+          <button class="chip" data-cat="Desserts">{% trans "Desserts" %}</button>
         </div>
       </div>
-    </section>
 
     <section class="featured container">
-      <h2>Featured restaurants</h2>
+      <h2>{% trans "Featured restaurants" %}</h2>
       <div class="cards" id="featuredList"></div>
     </section>
 
     <section class="offers-banner container">
-      <img src="{% static 'static/foodapp/images/offers.jpg' %}" alt="Offers" />
+      <img src="{% static 'foodapp/images/offers.jpg' %}" alt="{% trans 'Offers' %}" />
       <div class="offers-cta">
-        <h3>Hot Offers — Up to 50% OFF</h3>
-        <p>Tap to see today's best discounts across cuisines.</p>
-        <button id="viewOffers">View Offers</button>
+        <h3>{% trans "Hot Offers — Up to 50% OFF" %}</h3>
+        <p>{% trans "Tap to see today's best discounts across cuisines." %}</p>
+        <button id="viewOffers">{% trans "View Offers" %}</button>
       </div>
     </section>
 
     <section class="categories container">
-      <h2>Quick categories</h2>
+      <h2>{% trans "Quick categories" %}</h2>
       <div class="category-row">
-        <div class="category-card">Maharashtrian</div>
-        <div class="category-card">Pizza</div>
-        <div class="category-card">Chinese</div>
-        <div class="category-card">Burgers</div>
-        <div class="category-card">Desserts</div>
+        <div class="category-card">{% trans "Maharashtrian" %}</div>
+        <div class="category-card">{% trans "Pizza" %}</div>
+        <div class="category-card">{% trans "Chinese" %}</div>
+        <div class="category-card">{% trans "Burgers" %}</div>
+        <div class="category-card">{% trans "Desserts" %}</div>
       </div>
     </section>
+    {% endblock %}
   </main>
 
   <footer class="site-footer">
-    <div>© 2025 OneClickFood — StrangersBee</div>
+    <div>{% trans "© 2025 OneClickFood. All Rights Reserved." %}</div>
   </footer>
 
   <script src="{% static 'foodapp/js/main.js' %}"></script>
   <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>
 </html>
-
-

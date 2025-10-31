@@ -4,82 +4,164 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Menu — OneClickFood (Upgraded)</title>
+  <title>Menu Cart — OneClickFood</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{% static 'foodapp/css/auth.css' %}">
   <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
+  <style>
+    /* === FILTER BAR LAYOUT === */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .filter-btn {
+      background: #f0f0f0;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(90deg, #ff4d4d, #ff6666);
+      color: white;
+      border-color: #ff4d4d;
+      box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
+    }
+
+    /* === DROPDOWN FILTER OPTIONS === */
+    .filter-options {
+      display: none;
+      margin: 12px auto;
+      max-width: 600px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px 20px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .filter-options.show {
+      display: block;
+    }
+
+    .filter-options h4 {
+      margin-bottom: 8px;
+      color: #ff4d4d;
+    }
+
+    .filter-options label {
+      display: block;
+      margin: 6px 0;
+      cursor: pointer;
+    }
+
+    /* === ANIMATION === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      margin-top: 10px;
+    }
+
+    .btn.primary {
+      background: #ff4d4d;
+      color: white;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>{% trans "Welcome to OneClickFood Hub" %}</h1>
-  <p>{% trans "Order your favorite food from top restaurants near you!" %}</p>
-  <button>{% trans "Explore Menu" %}</button>
   <header class="site-header">
-    <div class="brand">🍴 <span>OneClickFood</span></div>
+    <div class="brand">🍴 <span>{% trans "OneClickFood" %}</span></div>
     <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}">Restaurants</a>
-      <a href="{% url 'menu' %}" class="active">Menu</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="{% url 'contact' %}">Contact</a>
+      <a href="{% url 'home' %}" class="active">{% trans "Home" %}</a>
+      <a href="{% url 'restaurant' %}">{% trans "Restaurants" %}</a>
+      <a href="{% url 'menu' %}">{% trans "Menu" %}</a>
+      <a href="{% url 'offers' %}">{% trans "Offers" %}</a>
+      <a href="{% url 'cart' %}">{% trans "Cart" %} (<span id="cartCount">0</span>)</a>
+      <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
     </nav>
   </header>
 
   <main class="main container">
     <h2>Menu — Browse & Filter</h2>
-    <p class="muted">Use the filters below to narrow down items. You can combine multiple filters.</p>
+    <p class="muted">Tap on a category below to filter your food selection.</p>
 
-    <section class="filters-panel">
-      <div class="filter-group">
-        <h4>Nutrient Function</h4>
-        <label><input type="checkbox" name="nutri" value="fruits"> Fruits & Vegetables</label>
-        <label><input type="checkbox" name="nutri" value="starchy"> Starchy Carbs</label>
-        <label><input type="checkbox" name="nutri" value="protein"> Protein</label>
-        <label><input type="checkbox" name="nutri" value="dairy"> Dairy & Alternatives</label>
-        <label><input type="checkbox" name="nutri" value="fats"> Fats & Oils</label>
-      </div>
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <button class="filter-btn" data-target="nutrient">Nutrient Function</button>
+      <button class="filter-btn" data-target="meal">Meal Time</button>
+      <button class="filter-btn" data-target="type">Type</button>
+      <button class="filter-btn" data-target="spice">Spice Level</button>
+      <button class="filter-btn" data-target="price">Price</button>
+    </div>
 
-      <div class="filter-group">
-        <h4>Meal Time</h4>
-        <label><input type="checkbox" name="meal" value="breakfast"> Morning (Breakfast)</label>
-        <label><input type="checkbox" name="meal" value="lunch"> Lunch</label>
-        <label><input type="checkbox" name="meal" value="dinner"> Dinner</label>
-      </div>
+    <!-- FILTER OPTIONS -->
+    <div id="nutrient" class="filter-options">
+      <h4>Nutrient Function</h4>
+      <label><input type="checkbox" name="nutri" value="fruits"> Fruits & Vegetables</label>
+      <label><input type="checkbox" name="nutri" value="starchy"> Starchy Carbs</label>
+      <label><input type="checkbox" name="nutri" value="protein"> Protein</label>
+      <label><input type="checkbox" name="nutri" value="dairy"> Dairy & Alternatives</label>
+      <label><input type="checkbox" name="nutri" value="fats"> Fats & Oils</label>
+    </div>
 
-      <div class="filter-group">
-        <h4>Type</h4>
-        <label><input type="checkbox" name="type" value="liquid"> Juices/Tea/Coffee</label>
-        <label><input type="checkbox" name="type" value="light"> Light Food</label>
-        <label><input type="checkbox" name="type" value="heavy"> Heavy Food</label>
-        <label><input type="checkbox" name="type" value="solid"> Solid</label>
-      </div>
+    <div id="meal" class="filter-options">
+      <h4>Meal Time</h4>
+      <label><input type="checkbox" name="meal" value="breakfast"> Breakfast</label>
+      <label><input type="checkbox" name="meal" value="lunch"> Lunch</label>
+      <label><input type="checkbox" name="meal" value="dinner"> Dinner</label>
+    </div>
 
-      <div class="filter-group">
-        <h4>Spice Level</h4>
-        <label><input type="checkbox" name="spice" value="spicy"> Spicy</label>
-        <label><input type="checkbox" name="spice" value="normal"> Normal</label>
-        <label><input type="checkbox" name="spice" value="not"> Not Spicy</label>
-      </div>
+    <div id="type" class="filter-options">
+      <h4>Type</h4>
+      <label><input type="checkbox" name="type" value="liquid"> Juices / Coffee / Tea</label>
+      <label><input type="checkbox" name="type" value="light"> Light Food</label>
+      <label><input type="checkbox" name="type" value="heavy"> Heavy Food</label>
+      <label><input type="checkbox" name="type" value="solid"> Solid</label>
+    </div>
 
-      <div class="filter-group">
-        <h4>Price</h4>
-        <label><input type="radio" name="priceSort" value="asc"> Price: Low → High</label>
-        <label><input type="radio" name="priceSort" value="desc"> Price: High → Low</label>
-      </div>
+    <div id="spice" class="filter-options">
+      <h4>Spice Level</h4>
+      <label><input type="checkbox" name="spice" value="spicy"> Spicy</label>
+      <label><input type="checkbox" name="spice" value="normal"> Normal</label>
+      <label><input type="checkbox" name="spice" value="not"> Not Spicy</label>
+    </div>
 
-      <div style="margin-top:12px">
-        <button id="applyFilters" class="btn primary">Apply Filters</button>
-        <button id="clearFilters" class="btn">Clear</button>
-      </div>
-    </section>
+    <div id="price" class="filter-options">
+      <h4>Price</h4>
+      <label><input type="radio" name="priceSort" value="asc"> Low → High</label>
+      <label><input type="radio" name="priceSort" value="desc"> High → Low</label>
+    </div>
 
-    <div id="menuGrid" class="menu-grid" style="margin-top:18px"></div>
+    <div style="text-align:center; margin-top:20px;">
+      <button id="applyFilters" class="btn primary">Apply Filters</button>
+      <button id="clearFilters" class="btn">Clear</button>
+    </div>
+
+    <div id="menuGrid" class="menu-grid"></div>
   </main>
 
-  <footer class="site-footer"><div>© 2025 OneClickFood</div></footer>
+  <footer class="site-footer">
+    <div>© 2025 OneClickFood</div>
+  </footer>
 
   <script src="{% static 'foodapp/js/main.js' %}"></script>
   <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>
 </html>
-
