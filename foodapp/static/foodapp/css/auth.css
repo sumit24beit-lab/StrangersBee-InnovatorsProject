@@ -1,18 +1,236 @@
 /* auth.css - styles for login/signup split-screen */
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#fff7f7}
-.auth-wrap{display:flex;height:100vh;align-items:stretch}
-.auth-left,.auth-right{flex:1;display:flex;align-items:center;justify-content:center;padding:40px}
-.auth-white{background:#fff}
-.auth-red{background:#e23b3b;color:#fff}
-.auth-left h1{font-size:32px;margin-bottom:18px;color:#111}
-.auth-right-inner{max-width:300px;text-align:center}
-.auth-right-inner h2{margin-bottom:8px}
-.auth-right-inner p{opacity:0.9;margin-bottom:18px}
-.auth-btn{padding:12px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
-.auth-btn.primary{background:#e23b3b;color:#fff}
-.auth-btn.outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.18)}
-form input{width:100%;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #eee}
-label.tc{display:block;margin:8px 0;color:#555}
-.small-row{text-align:right;margin-bottom:8px}
-@media (max-width:800px){.auth-wrap{flex-direction:column}.auth-right{padding:24px}.auth-left{padding:24px}}
+body {
+  margin: 0;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background: #fff7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* --- Main container --- */
+.auth-wrap {
+  display: flex;
+  width: 900px;               /* smaller fixed width */
+  height: 550px;              /* half-page height */
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background: #fff;
+}
+
+/* --- Left white side --- */
+.auth-left {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 50px;
+}
+
+.auth-left h1 {
+  font-size: 32px;
+  margin-bottom: 18px;
+  color: #111;
+}
+
+/* --- Right red side --- */
+.auth-right {
+  flex: 1;
+  background: #e23b3b;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.auth-right-inner {
+  text-align: center;
+}
+
+.auth-right-inner h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.auth-right-inner p {
+  opacity: 0.9;
+  margin-bottom: 18px;
+  font-size: 15px;
+}
+
+/* --- Buttons --- */
+.auth-btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.25s ease;
+}
+
+.auth-btn.primary {
+  background: #e23b3b;
+  color: #fff;
+}
+
+.auth-btn.primary:hover {
+  background: #c73030;
+}
+
+.auth-btn.outline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.auth-btn.outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Form --- */
+form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+}
+
+label.tc {
+  display: block;
+  margin: 8px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.small-row {
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .auth-wrap {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+  }
+  .auth-right {
+    padding: 30px;
+  }
+  .auth-left {
+    padding: 30px;
+  }
+}
+
+/* ---------- Spoon Animation Container ---------- */
+.spoon-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1.5s ease;
+  z-index: 9999;
+}
+
+.loader.fade-out {
+  opacity: 0;
+}
+
+/* ---------- Left and Right Spoons ---------- */
+.spoon {
+  width: 200px;
+  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+}
+
+.left-spoon {
+  background-image: url("{% static 'images/left-spoon.png' %}");
+  animation: spoonLeft 2.5s forwards;
+}
+
+.right-spoon {
+  background-image: url("{% static 'images/right-spoon.png' %}");
+  animation: spoonRight 2.5s forwards;
+}
+
+/* ---------- Animations ---------- */
+@keyframes spoonLeft {
+  0% {
+    transform: translateX(-300px) rotate(-90deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-400px) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes spoonRight {
+  0% {
+    transform: translateX(300px) rotate(90deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(400px) rotate(-20deg);
+    opacity: 0;
+  }
+}
+
+/* ---------- "Order Placed" Text ---------- */
+.spoon-text {
+  position: absolute;
+  font-size: 40px;
+  font-weight: bold;
+  color: #d32f2f;
+  opacity: 0;
+  animation: fadeText 2s 1.2s forwards;
+}
+
+@keyframes fadeText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+

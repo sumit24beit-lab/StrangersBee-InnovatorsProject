@@ -1,0 +1,280 @@
+{% load static %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="utf-8" />
+    <title>KitchenStation — Track Your Order</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="brand">🍴 <span>KitchenStation</span></div>
+        <nav class="nav">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'restaurant' %}">Home Cooks</a>
+            <a href="{% url 'menu' %}">Homemade Meals</a>
+            <a href="{% url 'offers' %}">Offers</a>
+            <a href="#" class="active">Orders</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+
+    <main class="main container order-tracking-page">
+
+        <!-- PAGE HEADER -->
+        <header class="page-header">
+            <h1>Track Your Order</h1>
+            <p>Follow the progress of your homemade meal from the home kitchen to your table.</p>
+
+            <div class="order-identity">
+                <!-- Future: <strong>Order {{ order.order_id }}</strong> -->
+                <strong>Order #KS-2026-00125</strong>
+                <!-- Future: <span class="status-badge">{{ order.status }}</span> -->
+                <span class="status-badge status-preparing">Preparing</span>
+            </div>
+        </header>
+
+        <!-- NO ACTIVE ORDER STATE -->
+        <!-- Future: {% if not order %} -->
+        <!--
+        <div class="empty-tracking-state" id="noActiveOrderState">
+            <h2>No Active Orders</h2>
+            <p>You don't currently have an order being prepared or delivered.</p>
+            <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Meals</a>
+        </div>
+        -->
+        <!-- Future: {% else %} -->
+
+        <div class="tracking-layout">
+            <div class="tracking-main">
+
+                <!-- ORDER STATUS TIMELINE -->
+                <section class="order-timeline">
+                    <h2>Order Status</h2>
+
+                    <!-- Future: contextual class (e.g. "step-active", "step-done", "step-pending") driven by {{ order.status }} -->
+
+                    <div class="timeline-step step-done">
+                        <div class="step-indicator">01</div>
+                        <div class="step-content">
+                            <h3>Order Confirmed</h3>
+                            <p>Your order has been received by KitchenStation.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step step-active">
+                        <div class="step-indicator">02</div>
+                        <div class="step-content">
+                            <h3>Home Cook Preparing</h3>
+                            <!-- Future: <p>{{ order.cook.name }} is preparing your meal.</p> -->
+                            <p>Asha's Kitchen is preparing your meal.</p>
+                            <!-- CURRENT STATUS MESSAGE -->
+                            <p class="status-message muted">Your meal is currently being prepared by the home cook. We'll update the order status when it is ready.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step step-pending">
+                        <div class="step-indicator">03</div>
+                        <div class="step-content">
+                            <h3>Order Ready</h3>
+                            <p>Your meal is ready for delivery or pickup.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step step-pending">
+                        <div class="step-indicator">04</div>
+                        <div class="step-content">
+                            <h3>Out for Delivery</h3>
+                            <p>Your order is on its way.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step step-pending">
+                        <div class="step-indicator">05</div>
+                        <div class="step-content">
+                            <h3>Delivered</h3>
+                            <p>Your homemade meal has been delivered.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- HOME COOK INFORMATION -->
+                <section class="tracking-cook-info">
+                    <h2>Your Home Cook</h2>
+                    <div class="cook-card">
+                        <div class="cook-details">
+                            <!-- Future: <h3>{{ order.cook.name }}</h3> -->
+                            <h3>Asha's Kitchen</h3>
+                            <!-- Future: <p>{{ order.cook.cuisine }} Home Cook</p> -->
+                            <p>North Indian Home Cook</p>
+                            <!-- Future: <p>Location: {{ order.cook.location }}</p> -->
+                            <p>Location: Thane, Maharashtra</p>
+                            <p class="cook-status">Status: Preparing Your Meal</p>
+                            <!-- Future: <p>"{{ order.cook.preparing_message }}"</p> -->
+                            <p class="cook-message muted">"Your meal is being freshly prepared in Asha's home kitchen."</p>
+                        </div>
+                        <div class="cook-actions">
+                            <!-- Future: <a href="{% url 'cook_profile' order.cook.id %}" class="btn secondary">View Home Cook</a> -->
+                            <button type="button" class="btn secondary">View Home Cook</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ESTIMATED INFORMATION -->
+                <section class="estimated-info">
+                    <h2>Estimated Times</h2>
+                    <div class="estimate-grid">
+                        <div class="estimate-item">
+                            <strong>Preparation Time:</strong>
+                            <!-- Future: <span>{{ order.estimated_prep_time }}</span> -->
+                            <span>30–45 minutes</span>
+                        </div>
+                        <div class="estimate-item">
+                            <strong>Delivery Time:</strong>
+                            <!-- Future: <span>{{ order.estimated_delivery_time }}</span> -->
+                            <span>20–30 minutes</span>
+                        </div>
+                    </div>
+                    <p class="muted" style="margin-top: 10px; font-size: 0.9em;">Preparation and delivery times may vary based on the home cook's availability.</p>
+                </section>
+
+            </div>
+
+            <aside class="tracking-sidebar">
+
+                <!-- ORDER SUMMARY -->
+                <section class="order-summary-card">
+                    <h2>Order Summary</h2>
+
+                    <div class="order-items-list">
+                        <!-- Future: {% for item in order.items.all %} -->
+                        <div class="order-item-row">
+                            <div>
+                                <!-- Future: <strong>{{ item.meal.name }}</strong> -->
+                                <strong>Homestyle Paneer Thali</strong>
+                                <!-- Future: <small>Prepared by {{ item.meal.cook.name }}</small> -->
+                                <small>Prepared by Asha's Kitchen</small>
+                            </div>
+                            <div>
+                                <!-- Future: <span>₹{{ item.meal.price }} × {{ item.quantity }}</span> -->
+                                <span>₹180 × 1</span>
+                            </div>
+                        </div>
+
+                        <div class="order-item-row">
+                            <div>
+                                <strong>Veg Biryani</strong>
+                                <small>Prepared by Riya's Home Kitchen</small>
+                            </div>
+                            <div>
+                                <span>₹150 × 2</span>
+                            </div>
+                        </div>
+                        <!-- Future: {% endfor %} -->
+                    </div>
+
+                    <div class="order-total-row">
+                        <!-- Future: <strong>Total: ₹{{ order.total }}</strong> -->
+                        <strong>Total: ₹480</strong>
+                    </div>
+                </section>
+
+                <!-- DELIVERY INFORMATION -->
+                <section class="delivery-info-card">
+                    <h2>Delivery Details</h2>
+                    <div class="delivery-info-rows">
+                        <div>
+                            <strong>Delivery Address:</strong>
+                            <!-- Future: <p>{{ order.delivery_address }}</p> -->
+                            <p>12 Example Street,<br>Thane, Maharashtra</p>
+                        </div>
+                        <div>
+                            <strong>Fulfilment:</strong>
+                            <!-- Future: <p>{{ order.fulfilment_method }}</p> -->
+                            <p>Home Delivery</p>
+                        </div>
+                        <div>
+                            <strong>Expected Delivery:</strong>
+                            <!-- Future: <p>{{ order.expected_delivery }}</p> -->
+                            <p>Today, 7:30 PM – 8:00 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- PICKUP STRUCTURE (for future pickup orders) -->
+                    <!--
+                    <div class="pickup-info" style="display:none;">
+                        <strong>Pickup Location:</strong>
+                        <p>Asha's Kitchen, Thane, Maharashtra</p>
+                        <strong>Status:</strong>
+                        <p>Ready for Pickup</p>
+                    </div>
+                    -->
+                </section>
+
+                <!-- CUSTOMER ACTIONS -->
+                <section class="tracking-actions">
+                    <!-- Future: <a href="{% url 'order_detail' order.id %}" class="btn primary">View Order Details</a> -->
+                    <button type="button" class="btn primary" style="width:100%; margin-bottom: 10px;">View Order Details</button>
+                    <!-- Future: <a href="{% url 'order_history' %}" class="btn secondary">View Order History</a> -->
+                    <button type="button" class="btn secondary" style="width:100%; margin-bottom: 10px;">View Order History</button>
+                    <a href="{% url 'menu' %}" class="btn" style="display:block; text-align:center; margin-bottom: 10px;">Explore More Meals</a>
+                    <a href="{% url 'contact' %}" class="btn" style="display:block; text-align:center;">Contact Support</a>
+                </section>
+
+                <!-- HELP / SUPPORT -->
+                <section class="support-card">
+                    <h3>Need Help With Your Order?</h3>
+                    <p>If there is an issue with your order, contact KitchenStation support.</p>
+                    <a href="{% url 'contact' %}" class="btn">Contact Support</a>
+                </section>
+
+            </aside>
+        </div>
+
+        <!-- Future: {% endif %} -->
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div>
+                <h4>KitchenStation</h4>
+                <p>Homemade food. Local kitchens. Real connections.</p>
+            </div>
+            <div>
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
+                    <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
+                    <li><a href="{% url 'offers' %}">Offers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Orders</a></li>
+                    <li><a href="{% url 'cart' %}">Cart</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            © 2026 KitchenStation
+        </div>
+    </footer>
+
+    <script src="{% static 'foodapp/js/main.js' %}"></script>
+    <script src="{% static 'foodapp/js/cart.js' %}"></script>
+</body>
+</html>

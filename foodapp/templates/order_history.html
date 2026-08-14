@@ -1,0 +1,225 @@
+{% load static %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="utf-8" />
+    <title>KitchenStation — Your Orders</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="brand">🍴 <span>KitchenStation</span></div>
+        <nav class="nav">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'restaurant' %}">Home Cooks</a>
+            <a href="{% url 'menu' %}">Homemade Meals</a>
+            <a href="{% url 'offers' %}">Offers</a>
+            <a href="#" class="active">Orders</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+
+    <main class="main container order-history-page">
+
+        <!-- PAGE HEADER -->
+        <header class="page-header">
+            <h1>Your Orders</h1>
+            <p>View your previous homemade food orders and revisit your favourite meals.</p>
+        </header>
+
+        <!-- FILTER / SEARCH AREA -->
+        <!-- Frontend structure only — filtering/sorting logic to be implemented with backend -->
+        <section class="order-filters">
+            <div class="filter-search">
+                <input type="text" placeholder="Search orders..." id="orderSearchInput" />
+            </div>
+            <div class="filter-tabs">
+                <button type="button" class="chip selected" data-filter="all">All Orders</button>
+                <button type="button" class="chip" data-filter="delivered">Delivered</button>
+                <button type="button" class="chip" data-filter="preparing">Preparing</button>
+                <button type="button" class="chip" data-filter="cancelled">Cancelled</button>
+            </div>
+            <div class="filter-sort">
+                <label for="orderSort">Sort by:</label>
+                <select id="orderSort">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- ORDER HISTORY LIST -->
+        <section class="order-history-list">
+            <h2>Order History</h2>
+
+            <!-- Future: {% if orders %} -->
+            <!-- Future: {% for order in orders %} -->
+
+            <!-- ORDER CARD 1 -->
+            <div class="order-card" data-status="delivered">
+                <div class="order-card-header">
+                    <div>
+                        <!-- Future: <strong>Order {{ order.order_id }}</strong> -->
+                        <strong>Order #KS-2026-00125</strong>
+                        <!-- Future: <span class="order-date">{{ order.created_at|date:"d F Y" }}</span> -->
+                        <span class="order-date">15 August 2026</span>
+                    </div>
+                    <div>
+                        <!-- Future: <span class="status-badge status-{{ order.status|lower }}">{{ order.status }}</span> -->
+                        <span class="status-badge status-delivered">Delivered</span>
+                    </div>
+                </div>
+
+                <div class="order-card-body">
+                    <!-- Future: <p class="cook-name">Prepared by {{ order.cook.name }}</p> -->
+                    <p class="cook-name">Prepared by: Asha's Kitchen</p>
+
+                    <div class="order-items-summary">
+                        <!-- Future: {% for item in order.items.all %} -->
+                        <!-- Future: <p>{{ item.meal.name }} × {{ item.quantity }}</p> -->
+                        <p>Homestyle Paneer Thali × 1</p>
+                        <p>Rajma Rice × 1</p>
+                        <!-- Future: {% endfor %} -->
+                    </div>
+
+                    <div class="order-meta">
+                        <!-- Future: <span>Fulfilment: {{ order.fulfilment_method }}</span> -->
+                        <span>Fulfilment: Home Delivery</span>
+                        <!-- Future: <span>Total: ₹{{ order.total }}</span> -->
+                        <span class="order-total">Total: ₹300</span>
+                    </div>
+                </div>
+
+                <div class="order-card-actions">
+                    <!-- Future: <a href="{% url 'order_detail' order.id %}" class="btn primary">View Order</a> -->
+                    <button type="button" class="btn primary">View Order</button>
+                    <!-- Future: <a href="{% url 'cook_profile' order.cook.id %}" class="btn secondary">View Home Cook</a> -->
+                    <button type="button" class="btn secondary">View Home Cook</button>
+                    <!-- Future: <a href="{% url 'reorder' order.id %}" class="btn">Order Again</a> -->
+                    <button type="button" class="btn">Order Again</button>
+                </div>
+            </div>
+
+            <!-- ORDER CARD 2 -->
+            <div class="order-card" data-status="completed">
+                <div class="order-card-header">
+                    <div>
+                        <strong>Order #KS-2026-00110</strong>
+                        <span class="order-date">12 August 2026</span>
+                    </div>
+                    <div>
+                        <span class="status-badge status-completed">Completed</span>
+                    </div>
+                </div>
+
+                <div class="order-card-body">
+                    <p class="cook-name">Prepared by: Riya's Home Kitchen</p>
+
+                    <div class="order-items-summary">
+                        <p>Veg Biryani × 2</p>
+                    </div>
+
+                    <div class="order-meta">
+                        <span>Fulfilment: Pickup</span>
+                        <span class="order-total">Total: ₹300</span>
+                    </div>
+                </div>
+
+                <div class="order-card-actions">
+                    <button type="button" class="btn primary">View Order</button>
+                    <button type="button" class="btn secondary">View Home Cook</button>
+                    <button type="button" class="btn">Order Again</button>
+                </div>
+            </div>
+
+            <!-- ORDER CARD 3 -->
+            <div class="order-card" data-status="cancelled">
+                <div class="order-card-header">
+                    <div>
+                        <strong>Order #KS-2026-00094</strong>
+                        <span class="order-date">8 August 2026</span>
+                    </div>
+                    <div>
+                        <span class="status-badge status-cancelled">Cancelled</span>
+                    </div>
+                </div>
+
+                <div class="order-card-body">
+                    <p class="cook-name">Prepared by: Neha's Kitchen</p>
+
+                    <div class="order-items-summary">
+                        <p>Maharashtrian Meal Combo × 1</p>
+                    </div>
+
+                    <div class="order-meta">
+                        <span>Fulfilment: Home Delivery</span>
+                        <span class="order-total">Total: ₹190</span>
+                    </div>
+                </div>
+
+                <div class="order-card-actions">
+                    <button type="button" class="btn primary">View Order</button>
+                    <button type="button" class="btn secondary">View Home Cook</button>
+                </div>
+            </div>
+
+            <!-- Future: {% else %} -->
+            <!-- EMPTY ORDER HISTORY STATE -->
+            <!-- To show this section: remove the order cards above and uncomment when orders is empty -->
+            <!--
+            <div class="empty-orders-state" id="emptyOrdersState">
+                <h3>No Orders Yet</h3>
+                <p>You haven't placed any homemade food orders yet.</p>
+                <p class="muted">Explore local home cooks and discover something homemade.</p>
+                <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Meals</a>
+            </div>
+            -->
+            <!-- Future: {% endif %} -->
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div>
+                <h4>KitchenStation</h4>
+                <p>Homemade food. Local kitchens. Real connections.</p>
+            </div>
+            <div>
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
+                    <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
+                    <li><a href="{% url 'offers' %}">Offers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Orders</a></li>
+                    <li><a href="{% url 'cart' %}">Cart</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            © 2026 KitchenStation
+        </div>
+    </footer>
+
+    <script src="{% static 'foodapp/js/main.js' %}"></script>
+    <script src="{% static 'foodapp/js/cart.js' %}"></script>
+</body>
+</html>

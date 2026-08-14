@@ -61,12 +61,12 @@ const MENU_DATA = [
 
 /* ---------- OFFERS ---------- */
 const OFFER_DATA = [
-  { id:21, discountPercent:40, itemId:21 }, // pizza_offer
-  { id:22, discountPercent:50, itemId:22 }, // burger
+  { id:21, discountPercent:40, itemId:21 }, // modak
+  { id:22, discountPercent:50, itemId:22 }, // patal puri
   { id:16, discountPercent:25, itemId:16 }, // ampalaya
   { id:3, discountPercent:15, itemId:3 },  // misal pav
-  { id:12, discountPercent:30, itemId:12}, // kombdi vade
-  { id:20, discountPercent:20, itemId:20}  // poha
+  { id:12, discountPercent:30, itemId:12}, // kombdi vade // poha
+  { id:50, discountPercent:17, itemId:50} // gulab jamun
 ];
 
 /* ---------- UTILS AND RENDERERS ---------- */
@@ -87,6 +87,7 @@ function renderFeatured(){
     list.appendChild(a);
   });
 }
+/* ---------RENDER MENU ---------- */
 function renderMenu(){
   const container = document.getElementById('menuGrid');
   if (!container) return;
@@ -139,22 +140,49 @@ function renderOffers(){
 function renderRestaurantsGrid(){
   const grid = document.getElementById('restaurantGrid');
   if (!grid) return;
-  const R = [
-    {name:'Spice Empire', cuisine:'Maharashtrian', rating:4.6, cost:350, time:'25-30 min'},
-    {name:'Pav & Co', cuisine:'Street Food', rating:4.4, cost:150, time:'20-25 min'},
-    {name:'Malvani Seas', cuisine:'Seafood', rating:4.7, cost:550, time:'35-40 min'},
-    {name:'Urban Pizza', cuisine:'Italian', rating:4.3, cost:450, time:'25-30 min'}
-  ];
   grid.innerHTML = '';
+  const R = [
+    {name:'Aishwarya Hotel', cuisine:'Maharashtrian', rating:4.6, cost:350, time:'25-30 min',img:'restaurant.jpg'},
+    {name:'Pav & Co', cuisine:'Street Food', rating:4.4, cost:150, time:'20-25 min',img:'restaurant1.jpg'},
+    {name:'Malvani Seas', cuisine:'Seafood', rating:4.7, cost:550, time:'35-40 min',img:'restaurant2.jpg'},
+    {name:'Urban Pizza', cuisine:'Italian', rating:4.3, cost:450, time:'25-30 min',img:'restaurant3.jpg'},
+    {name: "The Grand Thali",cuisine: "Maharashtrian",rating: 4.6,cost: 350,time: "25-30 min",img: "restaurant.jpg",type: "Casual Dining"},
+    {name: "Anil Vada Pav",cuisine: "Street Food",rating: 4.4,cost: 150,time: "20-25 min",img: "restaurant1.jpg",type: "Street Stall"},
+    {name: "Coastal King",cuisine: "Seafood",rating: 4.7,cost: 550,time: "35-40 min",img: "restaurant2.jpg",type: "Fine Dining"},
+    {name: "Ristorante Bella",cuisine: "Italian",rating: 4.3,cost: 450,time: "25-30 min",img: "restaurant3.jpg",type: "Mid-Range"},
+    {name: "Highway Dhaba No. 1",cuisine: "North Indian",rating: 3.9,cost: 200,time: "30-40 min",img: "restaurant4.jpg",type: "Dhaba (Roadside)"},
+    {name: "Global Kitchen Fusion",cuisine: "Multi-Cuisine",rating: 4.8,cost: 850,time: "45-50 min",img: "restaurant5.jpg",type: "Luxury/Elite"},
+    {name: "Quick Bites Subs",cuisine: "Fast Food",rating: 4.1,cost: 250,time: "15-20 min",img: "restaurant6.jpg",type: "Quick Service (QSR)"},
+    {name: "The Gourmet Patisserie",cuisine: "Desserts & Bakery",rating: 4.5,cost: 300,time: "20-25 min",img: "restaurant7.jpg",type: "Cafe"},
+    {name: "Chai & Chat Corner",cuisine: "Street Food",rating: 4.1,cost: 120,time: "15-20 min",img: "restaurant01.jpg",type: "Street Stall"},
+    {name: "Bhel Puri Express",cuisine: "Snacks",rating: 4.3,cost: 150,time: "10-15 min",img: "restaurant02.jpg",type: "Quick Service (QSR)"},
+    {name: "Amritsari Tandoor Dhaba",cuisine: "North Indian",rating: 3.8,cost: 220,time: "30-40 min",img: "restaurant03.jpg",type: "Dhaba (Roadside)"},
+    {name: "Dosa Palace",cuisine: "South Indian",rating: 4.4,cost: 180,time: "20-25 min",img: "restaurant04.jpg",type: "Casual Eatery"},
+    {name: "The Spice Route Bistro",cuisine: "Indian Fusion",rating: 4.5,cost: 450,time: "30-35 min",img: "restaurant05.jpg",type: "Casual Dining"},
+    {name: "Bombay Brasserie",cuisine: "Contemporary Indian",rating: 4.6,cost: 500,time: "35-40 min",img: "restaurant06.jpg",type: "Premium Casual"},
+    {name: "Pizza Roma",cuisine: "Italian",rating: 4.3,cost: 400,time: "25-30 min",img: "restaurant07.jpg",type: "Casual Dining"},
+    {name: "Wok Master",cuisine: "Chinese",rating: 4.2,cost: 380,time: "25-30 min",img: "restaurant08.jpg",type: "Quick Service (QSR)"},
+    {name: "The Daily Grind Cafe",cuisine: "Cafe & Coffee",rating: 4.5,cost: 300,time: "15-20 min",img: "restaurant09.jpg",type: "Cafe"},
+    {name: "Sweet Surrender Bakery",cuisine: "Desserts & Bakery",rating: 4.7,cost: 350,time: "20-25 min",img: "restaurant10.jpg",type: "Bakery/Patisserie"},
+    {name: "Kebab Corner",cuisine: "Mughlai",rating: 4.4,cost: 420,time: "30-35 min",img: "restaurant11.jpg",type: "Specialty"},
+    {name: "Green Leaf Vegan",cuisine: "Health Food",rating: 4.6,cost: 320,time: "25-30 min",img: "restaurant12.jpg",type: "Health/Vegan"},
+    {name: "The Saffron Room",cuisine: "North Indian",rating: 4.8,cost: 750,time: "40-45 min",img: "restaurant13.jpg",type: "Fine Dining"},
+    {name: "Aqua Grill & Bar",cuisine: "Seafood & European",rating: 4.7,cost: 900,time: "45-50 min",img: "restaurant14.jpg",type: "Luxury/Elite"},
+    {name: "Mizu Pan-Asian",cuisine: "Japanese/Pan-Asian",rating: 4.9,cost: 1200,time: "50-60 min",img: "restaurant15.jpg",type: "Ultra-Luxury"},
+    {name: "The Heritage Feast",cuisine: "Regional Indian",rating: 4.7,cost: 650,time: "35-40 min",img: "restaurant16.jpg",type: "Premium Casual"}
+  ];
   R.forEach(r=>{
     const card = el('div','card restaurant-card');
-    const img = el('img'); img.src = `/static/foodapp/images/restaurant.jpg`; img.alt=r.name; img.style.width='180px';
+    const img = el('img'); img.src = `/static/foodapp/images/${r.img}`; img.alt=r.name; img.style.width='180px';
     const info = el('div','');
     const h = el('h4'); h.textContent = r.name;
     const p = el('p'); p.className='muted'; p.textContent = `${r.cuisine} • ₹${r.cost} for two • ${r.time}`;
     const btn = el('button','btn'); btn.textContent = 'View Menu'; btn.onclick = ()=> location.href='/menu/';
-    info.appendChild(h); info.appendChild(p); info.appendChild(btn);
-    card.appendChild(img); card.appendChild(info);
+    info.appendChild(h); 
+    info.appendChild(p); 
+    info.appendChild(btn);
+    card.appendChild(img); 
+    card.appendChild(info);
     grid.appendChild(card);
   });
 }
@@ -171,27 +199,12 @@ function gatherFilters(){
 function applyFilters(){
   const f = gatherFilters();
   let result = MENU_DATA.slice();
-
-  // Nutrient filter (map input names to item.nutri)
-  if (f.nutri.length){
-    result = result.filter(it => f.nutri.includes(it.nutri));
-  }
-  // Meal
-  if (f.meal.length){
-    result = result.filter(it => f.meal.includes(it.meal));
-  }
-  // Type
-  if (f.type.length){
-    result = result.filter(it => f.type.includes(it.type));
-  }
-  // Spice
-  if (f.spice.length){
-    result = result.filter(it => f.spice.includes(it.spice));
-  }
-  // Price sort
+  if (f.nutri.length) result = result.filter(it => f.nutri.includes(it.nutri));
+  if (f.meal.length) result = result.filter(it => f.meal.includes(it.meal));
+  if (f.type.length) result = result.filter(it => f.type.includes(it.type));
+  if (f.spice.length) result = result.filter(it => f.spice.includes(it.spice));
   if (f.priceSort === 'asc') result.sort((a,b)=>a.price-b.price);
   else if (f.priceSort === 'desc') result.sort((a,b)=>b.price-a.price);
-
   renderMenu(result);
 }
 
@@ -218,24 +231,33 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
   });
 
-  // initial full render
-  renderMenu(MENU_DATA);
-
-  const applyBtn = document.getElementById('applyFilters');
-  const clearBtn = document.getElementById('clearFilters');
-  if (applyBtn) applyBtn.addEventListener('click', applyFilters);
-  if (clearBtn) clearBtn.addEventListener('click', ()=>{
+renderMenu(MENU_DATA);
+const applyBtn = document.getElementById('applyFilters');
+const clearBtn = document.getElementById('clearFilters');
+// Ensure applyFilters runs after all data loaded
+if (applyBtn) {
+  applyBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    if (typeof applyFilters === 'function') applyFilters();
+    else console.error("applyFilters() not found");
+  });
+}
+if (clearBtn) {
+  clearBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
     document.querySelectorAll('input[type="checkbox"]').forEach(i=>i.checked=false);
     document.querySelectorAll('input[name="priceSort"]').forEach(i=>i.checked=false);
     renderMenu(MENU_DATA);
   });
+}
+  // initial full render
+renderFeatured();
+renderRestaurantsGrid();
+renderOffers();
+initSearch();
 
   // keep previous behaviors: featured & restaurants & offers if present
-  if (typeof renderFeatured === 'function') try{ renderFeatured(); }catch(e){}
-  if (typeof renderRestaurantsGrid === 'function') try{ renderRestaurantsGrid(); }catch(e){}
-  if (typeof renderOffers === 'function') try{ renderOffers(); }catch(e){}
-  renderFeatured();
-  renderRestaurantsGrid();
-  renderOffers();
-  initSearch();
+if (typeof renderFeatured === 'function') try{ renderFeatured(); }catch(e){}
+if (typeof renderRestaurantsGrid === 'function') try{ renderRestaurantsGrid(); }catch(e){}
+if (typeof renderOffers === 'function') try{ renderOffers(); }catch(e){}
 });

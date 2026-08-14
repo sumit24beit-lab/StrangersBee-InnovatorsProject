@@ -18,10 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect 
 
-urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),
+urlpatterns=[
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('home')),
+    path('',lambda request: redirect('home/')),
     path('',include('foodapp.urls')),
-
 ]
+
+

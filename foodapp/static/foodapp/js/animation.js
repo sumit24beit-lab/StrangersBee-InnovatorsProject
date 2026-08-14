@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             msg.classList.add('show');
             // after 2s redirect to home
             setTimeout(()=> {
-              window.location.href = '/';
+              window.location.href = 'delivery.html';
             },2000);
           },900);
         },300);

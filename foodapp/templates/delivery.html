@@ -1,124 +1,220 @@
-{% load i18n %}
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
 <head>
     <meta charset="utf-8" />
-    <title>Delivery — OneClickFood</title>
+    <title>KitchenStation — Checkout</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
 </head>
 <body>
     <header class="site-header">
-        <div class="brand">🍴 <span>OneClickFood</span></div>
+        <div class="brand">🍴 <span>KitchenStation</span></div>
         <nav class="nav">
-            <a href="{% url 'home' %}" class="active">{% trans "Home" %}</a>
-            <a href="{% url 'restaurant' %}">{% trans "Restaurants" %}</a>
-            <a href="{% url 'menu' %}">{% trans "Menu" %}</a>
-            <a href="{% url 'offers' %}">{% trans "Offers" %}</a>
-            <a href="{% url 'cart' %}">{% trans "Cart" %} (<span id="cartCount">0</span>)</a>
-            <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
-    </nav>
-    <div class="language-buttons">
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-        <input type="hidden" name="language" value="en">
-        <button class="language-btn">🇬🇧 EN</button>
-      </form>
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-          <input type="hidden" name="language" value="hi">
-          <button class="language-btn">🇮🇳 HI</button>
-      </form>
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-          <input type="hidden" name="language" value="mr">
-          <button class="language-btn">🇮🇳 MR</button>
-      </form>
-      </div>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'restaurant' %}">Home Cooks</a>
+            <a href="{% url 'menu' %}">Homemade Meals</a>
+            <a href="{% url 'offers' %}">Offers</a>
+            <a href="#">Orders</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+            <a href="#">Profile</a>
+        </nav>
     </header>
 
-    <main class="main container">
-        <h2>Delivery Details & Payment</h2>
+    <main class="main container checkout-page">
+        <header class="page-header">
+            <h2>Checkout</h2>
+            <p>Review your order details before placing your homemade food order.</p>
+        </header>
+
         <div class="delivery-grid">
             <div class="delivery-card form-card">
-                <h3>Delivery Information</h3>
                 <form id="deliveryForm"> 
-                    <h4>Contact Details</h4>
-                    <div class="row">
-                        <input id="custName" name="customer_name" placeholder="Full Name" required type="text" />
-                        <input id="custPhone" name="customer_phone" placeholder="Phone number" required type="tel" />
-                    </div>
-                    <div class="row">
-                        <input id="custEmail" name="customer_email" placeholder="Email address" required type="email" />
-                    </div>
-
-                    <h4>Delivery Address</h4>
-                    <div class="row">
-                        <input id="custAddr" name="delivery_address_line1" placeholder="Delivery address (Street, Building...)" required type="text" />
-                    </div>
-                    <div class="row">
-                        <input id="custApt" name="delivery_apartment" placeholder="Apartment / Suite (Optional)" type="text" />
-                    </div>
-                    <div class="row">
-                      <input id="postcode" name="zip_code" placeholder="Postal Code" type="text">
-                  </div>
-              
                     
-                    <input type="hidden" id="addrTypeHidden" name="address_type" value="Other">
-                    <div class="row small-chips">
-                        <button type="button" class="chip small selected" data-type="Home">Home</button>
-                        <button type="button" class="chip small" data-type="Work">Work</button>
-                        <button type="button" class="chip small" data-type="Other">Other</button>
-                    </div>
+                    <!-- 1. CUSTOMER INFORMATION -->
+                    <section class="checkout-section">
+                        <h3>Customer Information</h3>
+                        <div class="row">
+                            <input id="custName" name="customer_name" placeholder="Full Name" required type="text" />
+                            <input id="custPhone" name="customer_phone" placeholder="Phone number" required type="tel" />
+                        </div>
+                        <div class="row">
+                            <input id="custEmail" name="customer_email" placeholder="Email address" required type="email" />
+                        </div>
+                    </section>
 
-                    <h4>Choose Delivery Time</h4>
-                    <input type="hidden" id="deliveryTimeHidden" name="delivery_time" value="ASAP">
-                    <div class="time-carousel">
-                        <button type="button" class="time-btn selected" data-time="ASAP">ASAP</button>
-                        <button type="button" class="time-btn" data-time="30_mins">In 30 mins</button>
-                        <button type="button" class="time-btn" data-time="schedule">Schedule</button>
-                    </div>
+                    <!-- 2. DELIVERY ADDRESS -->
+                    <section class="checkout-section">
+                        <h3>Delivery Address</h3>
+                        <div class="row">
+                            <input id="custAddr" name="delivery_address_line1" placeholder="Address Line (Street, Building...)" required type="text" />
+                        </div>
+                        <div class="row">
+                            <input id="custApt" name="delivery_apartment" placeholder="Apartment / Suite (Optional)" type="text" />
+                        </div>
+                        <div class="row">
+                            <input id="postcode" name="zip_code" placeholder="Postal Code" type="text">
+                        </div>
+                        
+                        <input type="hidden" id="addrTypeHidden" name="address_type" value="Other">
+                        <div class="row small-chips">
+                            <button type="button" class="chip small selected" data-type="Home">Home</button>
+                            <button type="button" class="chip small" data-type="Work">Work</button>
+                            <button type="button" class="chip small" data-type="Other">Other</button>
+                        </div>
+                    </section>
 
-                    <h4>Payment Method</h4>
-                    <input type="hidden" id="paymentMethodHidden" name="payment_method" value="cash">
-                    <div class="payment-tiles">
-                        <div class="tile selected" data-pay="cash">Cash</div>
-                        <div class="tile" data-pay="card">Card</div>
-                        <div class="tile" data-pay="upi">UPI</div>
-                    </div>
-                    
-                    <div id="onlinePaymentFields" style="display:none; margin-top: 10px;">
-                        <input name="card_number" placeholder="Card Number" type="text" />
-                        <input name="card_expiry" placeholder="MM/YY" type="text" />
-                    </div>
+                    <!-- 5. DELIVERY / PICKUP -->
+                    <section class="checkout-section">
+                        <h3>Fulfilment Method</h3>
+                        <input type="hidden" id="deliveryTimeHidden" name="delivery_time" value="ASAP">
+                        <div class="time-carousel">
+                            <button type="button" class="time-btn selected" data-time="ASAP">Home Delivery</button>
+                            <button type="button" class="time-btn" data-time="pickup">Pickup</button>
+                        </div>
+                        <p class="muted" style="margin-top: 10px; font-size: 0.9em;">Preparation and delivery time may depend on the home cook's availability.</p>
+                    </section>
 
-                    <div style="margin-top:20px">
-                         <input type="checkbox" id="termsAgree" name="terms_agreed" required>
-                        <label for="termsAgree">I agree to the Terms & Conditions</label>
-                    </div>
+                    <!-- 6. PAYMENT METHOD -->
+                    <section class="checkout-section">
+                        <h3>Payment Method</h3>
+                        <input type="hidden" id="paymentMethodHidden" name="payment_method" value="cash">
+                        <div class="payment-tiles">
+                            <div class="tile selected" data-pay="cash">Cash on Delivery</div>
+                            <div class="tile" data-pay="card">Online Payment (Card)</div>
+                            <div class="tile" data-pay="upi">UPI</div>
+                        </div>
+                        
+                        <div id="onlinePaymentFields" style="display:none; margin-top: 10px;">
+                            <input name="card_number" placeholder="Card Number" type="text" />
+                            <input name="card_expiry" placeholder="MM/YY" type="text" />
+                        </div>
+                    </section>
 
-                    <div style="margin-top:14px">
-                        <button class="btn primary" type="submit">Place Order</button>
+                    <!-- 8. CUSTOMER NOTE -->
+                    <section class="checkout-section">
+                        <h3>Additional Note</h3>
+                        <div class="row">
+                            <textarea name="customer_note" placeholder="Add a note for the home cook (e.g., Any preferences or instructions for your meal?)" rows="3" style="width: 100%; border: 1px solid #ccc; border-radius: 4px; padding: 10px;"></textarea>
+                        </div>
+                    </section>
+
+                    <!-- 9. TERMS / CONFIRMATION -->
+                    <section class="checkout-section">
+                        <div style="margin-top:20px">
+                            <input type="checkbox" id="termsAgree" name="terms_agreed" required>
+                            <label for="termsAgree">I have reviewed my order details and delivery information.</label>
+                        </div>
+                    </section>
+
+                    <!-- 10. PLACE ORDER -->
+                    <div style="margin-top:20px; display: flex; gap: 15px;">
+                        <button class="btn primary" type="submit" style="flex: 1;">Place Order</button>
+                        <a href="{% url 'cart' %}" class="btn secondary" style="flex: 1; text-align: center;">Back to Cart</a>
                     </div>
                 </form>
             </div>
 
             <div class="delivery-card summary-card" id="deliverySummary">
+                <!-- 3. ORDER ITEMS & 7. ORDER SUMMARY -->
+                <!-- The existing cart.js will populate #deliverySummary, but here is the expected HTML structure for future reference: -->
+                <h3>Your Order</h3>
+                
+                <div class="order-items-preview">
+                    <!-- Example Item -->
+                    <div class="order-item-row" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <strong>Homestyle Paneer Thali</strong><br>
+                                <small>Prepared by Asha's Kitchen</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <span>₹180 × 1</span><br>
+                                <strong>₹180</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Example Item -->
+                    <div class="order-item-row" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <strong>Veg Biryani</strong><br>
+                                <small>Prepared by Riya's Home Kitchen</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <span>₹150 × 2</span><br>
+                                <strong>₹300</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h3>Order Summary</h3>
+                <div id="summaryDetails">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Subtotal</span>
+                        <span>₹480</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Delivery Fee</span>
+                        <span>₹40</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1em; margin-top: 15px; border-top: 1px solid #333; padding-top: 10px;">
+                        <span>Total</span>
+                        <span>₹520</span>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
     <footer class="site-footer">
-        <div>© 2025 OneClickFood</div>
+        <div class="container">
+            <div>
+                <h4>KitchenStation</h4>
+                <p>Homemade food. Local kitchens. Real connections.</p>
+            </div>
+            <div>
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
+                    <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
+                    <li><a href="{% url 'offers' %}">Offers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Account</h4>
+                <ul>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Orders</a></li>
+                    <li><a href="{% url 'cart' %}">Cart</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            © 2026 KitchenStation
+        </div>
     </footer>
+    
     <script>
-        // JS to update hidden inputs when buttons/tiles are clicked
+        // Preserved JS to update hidden inputs when buttons/tiles are clicked
         document.querySelectorAll('.small-chips .chip').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.getElementById('addrTypeHidden').value = btn.getAttribute('data-type');
-                // Logic to visually select chip here
             });
         });
+    </script>
+    <script src="{% static 'foodapp/js/animation.js' %}"></script>
     <script src="{% static 'foodapp/js/main.js' %}"></script>
     <script src="{% static 'foodapp/js/cart.js' %}"></script>
 </body>

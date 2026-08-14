@@ -1,93 +1,194 @@
-{% load i18n %}
 {% load static %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
   <meta charset="utf-8" />
-  <title>{% block title %}{% trans "OneClickFood — Home" %}{% endblock %}</title>
+  <title>{% block title %}KitchenStation — Home{% endblock %}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
   <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
 </head>
 <body>
   <header class="site-header">
-    <div class="brand">🍴 <span>{% trans "OneClickFood" %}</span></div>
+    <div class="brand">🍴 <span>KitchenStation</span></div>
 
     <nav class="nav">
-      <a href="{% url 'home' %}" class="active">{% trans "Home" %}</a>
-      <a href="{% url 'restaurant' %}">{% trans "Restaurants" %}</a>
-      <a href="{% url 'menu' %}">{% trans "Menu" %}</a>
-      <a href="{% url 'offers' %}">{% trans "Offers" %}</a>
-      <a href="{% url 'cart' %}">{% trans "Cart" %} (<span id="cartCount">0</span>)</a>
-      <a href="{% url 'contact' %}">{% trans "Contact" %}</a>
+      <a href="{% url 'home' %}" class="active">Home</a>
+      <a href="{% url 'restaurant' %}">Home Cooks</a>
+      <a href="{% url 'menu' %}">Homemade Meals</a>
+      <a href="{% url 'offers' %}">Offers</a>
+      <a href="#">Orders</a>
+      <a href="{% url 'contact' %}">Contact</a>
+      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
+      <a href="#">Profile</a>
     </nav>
 
-    <!-- Language Switch Buttons -->
-    <div class="language-buttons">
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-        <input type="hidden" name="language" value="en">
-        <button class="language-btn">🇬🇧 {% trans "English" %}</button>
-      </form>
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-        <input type="hidden" name="language" value="hi">
-        <button class="language-btn">🇮🇳 {% trans "Hindi" %}</button>
-      </form>
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-        <input type="hidden" name="language" value="mr">
-        <button class="language-btn">🇮🇳 {% trans "Marathi" %}</button>
-      </form>
-    </div>
   </header>
 
   <main class="main">
     {% block content %}
-      <div class="hero-inner">
-        <h1>{% blocktrans %}Delicious food — delivered fast. <span>OneClick</span>.{% endblocktrans %}</h1>
-        <p class="sub">{% trans "Explore Maharashtrian classics, pizzas, Chinese & more from local kitchens." %}</p>
+      <section class="hero-inner">
+        <h1>Homemade Food, From Local Kitchens to Your Table.</h1>
+        <p class="sub">Discover delicious homemade meals prepared by local home cooks and enjoy fresh, affordable food made with care.</p>
 
-        <div class="hero-search">
-          <input id="globalSearch" placeholder="{% trans 'Search restaurants, dishes or city (e.g. Pune, Misal Pav)' %}" />
-          <button id="searchBtn">{% trans "Search" %}</button>
+        <div class="hero-actions">
+          <a href="{% url 'restaurant' %}" class="btn primary">Explore Home Cooks</a>
+          <a href="{% url 'menu' %}" class="btn secondary">Explore Homemade Meals</a>
         </div>
 
-        <div class="hero-quick">
-          <button class="chip" data-cat="Maharashtrian">{% trans "Maharashtrian" %}</button>
-          <button class="chip" data-cat="Pizza">{% trans "Pizza" %}</button>
-          <button class="chip" data-cat="Chinese">{% trans "Chinese" %}</button>
-          <button class="chip" data-cat="Beverages">{% trans "Beverages" %}</button>
-          <button class="chip" data-cat="Desserts">{% trans "Desserts" %}</button>
+        <ul class="hero-features">
+          <li>✓ Freshly Prepared</li>
+          <li>✓ Affordable</li>
+          <li>✓ Local</li>
+        </ul>
+      </section>
+
+      <section class="container">
+        <h2>Discover Home Cooks Near You</h2>
+        <p>Explore local home cooks and discover the meals and cuisines they prepare from their own kitchens.</p>
+        
+        <div class="cards" id="homeCooksList">
+          <div class="card">
+            <h3>Asha's Kitchen</h3>
+            <p>North Indian</p>
+            <p>Rating: 4.8</p>
+          </div>
+          <div class="card">
+            <h3>Riya's Home Kitchen</h3>
+            <p>South Indian</p>
+            <p>Rating: 4.7</p>
+          </div>
+          <div class="card">
+            <h3>Meera's Kitchen</h3>
+            <p>Homestyle Meals</p>
+            <p>Rating: 4.9</p>
+          </div>
         </div>
-      </div>
+        <div>
+          <a href="{% url 'restaurant' %}" class="btn">View All Home Cooks</a>
+        </div>
+      </section>
 
-    <section class="featured container">
-      <h2>{% trans "Featured restaurants" %}</h2>
-      <div class="cards" id="featuredList"></div>
-    </section>
+      <section class="container">
+        <h2>Today's Homemade Favorites</h2>
+        <p>Explore freshly prepared meals from local home cooks.</p>
 
-    <section class="offers-banner container">
-      <img src="{% static 'foodapp/images/offers.jpg' %}" alt="{% trans 'Offers' %}" />
-      <div class="offers-cta">
-        <h3>{% trans "Hot Offers — Up to 50% OFF" %}</h3>
-        <p>{% trans "Tap to see today's best discounts across cuisines." %}</p>
-        <button id="viewOffers">{% trans "View Offers" %}</button>
-      </div>
-    </section>
+        <div class="cards" id="mealsList">
+          <div class="card">
+            <h3>Homestyle Paneer Thali</h3>
+            <p><strong>₹180</strong></p>
+            <p>Dal, Rice, Roti and Sabzi</p>
+            <p><small>Freshly Prepared</small></p>
+          </div>
+          <div class="card">
+            <h3>Veg Biryani</h3>
+            <p><strong>₹150</strong></p>
+            <p>Homemade spices and fresh preparation</p>
+          </div>
+          <div class="card">
+            <h3>Masala Dosa</h3>
+            <p><strong>₹90</strong></p>
+            <p>South Indian home-style</p>
+          </div>
+        </div>
+        <div>
+          <a href="{% url 'menu' %}" class="btn">Explore More Meals</a>
+        </div>
+      </section>
 
-    <section class="categories container">
-      <h2>{% trans "Quick categories" %}</h2>
-      <div class="category-row">
-        <div class="category-card">{% trans "Maharashtrian" %}</div>
-        <div class="category-card">{% trans "Pizza" %}</div>
-        <div class="category-card">{% trans "Chinese" %}</div>
-        <div class="category-card">{% trans "Burgers" %}</div>
-        <div class="category-card">{% trans "Desserts" %}</div>
-      </div>
-    </section>
+      <section class="container">
+        <h2>Why Choose Homemade?</h2>
+        <div class="feature-blocks">
+          <div class="feature-block">
+            <h3>Made at Home</h3>
+            <p>Meals prepared in local home kitchens.</p>
+          </div>
+          <div class="feature-block">
+            <h3>Made With Care</h3>
+            <p>Food prepared by people who take pride in their cooking.</p>
+          </div>
+          <div class="feature-block">
+            <h3>Affordable</h3>
+            <p>Enjoy homemade meals at reasonable prices.</p>
+          </div>
+          <div class="feature-block">
+            <h3>Support Local Cooks</h3>
+            <p>Help home cooks reach more customers in their local community.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <h2>How KitchenStation Works</h2>
+        <div class="steps">
+          <div class="step">
+            <h3>01 — Discover</h3>
+            <p>Find home cooks and homemade meals available around you.</p>
+          </div>
+          <div class="step">
+            <h3>02 — Choose</h3>
+            <p>Explore menus and select the meals you want.</p>
+          </div>
+          <div class="step">
+            <h3>03 — Order</h3>
+            <p>Place your order through KitchenStation.</p>
+          </div>
+          <div class="step">
+            <h3>04 — Enjoy</h3>
+            <p>Receive or collect your freshly prepared homemade food.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <h2>Cook From Home. Reach More Customers.</h2>
+        <p>Turn your cooking into an opportunity. Join KitchenStation and share your homemade meals with customers in your local community.</p>
+        <button class="btn primary">Become a Home Cook</button>
+      </section>
+
+      <section class="container">
+        <h2>Ready for a Homemade Meal?</h2>
+        <p>Discover local home cooks and find something delicious today.</p>
+        <div>
+          <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Food</a>
+        </div>
+      </section>
     {% endblock %}
   </main>
 
   <footer class="site-footer">
-    <div>{% trans "© 2025 OneClickFood. All Rights Reserved." %}</div>
+    <div class="container">
+      <div>
+        <h4>KitchenStation</h4>
+        <p>Homemade food. Local kitchens. Real connections.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
+          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
+          <li><a href="{% url 'offers' %}">Offers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Account</h4>
+        <ul>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Orders</a></li>
+          <li><a href="{% url 'cart' %}">Cart</a></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      © 2026 KitchenStation
+    </div>
   </footer>
 
   <script src="{% static 'foodapp/js/main.js' %}"></script>

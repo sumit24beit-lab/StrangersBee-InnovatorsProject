@@ -1,8 +1,5 @@
 from django.db import models
-
 from django.contrib.auth.models import User
-from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -52,18 +49,24 @@ ORDER_CHOICE=[
     ('cancelled','Cancelled'),
 ]
 
-class Customer(models.Model):
+class CustomerProfile(models.Model):
     user=models.CharField(max_length=200)
+    first_name = models.CharField(max_length=100,blank=True)
+    middle_name = models.CharField(max_length=100,blank=True)
+    last_name = models.CharField(max_length=100,blank=True)
     email=models.EmailField()
     password=models.CharField(max_length=200,blank=True)
-    phone=models.CharField(max_length=20)
+    primary_mobile_number = models.CharField(max_length=10,blank=True,null=True)
+    alternate_mobile_number = models.CharField(max_length=10,blank=True, null=True)    
     date_joined=models.DateTimeField(auto_now_add=True)
     is_active=models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
 
 class Address(models.Model):
-    customer=models.ForeignKey(Customer,on_delete=models.CASCADE,related_name="customer_addresses")
+    customer=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name="customer_addresses")
     address_line=models.CharField(max_length=400)
     city=models.CharField(max_length=120)
     area=models.CharField(max_length=120)
@@ -118,7 +121,7 @@ class Offer(models.Model):
         return f"{self.menu_item.name} ({self.discount_price}% off)"
 
 class Order(models.Model):
-    customer=models.ForeignKey(Customer,on_delete=models.CASCADE,related_name="orders")
+    customer=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name="orders")
     address=models.ForeignKey(Address,on_delete=models.CASCADE,related_name="orders")
     created_at=models.DateTimeField(auto_now_add=True)
     status=models.CharField(max_length=20,choices=ORDER_CHOICE,default='pending')
@@ -154,7 +157,7 @@ class OrderItem(models.Model):
         return f"{self.quantity} x {self.name}"    
 
 class Contact(models.Model):
-    name=models.ForeignKey(Customer,on_delete=models.CASCADE,related_name='contact')
+    name=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name='contact')
     email=models.CharField()
     subject=models.CharField(max_length=200)
     created_at=models.DateTimeField(auto_now_add=True)

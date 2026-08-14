@@ -40,6 +40,17 @@ INSTALLED_APPS = [
     'foodapp'
 ]
 
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
 ROOT_URLCONF = 'oneclick.urls'
 
 TEMPLATES = [
@@ -98,46 +109,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
-# default language
-LANGUAGE_CODE = 'en'
-
-from django.utils.translation import gettext_lazy as _
-LANGUAGES = [
-    ('en', _('English')),
-    ('hi', _('Hindi')),
-    ('mr', _('Marathi')),
-]
-
-# where Django will look for locale/folders
-import os
-BASE_DIR = Path(__file__).resolve().parent.parent
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR,'locale'),
-]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'foodapp'/'static',]
