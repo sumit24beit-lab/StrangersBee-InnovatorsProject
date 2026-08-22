@@ -1,0 +1,122 @@
+﻿import os
+
+conf_content = """{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}KitchenStation — Order Confirmed{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+  <div class="ks-card mx-auto" style="max-width: 600px;">
+    <div class="mb-4">
+      <span class="fs-1 d-block mb-3">✅</span>
+      <h1 class="display-6 fw-bold">Order Confirmed!</h1>
+      <p class="text-muted">Thank you for ordering homemade food. Your order has been placed successfully.</p>
+    </div>
+    
+    <div class="bg-light p-4 rounded mb-4 text-start">
+      <h3 class="h6 fw-bold mb-3 border-bottom pb-2">Order Details</h3>
+      <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted">Order ID:</span>
+        <span class="fw-bold">#KS-84920</span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted">Date:</span>
+        <span class="fw-bold">22 Aug 2026</span>
+      </div>
+      <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted">Estimated Delivery:</span>
+        <span class="fw-bold">45 mins</span>
+      </div>
+      <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+        <span class="fw-bold">Amount Paid:</span>
+        <span class="fw-bold text-success">₹330</span>
+      </div>
+    </div>
+    
+    <div class="d-flex gap-3 justify-content-center">
+      <a href="#" class="btn btn-ks-primary">Track Order</a>
+      <a href="{% url 'home' %}" class="btn btn-outline-secondary">Back to Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+"""
+
+with open("foodapp/templates/order_confirmation.html", "w", encoding="utf-8") as f:
+    f.write(conf_content)
+
+track_content = """{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}KitchenStation — Track Order{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="mb-4">
+    <h1 class="display-6 fw-bold">Track Your Order</h1>
+    <p class="text-muted">Order #KS-84920</p>
+  </div>
+  
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="ks-card mb-4">
+        <h3 class="h5 fw-bold mb-4">Order Status</h3>
+        <div class="position-relative">
+          <div class="progress mb-4" style="height: 4px;">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="d-flex justify-content-between text-center position-relative" style="top: -24px;">
+            <div style="width: 32px; height: 32px; background: #5F8D4E; color: white; border-radius: 50%; line-height: 32px; font-weight: bold; margin: 0 auto;">✓</div>
+            <div style="width: 32px; height: 32px; background: #5F8D4E; color: white; border-radius: 50%; line-height: 32px; font-weight: bold; margin: 0 auto;">2</div>
+            <div style="width: 32px; height: 32px; background: #eee; color: #999; border-radius: 50%; line-height: 32px; font-weight: bold; margin: 0 auto;">3</div>
+            <div style="width: 32px; height: 32px; background: #eee; color: #999; border-radius: 50%; line-height: 32px; font-weight: bold; margin: 0 auto;">4</div>
+          </div>
+          <div class="d-flex justify-content-between text-center mt-2 small">
+            <div class="text-muted" style="width: 25%;">Order<br>Placed</div>
+            <div class="fw-bold" style="width: 25%; color: var(--ks-primary);">Food<br>Preparing</div>
+            <div class="text-muted" style="width: 25%;">Out for<br>Delivery</div>
+            <div class="text-muted" style="width: 25%;">Order<br>Delivered</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-3">Cook Information</h3>
+        <div class="d-flex align-items-center">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Cook" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+          <div class="ms-3">
+            <h4 class="h6 fw-bold mb-1">Asha's Kitchen</h4>
+            <p class="text-muted small mb-0">"Preparing your Thali with fresh ingredients! Need 15 more minutes."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-3 border-bottom pb-2">Order Summary</h3>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between small mb-1">
+            <span>2x Homestyle Paneer Thali</span>
+            <span>₹360</span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between border-top pt-2 fw-bold">
+          <span>Total</span>
+          <span>₹360</span>
+        </div>
+        <div class="mt-4">
+          <a href="#" class="btn btn-outline-secondary w-100">Need Help? Contact Support</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+"""
+
+with open("foodapp/templates/order_tracking.html", "w", encoding="utf-8") as f:
+    f.write(track_content)
+
+print("Order templates updated.")

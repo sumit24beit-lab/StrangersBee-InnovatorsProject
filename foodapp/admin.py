@@ -1,10 +1,11 @@
-from django.contrib import admin
-from .models import Customer,Address,Restaurant,Menu,Offer,Order,OrderItem,Contact
+﻿from django.contrib import admin
+from .models import CustomerProfile,Address,Restaurant,Menu,Offer,Order,OrderItem,Contact
 
 # Register your models here.
-@admin.register(Customer)
+@admin.register(CustomerProfile)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('user','email','password','phone','date_joined')
+    list_display = ('user','email','password','primary_mobile_number','date_joined')
+
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0    

@@ -1,0 +1,120 @@
+﻿import os
+
+content = """{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}KitchenStation — Home Cooks{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <!-- Header & Search -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold mb-3">Discover Local Home Cooks</h1>
+    <p class="lead text-muted mb-4">Meet the passionate people cooking delicious homemade meals in your neighborhood.</p>
+    
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="input-group mb-3 ks-card p-2 flex-row border-0" style="background: transparent; box-shadow: none;">
+          <input type="text" class="form-control" placeholder="Search by cook name, cuisine, or location..." id="cookSearchInput" style="height: 50px;">
+          <button class="btn btn-ks-primary px-4" type="button" id="searchCooksBtn">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="mb-5">
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+      <select class="form-select w-auto" id="filter-location">
+        <option value="">All Locations</option>
+        <option value="andheri">Andheri</option>
+        <option value="bandra">Bandra</option>
+        <option value="powai">Powai</option>
+      </select>
+      <select class="form-select w-auto" id="filter-cuisine">
+        <option value="">All Cuisines</option>
+        <option value="north-indian">North Indian</option>
+        <option value="south-indian">South Indian</option>
+        <option value="maharashtrian">Maharashtrian</option>
+      </select>
+      <select class="form-select w-auto" id="filter-rating">
+        <option value="">Any Rating</option>
+        <option value="4+">4.0 & Above</option>
+        <option value="4.5+">4.5 & Above</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Cooks Grid -->
+  <div class="row g-4 mb-5" id="restaurantGrid">
+    
+    <div class="col-md-6 col-lg-4">
+      <div class="ks-card text-center">
+        <div class="mb-3">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Asha" class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
+        </div>
+        <h3 class="h4 fw-bold mb-1">Asha's Kitchen</h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> Andheri West</p>
+        <div class="mb-2">
+          <span class="ks-badge">North Indian</span>
+        </div>
+        <p class="small mb-3 text-muted">Specializes in authentic homemade thalis and parathas using cold-pressed oils.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <span class="ks-badge-accent ks-badge">★ 4.8</span>
+          <a href="#" class="btn btn-ks-secondary btn-sm">View Menu</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="ks-card text-center">
+        <div class="mb-3">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Riya" class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
+        </div>
+        <h3 class="h4 fw-bold mb-1">Riya's Home Kitchen</h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> Powai</p>
+        <div class="mb-2">
+          <span class="ks-badge">South Indian</span>
+        </div>
+        <p class="small mb-3 text-muted">Serving traditional South Indian meals with freshly ground spices.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <span class="ks-badge-accent ks-badge">★ 4.7</span>
+          <a href="#" class="btn btn-ks-secondary btn-sm">View Menu</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="ks-card text-center">
+        <div class="mb-3">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Meera" class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
+        </div>
+        <h3 class="h4 fw-bold mb-1">Meera's Kitchen</h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> Bandra</p>
+        <div class="mb-2">
+          <span class="ks-badge">Homestyle Snacks</span>
+        </div>
+        <p class="small mb-3 text-muted">Healthy and diet-friendly meals prepared with care for everyday eating.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <span class="ks-badge-accent ks-badge">★ 4.9</span>
+          <a href="#" class="btn btn-ks-secondary btn-sm">View Menu</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <section class="mb-5 bg-white p-5 border rounded text-center" style="box-shadow: var(--ks-shadow); border-radius: var(--ks-radius);">
+    <h2 class="h3 fw-bold mb-3">Cook From Home. Reach More Customers.</h2>
+    <p class="text-muted mb-4 max-w-md mx-auto">Turn your cooking into an opportunity. Join KitchenStation and share your homemade meals with customers in your local community.</p>
+    <a href="#" class="btn btn-ks-primary">Become a Home Cook</a>
+  </section>
+
+</div>
+{% endblock %}
+"""
+
+with open("foodapp/templates/restaurant.html", "w", encoding="utf-8") as f:
+    f.write(content)
+print("restaurant.html updated.")

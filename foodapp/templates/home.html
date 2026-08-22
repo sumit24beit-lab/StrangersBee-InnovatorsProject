@@ -1,197 +1,187 @@
+﻿{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="{{ LANGUAGE_CODE }}">
-<head>
-  <meta charset="utf-8" />
-  <title>{% block title %}KitchenStation — Home{% endblock %}</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>KitchenStation</span></div>
 
-    <nav class="nav">
-      <a href="{% url 'home' %}" class="active">Home</a>
-      <a href="{% url 'restaurant' %}">Home Cooks</a>
-      <a href="{% url 'menu' %}">Homemade Meals</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="#">Orders</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="#">Profile</a>
-    </nav>
+{% block title %}KitchenStation — Home{% endblock %}
 
-  </header>
-
-  <main class="main">
-    {% block content %}
-      <section class="hero-inner">
-        <h1>Homemade Food, From Local Kitchens to Your Table.</h1>
-        <p class="sub">Discover delicious homemade meals prepared by local home cooks and enjoy fresh, affordable food made with care.</p>
-
-        <div class="hero-actions">
-          <a href="{% url 'restaurant' %}" class="btn primary">Explore Home Cooks</a>
-          <a href="{% url 'menu' %}" class="btn secondary">Explore Homemade Meals</a>
+{% block content %}
+<div class="container py-4">
+  <section class="ks-hero mb-5">
+    <div class="row align-items-center">
+      <div class="col-md-8 mx-auto text-center">
+        <h1 class="display-4 fw-bold mb-3">Homemade Food, From Local Kitchens to Your Table.</h1>
+        <p class="lead mb-4">Discover delicious homemade meals prepared by local home cooks and enjoy fresh, affordable food made with care.</p>
+        <div class="d-flex gap-3 justify-content-center">
+          <a href="{% url 'restaurant' %}" class="btn btn-ks-secondary btn-lg">Explore Home Cooks</a>
+          <a href="{% url 'menu' %}" class="btn btn-ks-accent btn-lg">Explore Homemade Meals</a>
         </div>
-
-        <ul class="hero-features">
-          <li>✓ Freshly Prepared</li>
-          <li>✓ Affordable</li>
-          <li>✓ Local</li>
-        </ul>
-      </section>
-
-      <section class="container">
-        <h2>Discover Home Cooks Near You</h2>
-        <p>Explore local home cooks and discover the meals and cuisines they prepare from their own kitchens.</p>
-        
-        <div class="cards" id="homeCooksList">
-          <div class="card">
-            <h3>Asha's Kitchen</h3>
-            <p>North Indian</p>
-            <p>Rating: 4.8</p>
-          </div>
-          <div class="card">
-            <h3>Riya's Home Kitchen</h3>
-            <p>South Indian</p>
-            <p>Rating: 4.7</p>
-          </div>
-          <div class="card">
-            <h3>Meera's Kitchen</h3>
-            <p>Homestyle Meals</p>
-            <p>Rating: 4.9</p>
-          </div>
+        <div class="d-flex justify-content-center gap-4 mt-4">
+          <span class="ks-badge"><i class="bi bi-check-circle"></i> Freshly Prepared</span>
+          <span class="ks-badge"><i class="bi bi-check-circle"></i> Affordable</span>
+          <span class="ks-badge"><i class="bi bi-check-circle"></i> Local</span>
         </div>
-        <div>
-          <a href="{% url 'restaurant' %}" class="btn">View All Home Cooks</a>
-        </div>
-      </section>
-
-      <section class="container">
-        <h2>Today's Homemade Favorites</h2>
-        <p>Explore freshly prepared meals from local home cooks.</p>
-
-        <div class="cards" id="mealsList">
-          <div class="card">
-            <h3>Homestyle Paneer Thali</h3>
-            <p><strong>₹180</strong></p>
-            <p>Dal, Rice, Roti and Sabzi</p>
-            <p><small>Freshly Prepared</small></p>
-          </div>
-          <div class="card">
-            <h3>Veg Biryani</h3>
-            <p><strong>₹150</strong></p>
-            <p>Homemade spices and fresh preparation</p>
-          </div>
-          <div class="card">
-            <h3>Masala Dosa</h3>
-            <p><strong>₹90</strong></p>
-            <p>South Indian home-style</p>
-          </div>
-        </div>
-        <div>
-          <a href="{% url 'menu' %}" class="btn">Explore More Meals</a>
-        </div>
-      </section>
-
-      <section class="container">
-        <h2>Why Choose Homemade?</h2>
-        <div class="feature-blocks">
-          <div class="feature-block">
-            <h3>Made at Home</h3>
-            <p>Meals prepared in local home kitchens.</p>
-          </div>
-          <div class="feature-block">
-            <h3>Made With Care</h3>
-            <p>Food prepared by people who take pride in their cooking.</p>
-          </div>
-          <div class="feature-block">
-            <h3>Affordable</h3>
-            <p>Enjoy homemade meals at reasonable prices.</p>
-          </div>
-          <div class="feature-block">
-            <h3>Support Local Cooks</h3>
-            <p>Help home cooks reach more customers in their local community.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="container">
-        <h2>How KitchenStation Works</h2>
-        <div class="steps">
-          <div class="step">
-            <h3>01 — Discover</h3>
-            <p>Find home cooks and homemade meals available around you.</p>
-          </div>
-          <div class="step">
-            <h3>02 — Choose</h3>
-            <p>Explore menus and select the meals you want.</p>
-          </div>
-          <div class="step">
-            <h3>03 — Order</h3>
-            <p>Place your order through KitchenStation.</p>
-          </div>
-          <div class="step">
-            <h3>04 — Enjoy</h3>
-            <p>Receive or collect your freshly prepared homemade food.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="container">
-        <h2>Cook From Home. Reach More Customers.</h2>
-        <p>Turn your cooking into an opportunity. Join KitchenStation and share your homemade meals with customers in your local community.</p>
-        <button class="btn primary">Become a Home Cook</button>
-      </section>
-
-      <section class="container">
-        <h2>Ready for a Homemade Meal?</h2>
-        <p>Discover local home cooks and find something delicious today.</p>
-        <div>
-          <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Food</a>
-        </div>
-      </section>
-    {% endblock %}
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div>
-        <h4>KitchenStation</h4>
-        <p>Homemade food. Local kitchens. Real connections.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
-          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
-          <li><a href="{% url 'offers' %}">Offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Account</h4>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="{% url 'cart' %}">Cart</a></li>
-        </ul>
       </div>
     </div>
-    <div>
-      © 2026 KitchenStation
-    </div>
-  </footer>
+  </section>
 
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
-</body>
-</html>
+  <section class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <div>
+        <h2 class="h3 fw-bold mb-1">Discover Home Cooks Near You</h2>
+        <p class="text-muted mb-0">Explore local home cooks and discover the meals and cuisines they prepare from their own kitchens.</p>
+      </div>
+      <a href="{% url 'restaurant' %}" class="btn btn-ks-secondary btn-sm">View All</a>
+    </div>
+    
+    <div class="row g-4" id="homeCooksList">
+      <div class="col-md-4">
+        <div class="ks-card">
+          <h3 class="h5 fw-bold">Asha's Kitchen</h3>
+          <p class="text-muted mb-2">North Indian</p>
+          <div class="mt-auto pt-3 border-top">
+            <span class="ks-badge-accent ks-badge">Rating: 4.8</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ks-card">
+          <h3 class="h5 fw-bold">Riya's Home Kitchen</h3>
+          <p class="text-muted mb-2">South Indian</p>
+          <div class="mt-auto pt-3 border-top">
+            <span class="ks-badge-accent ks-badge">Rating: 4.7</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ks-card">
+          <h3 class="h5 fw-bold">Meera's Kitchen</h3>
+          <p class="text-muted mb-2">Homestyle Meals</p>
+          <div class="mt-auto pt-3 border-top">
+            <span class="ks-badge-accent ks-badge">Rating: 4.9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <div>
+        <h2 class="h3 fw-bold mb-1">Today's Homemade Favorites</h2>
+        <p class="text-muted mb-0">Explore freshly prepared meals from local home cooks.</p>
+      </div>
+      <a href="{% url 'menu' %}" class="btn btn-ks-secondary btn-sm">Explore More</a>
+    </div>
+
+    <div class="row g-4" id="mealsList">
+      <div class="col-md-4">
+        <div class="ks-card">
+          <h3 class="h5 fw-bold mb-1">Homestyle Paneer Thali</h3>
+          <p class="text-muted small mb-2">Dal, Rice, Roti and Sabzi</p>
+          <p class="mb-3"><span class="ks-badge">Freshly Prepared</span></p>
+          <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+            <strong class="fs-5">₹180</strong>
+            <button class="btn btn-ks-primary btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ks-card">
+          <h3 class="h5 fw-bold mb-1">Veg Biryani</h3>
+          <p class="text-muted small mb-3">Homemade spices and fresh preparation</p>
+          <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+            <strong class="fs-5">₹150</strong>
+            <button class="btn btn-ks-primary btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="ks-card">
+          <h3 class="h5 fw-bold mb-1">Masala Dosa</h3>
+          <p class="text-muted small mb-3">South Indian home-style</p>
+          <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+            <strong class="fs-5">₹90</strong>
+            <button class="btn btn-ks-primary btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5 bg-white p-5 border rounded" style="box-shadow: var(--ks-shadow); border-radius: var(--ks-radius);">
+    <h2 class="h3 fw-bold mb-4 text-center">Why Choose Homemade?</h2>
+    <div class="row g-4 text-center">
+      <div class="col-md-3">
+        <h3 class="h5 fw-bold">Made at Home</h3>
+        <p class="text-muted small">Meals prepared in local home kitchens.</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="h5 fw-bold">Made With Care</h3>
+        <p class="text-muted small">Food prepared by people who take pride in their cooking.</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="h5 fw-bold">Affordable</h3>
+        <p class="text-muted small">Enjoy homemade meals at reasonable prices.</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="h5 fw-bold">Support Local Cooks</h3>
+        <p class="text-muted small">Help home cooks reach more customers in their local community.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <h2 class="h3 fw-bold mb-4 text-center">How KitchenStation Works</h2>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="ks-card text-center">
+          <span class="fs-1 mb-2">🔍</span>
+          <h3 class="h5 fw-bold">01 — Discover</h3>
+          <p class="text-muted small">Find home cooks and homemade meals available around you.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ks-card text-center">
+          <span class="fs-1 mb-2">🍽️</span>
+          <h3 class="h5 fw-bold">02 — Choose</h3>
+          <p class="text-muted small">Explore menus and select the meals you want.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ks-card text-center">
+          <span class="fs-1 mb-2">🛒</span>
+          <h3 class="h5 fw-bold">03 — Order</h3>
+          <p class="text-muted small">Place your order through KitchenStation.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="ks-card text-center">
+          <span class="fs-1 mb-2">😋</span>
+          <h3 class="h5 fw-bold">04 — Enjoy</h3>
+          <p class="text-muted small">Receive or collect your freshly prepared homemade food.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div class="ks-card text-center py-5" style="background-color: rgba(95, 141, 78, 0.1);">
+        <h2 class="h3 fw-bold mb-3">Cook From Home. Reach More Customers.</h2>
+        <p class="text-muted mb-4">Turn your cooking into an opportunity. Join KitchenStation and share your homemade meals with customers in your local community.</p>
+        <div>
+          <button class="btn btn-ks-primary">Become a Home Cook</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="ks-card text-center py-5" style="background-color: rgba(201, 106, 74, 0.1);">
+        <h2 class="h3 fw-bold mb-3">Ready for a Homemade Meal?</h2>
+        <p class="text-muted mb-4">Discover local home cooks and find something delicious today.</p>
+        <div>
+          <a href="{% url 'menu' %}" class="btn btn-ks-accent">Explore Homemade Food</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

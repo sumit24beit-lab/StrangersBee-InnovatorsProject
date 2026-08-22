@@ -1,203 +1,46 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'en' }}">
-<head>
-  <meta charset="utf-8">
-  <title>KitchenStation — Homestyle Paneer Thali</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>KitchenStation</span></div>
-    <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}">Home Cooks</a>
-      <a href="{% url 'menu' %}">Homemade Meals</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="#">Orders</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="#">Profile</a>
-    </nav>
-  </header>
 
-  <main class="main container">
-    <!-- MEAL HEADER -->
-    <header class="meal-header">
-      <div class="meal-image">[Main Meal Image Placeholder]</div>
-      <div class="meal-intro">
-        <h1>Homestyle Paneer Thali</h1>
-        <p class="desc">A comforting homemade meal featuring paneer, dal, rice, roti, seasonal vegetables and salad.</p>
-        <p class="price">Price: ₹180</p>
-        <p class="category">Category: North Indian</p>
-        <p class="type">Food Type: Vegetarian</p>
-        <p class="prep-type">Preparation: Freshly Prepared</p>
-        <p class="portion">Portion: 1 Person</p>
-        <p class="rating">Rating: 4.8 / 5</p>
+{% block title %}KitchenStation — Meal Detail{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row g-5">
+    <div class="col-md-6">
+      <img src="{% static 'foodapp/images/meal-placeholder.jpg' %}" alt="Meal" class="img-fluid rounded" style="border: 2px solid var(--ks-border); box-shadow: var(--ks-shadow); width:100%;">
+    </div>
+    <div class="col-md-6">
+      <div class="mb-2">
+        <span class="ks-badge">Veg</span>
+        <span class="ks-badge">North Indian</span>
       </div>
-    </header>
-
-    <!-- MEAL DESCRIPTION -->
-    <section class="meal-description">
-      <h2>About This Meal</h2>
-      <p>This homestyle paneer thali is prepared with familiar ingredients and traditional flavours. It includes a balanced combination of dal, rice, roti, seasonal vegetables and salad.</p>
-    </section>
-
-    <!-- WHAT'S INCLUDED -->
-    <section class="meal-includes">
-      <h2>What's Included</h2>
-      <ul>
-        <li>Paneer Sabzi</li>
-        <li>Dal</li>
-        <li>Steamed Rice</li>
-        <li>2 Rotis</li>
-        <li>Seasonal Vegetable</li>
-        <li>Fresh Salad</li>
-      </ul>
-    </section>
-
-    <!-- INGREDIENTS -->
-    <section class="meal-ingredients">
-      <h2>Ingredients</h2>
-      <ul>
-        <li>Paneer</li>
-        <li>Lentils</li>
-        <li>Rice</li>
-        <li>Wheat Flour</li>
-        <li>Seasonal Vegetables</li>
-        <li>Fresh Herbs</li>
-        <li>Homemade Spices</li>
-      </ul>
-    </section>
-
-    <!-- HOME COOK INFORMATION -->
-    <section class="cook-info">
-      <h2>Prepared By</h2>
-      <h3>Asha's Kitchen</h3>
-      <p>North Indian Home Cook</p>
-      <p>Location: Thane, Maharashtra</p>
-      <p>Rating: 4.8 / 5</p>
-      <p class="status badge">Verified Home Cook</p>
-      <p class="desc">Traditional North Indian meals prepared fresh from a home kitchen.</p>
-      <button type="button" class="btn">View Home Cook</button>
-    </section>
-
-    <!-- PREPARATION INFORMATION -->
-    <section class="prep-info">
-      <h2>Preparation</h2>
-      <p>Freshly prepared in a home kitchen.</p>
-      <p>Estimated preparation time: 45 minutes</p>
-      <p>Preparation type: Homemade</p>
-    </section>
-
-    <!-- AVAILABILITY -->
-    <section class="availability-info">
-      <h2>Availability</h2>
-      <p class="status-available">Available Today</p>
-      <p>Quantity Available: [Placeholder]</p>
-    </section>
-
-    <!-- QUANTITY AND ORDER ACTION -->
-    <section class="order-actions">
-      <div class="quantity-selector">
-        <label for="meal-quantity">Quantity:</label>
-        <button type="button" class="btn-qty-minus">[-]</button>
-        <input type="number" id="meal-quantity" value="1" min="1" max="10" readonly>
-        <button type="button" class="btn-qty-plus">[+]</button>
-      </div>
-      <div class="action-buttons" style="margin-top: 15px;">
-        <button type="button" class="btn primary">Add to Cart</button>
-        <button type="button" class="btn secondary">Order Now</button>
-      </div>
-    </section>
-
-    <!-- CUSTOMER REVIEWS -->
-    <section class="customer-reviews">
-      <h2>What Customers Say</h2>
+      <h1 class="display-6 fw-bold mb-2">Homestyle Paneer Thali</h1>
+      <p class="text-muted mb-3">By <a href="#" class="text-decoration-none fw-bold" style="color: var(--ks-primary);">Asha's Kitchen</a></p>
       
-      <div class="review-list">
-        <div class="review-card">
-          <p class="review-text">"Everything tasted fresh and homemade. The paneer was especially good."</p>
-          <p class="customer-name">— Rahul</p>
-          <p class="rating">★★★★★</p>
-        </div>
-
-        <div class="review-card">
-          <p class="review-text">"Good portion size and felt like a proper home-cooked meal."</p>
-          <p class="customer-name">— Priya</p>
-          <p class="rating">★★★★☆</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- RELATED MEALS -->
-    <section class="related-meals">
-      <h2>More From This Kitchen</h2>
+      <h2 class="h3 fw-bold mb-4" style="color: var(--ks-accent);">₹180</h2>
       
-      <div class="meal-cards">
-        <div class="meal-card">
-          <h3>Rajma Rice</h3>
-          <p class="price">₹120</p>
-        </div>
-        <div class="meal-card">
-          <h3>Gulab Jamun</h3>
-          <p class="price">₹80</p>
-        </div>
-        <div class="meal-card">
-          <h3>Vegetable Pulao</h3>
-          <p class="price">₹130</p>
-        </div>
-      </div>
-      <button type="button" class="btn" style="margin-top: 15px;">View All Meals</button>
-    </section>
-
-    <!-- FINAL CTA -->
-    <section class="final-cta">
-      <h2>Want to Explore More Homemade Food?</h2>
-      <p>Discover more meals prepared by local home cooks on KitchenStation.</p>
-      <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Meals</a>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div>
-        <h4>KitchenStation</h4>
-        <p>Homemade food. Local kitchens. Real connections.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
-          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
-          <li><a href="{% url 'offers' %}">Offers</a></li>
+      <p class="mb-4">Enjoy a wholesome, freshly prepared North Indian thali straight from Asha's kitchen. Made with high-quality ingredients, cold-pressed mustard oil, and authentic homemade masalas.</p>
+      
+      <div class="ks-card bg-light p-3 mb-4">
+        <h4 class="h6 fw-bold mb-2">What's included:</h4>
+        <ul class="mb-0 text-muted small">
+          <li>Paneer Butter Masala (250ml)</li>
+          <li>Yellow Dal Tadka (250ml)</li>
+          <li>3 Whole Wheat Phulkas (with Ghee)</li>
+          <li>Steamed Rice</li>
+          <li>Salad & Pickle</li>
         </ul>
       </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Account</h4>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="{% url 'cart' %}">Cart</a></li>
-        </ul>
+
+      <div class="d-flex gap-3 align-items-center">
+        <div class="input-group" style="width: 120px;">
+          <button class="btn btn-outline-secondary" type="button">-</button>
+          <input type="text" class="form-control text-center" value="1">
+          <button class="btn btn-outline-secondary" type="button">+</button>
+        </div>
+        <button class="btn btn-ks-primary flex-grow-1">Add to Cart</button>
       </div>
     </div>
-    <div>
-      © 2026 KitchenStation
-    </div>
-  </footer>
-
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
-</body>
-</html>
+  </div>
+</div>
+{% endblock %}

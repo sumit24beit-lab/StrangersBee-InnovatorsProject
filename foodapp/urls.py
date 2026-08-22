@@ -1,15 +1,14 @@
-from django.urls import path
-from .views import signup_page_view,login_page_view,home_page_view, cart_page_view, menu_page_view, restaurant_page_view, delivery_page_view, contact_page_view, offers_page_view, chatbot_page_view
+﻿from django.urls import path
+from .views import signup_view, login_view, home_page_view, cart_view, menu_view, restaurant_view, delivery_view, contact_view, offers_view
 
 urlpatterns = [
-    path('signup/',signup_page_view,name='signup'),
-    path('login/',login_page_view,name='login'),
-    path('home/',home_page_view,name='home'),
-    path('cart/',cart_page_view,name='cart'),
-    path('menu/',menu_page_view,name='menu'),
-    path('restaurant/',restaurant_page_view,name='restaurant'),
-    path('delivery/',delivery_page_view,name='delivery'),
-    path('contact/',contact_page_view,name='contact'),
-    path('offers/',offers_page_view,name='offers'),
-    path('chatbot/',chatbot_page_view,name='chatbot')
+    path('signup/', signup_view, name='signup'),
+    path('login/', login_view, name='login'),
+    path('home/', home_page_view, name='home'),
+    path('cart/', cart_view, name='cart'),
+    path('menu/', menu_view, name='menu'),
+    path('restaurant/', restaurant_view, name='restaurant'),
+    path('delivery/', delivery_view, name='delivery'),
+    path('contact/', contact_view, name='contact'),
+    path('offers/', offers_view, name='offers'),
 ]

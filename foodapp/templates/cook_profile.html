@@ -1,171 +1,62 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'en' }}">
-<head>
-  <meta charset="utf-8">
-  <title>KitchenStation — Asha's Kitchen</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>KitchenStation</span></div>
-    <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}" class="active">Home Cooks</a>
-      <a href="{% url 'menu' %}">Homemade Meals</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="#">Orders</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="#">Profile</a>
-    </nav>
-  </header>
 
-  <main class="main container">
-    <!-- PROFILE HEADER -->
-    <header class="profile-header">
-      <div class="profile-images">
-        <div class="profile-image">[Profile Image Placeholder]</div>
-        <div class="kitchen-image">[Home Kitchen Image Placeholder]</div>
-      </div>
-      <div class="profile-intro">
-        <h1>Asha's Kitchen</h1>
-        <p class="subtitle">Homemade North Indian Food</p>
-        <p class="location">Location: Thane, Maharashtra</p>
-        <p class="rating">Rating: 4.8</p>
-        <p class="status badge">Verified Home Cook</p>
-        <p class="desc">"Preparing comforting North Indian meals from my home kitchen using familiar ingredients and traditional recipes."</p>
-      </div>
-    </header>
+{% block title %}KitchenStation — Cook Profile{% endblock %}
 
-    <!-- ABOUT THE HOME COOK & HOME COOK INFORMATION -->
-    <section class="about-cook">
-      <h2>About the Cook</h2>
-      <p>"Hi, I'm Asha. I enjoy preparing traditional North Indian meals and sharing the food I make at home with people in my local community."</p>
+{% block content %}
+<div class="container py-4">
+  <div class="ks-card p-0 overflow-hidden mb-5 border-0 shadow-none">
+    <div style="height: 200px; background: url('{% static 'foodapp/images/cook_placeholder.jpg' %}') center/cover;"></div>
+    <div class="px-4 pb-4 position-relative">
+      <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Cook" class="rounded-circle border border-4 border-white position-absolute" style="width: 120px; height: 120px; top: -60px; object-fit: cover;">
       
-      <div class="cook-info">
-        <p><strong>Cuisine:</strong> North Indian</p>
-        <p><strong>Speciality:</strong> Homestyle Vegetarian Meals</p>
-        <p><strong>Experience:</strong> Home Cooking</p>
-        <p><strong>Location:</strong> Thane, Maharashtra</p>
-        <p><strong>Rating:</strong> 4.8 / 5</p>
-        <p><strong>Verification:</strong> Verified Home Cook</p>
-        <p><strong>Preparation:</strong> Freshly Prepared</p>
-      </div>
-    </section>
-
-    <!-- HOME KITCHEN -->
-    <section class="home-kitchen-philosophy">
-      <h2>From Asha's Kitchen</h2>
-      <p>Meals prepared fresh in a home kitchen with a focus on simple ingredients, familiar flavours and homestyle cooking.</p>
-    </section>
-
-    <!-- AVAILABILITY -->
-    <section class="availability-status">
-      <h2>Today's Availability</h2>
-      <p class="status-available">Available Today: Currently accepting orders</p>
-    </section>
-
-    <!-- MEALS BY THIS HOME COOK -->
-    <section class="cook-meals">
-      <h2>Homemade Meals</h2>
-      
-      <div class="meal-cards">
-        <div class="meal-card">
-          <h3>Homestyle Paneer Thali</h3>
-          <p class="price">₹180</p>
-          <p class="desc">Dal, rice, roti, seasonal sabzi and salad.</p>
-          <button type="button" class="btn">View Meal</button>
+      <div class="pt-5 mt-2 d-flex justify-content-between align-items-start">
+        <div>
+          <h1 class="h3 fw-bold mb-1">Asha's Kitchen</h1>
+          <p class="text-muted mb-2"><i class="bi bi-geo-alt"></i> Andheri West • <span class="ks-badge">North Indian</span></p>
+          <p class="mb-0 max-w-md">"Cooking authentic North Indian food from my home for 15 years. My food is prepared with cold-pressed oils and no artificial colors."</p>
         </div>
-
-        <div class="meal-card">
-          <h3>Rajma Rice</h3>
-          <p class="price">₹120</p>
-          <p class="desc">Homestyle rajma served with steamed rice.</p>
-          <button type="button" class="btn">View Meal</button>
+        <div class="text-end">
+          <span class="ks-badge-accent ks-badge d-block mb-2 text-center fs-5 py-2">★ 4.8</span>
+          <p class="text-muted small mb-0">120+ Ratings</p>
         </div>
-
-        <div class="meal-card">
-          <h3>Gulab Jamun</h3>
-          <p class="price">₹80</p>
-          <p class="desc">Traditional homemade dessert.</p>
-          <button type="button" class="btn">View Meal</button>
-        </div>
-      </div>
-
-      <div class="customer-actions" style="margin-top: 20px;">
-        <button type="button" class="btn primary">Explore Meals</button>
-        <button type="button" class="btn secondary">View Menu</button>
-        <button type="button" class="btn">Order a Meal</button>
-      </div>
-    </section>
-
-    <!-- RATINGS & REVIEWS -->
-    <section class="customer-reviews">
-      <h2>Customer Reviews</h2>
-      
-      <div class="review-list">
-        <div class="review-card">
-          <p class="rating">Rating: 5/5</p>
-          <p class="review-text">"Felt just like a meal at home. Everything was fresh and delicious."</p>
-          <p class="customer-name">— Rahul</p>
-        </div>
-
-        <div class="review-card">
-          <p class="rating">Rating: 4.5/5</p>
-          <p class="review-text">"Really good homemade food and reasonable pricing."</p>
-          <p class="customer-name">— Priya</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- BOTTOM CTA -->
-    <section class="bottom-cta">
-      <h2>Want to Try Something From This Kitchen?</h2>
-      <p>Explore homemade meals prepared by this home cook.</p>
-      <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Meals</a>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div>
-        <h4>KitchenStation</h4>
-        <p>Homemade food. Local kitchens. Real connections.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
-          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
-          <li><a href="{% url 'offers' %}">Offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Account</h4>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="{% url 'cart' %}">Cart</a></li>
-        </ul>
       </div>
     </div>
-    <div>
-      © 2026 KitchenStation
-    </div>
-  </footer>
+  </div>
 
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
-</body>
-</html>
+  <h2 class="h4 fw-bold mb-4 border-bottom pb-2">Meals by Asha</h2>
+  
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-1">Homestyle Paneer Thali</h3>
+        <p class="text-muted small mb-3">Fresh paneer gravy with 3 rotis, dal, and rice.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5">₹180</strong>
+          <button class="btn btn-ks-primary btn-sm">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-1">Rajma Chawal</h3>
+        <p class="text-muted small mb-3">Authentic punjabi rajma cooked overnight, served with jeera rice.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5">₹140</strong>
+          <button class="btn btn-ks-primary btn-sm">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="ks-card opacity-75">
+        <h3 class="h5 fw-bold mb-1">Aloo Paratha (2 pcs)</h3>
+        <p class="text-muted small mb-3">Stuffed with seasoned potatoes, served with homemade curd and pickle.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5 text-muted">₹100</strong>
+          <span class="text-danger small fw-bold">Sold Out</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

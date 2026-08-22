@@ -1,170 +1,88 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'en' }}">
-<head>
-  <meta charset="utf-8" />
-  <title>KitchenStation — Your Cart</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>KitchenStation</span></div>
-    <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}">Home Cooks</a>
-      <a href="{% url 'menu' %}">Homemade Meals</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="#">Orders</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'cart' %}" class="active">Cart (<span id="cartCount">0</span>)</a>
-      <a href="#">Profile</a>
-    </nav>
-  </header>
 
-  <main class="main container cart-page">
-    <header class="page-header">
-      <h2>Your Cart</h2>
-      <p>Review your homemade meals before placing your order.</p>
-    </header>
-    
-    <div class="cart-layout">
-      <!-- CART ITEMS LIST -->
-      <div class="cart-items" id="cartItems">
-        
-        <!-- EMPTY CART STATE (Preserved structure, updated content) -->
-        <div id="emptyCartState" class="empty-cart-message">
-          <h3>Your Cart is Empty</h3>
-          <p>Looks like you haven't added any homemade meals yet.</p>
-          <p class="muted">Discover local home cooks and find something you'd like to try.</p>
-          <a href="{% url 'menu' %}" class="btn primary">Explore Homemade Meals</a>
-        </div>
+{% block title %}KitchenStation — Your Cart{% endblock %}
 
-        <!-- EXAMPLE CART ITEM STRUCTURE (For future backend integration) -->
-        <!-- 
-        <div class="cart-item-card">
-          <div class="item-image">[Image Placeholder]</div>
-          <div class="item-details">
-            <h3>Homestyle Paneer Thali</h3>
-            <p class="cook-name">Prepared by: Asha's Kitchen</p>
-            <p class="price">₹180</p>
-          </div>
-          <div class="item-actions">
-            <div class="quantity-control">
-              <button class="btn-qty-minus">[-]</button>
-              <input type="number" value="1" readonly>
-              <button class="btn-qty-plus">[+]</button>
-            </div>
-            <p class="subtotal">Subtotal: ₹180</p>
-            <button type="button" class="btn-remove">Remove</button>
-          </div>
+{% block content %}
+<div class="container py-4 cart-page">
+  <div class="mb-4">
+    <h1 class="display-6 fw-bold">Your Cart</h1>
+    <p class="text-muted">Review your items before checkout</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Cart Items Section -->
+    <div class="col-lg-8">
+      <div class="ks-card mb-4" id="cartItemsContainer">
+        <!-- JS will render items here -->
+        <div id="emptyCartState" class="text-center py-5" style="display: none;">
+          <span class="fs-1 mb-3 d-block">🛒</span>
+          <h3 class="h5 fw-bold">Your cart is empty</h3>
+          <p class="text-muted mb-4">Looks like you haven't added any homemade meals yet.</p>
+          <a href="{% url 'menu' %}" class="btn btn-ks-primary">Explore Homemade Meals</a>
         </div>
         
-        <div class="cart-item-card">
-          <div class="item-image">[Image Placeholder]</div>
-          <div class="item-details">
-            <h3>Veg Biryani</h3>
-            <p class="cook-name">Prepared by: Riya's Home Kitchen</p>
-            <p class="price">₹150</p>
-          </div>
-          <div class="item-actions">
-            <div class="quantity-control">
-              <button class="btn-qty-minus">[-]</button>
-              <input type="number" value="2" readonly>
-              <button class="btn-qty-plus">[+]</button>
+        <div id="cartItems">
+          <!-- Item Card Prototype (hidden or handled by JS) -->
+          <!--
+          <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+            <div class="flex-shrink-0">
+              <img src="/static/foodapp/images/meal-placeholder.jpg" class="rounded" style="width:80px; height:80px; object-fit:cover;" alt="Meal">
             </div>
-            <p class="subtotal">Subtotal: ₹300</p>
-            <button type="button" class="btn-remove">Remove</button>
-          </div>
-        </div>
-        -->
-      </div>
-
-      <!-- ORDER SUMMARY & ACTIONS -->
-      <aside class="cart-summary" id="cartSummary">
-        <h3>Order Summary</h3>
-        <div id="summaryDetails">
-          <!-- SAMPLE SUMMARY CONTENT (Preserved IDs for JS) -->
-          <!-- The JavaScript in cart.js will populate this area, but the structure is planned as follows:
-          <div class="summary-row">
-            <span>Subtotal</span>
-            <span>₹480</span>
-          </div>
-          <div class="summary-row">
-            <span>Offers / Discount</span>
-            <span>-₹30</span>
-          </div>
-          <div class="summary-row">
-            <span>Delivery Fee</span>
-            <span>₹40</span>
-          </div>
-          <div class="summary-row total">
-            <strong>Total</strong>
-            <strong>₹490</strong>
+            <div class="flex-grow-1 ms-3">
+              <h4 class="h6 fw-bold mb-1">Homestyle Paneer Thali</h4>
+              <p class="text-muted small mb-2">By Asha's Kitchen</p>
+              <h5 class="fw-bold mb-0">₹180</h5>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="input-group input-group-sm" style="width: 100px;">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+                <input type="text" class="form-control text-center" value="1">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+              <button class="btn text-danger ms-2"><i class="bi bi-trash"></i></button>
+            </div>
           </div>
           -->
         </div>
+      </div>
+    </div>
+
+    <!-- Order Summary Section -->
+    <div class="col-lg-4">
+      <div class="ks-card position-sticky" style="top: 100px;">
+        <h3 class="h5 fw-bold mb-3 pb-3 border-bottom">Order Summary</h3>
         
-        <div class="coupon">
-          <input id="couponInput" placeholder="Enter offer code"/>
-          <button id="applyCoupon">Apply</button>
+        <div id="summaryDetails">
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Subtotal</span>
+            <span class="fw-bold">₹0</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Delivery Fee</span>
+            <span class="fw-bold">₹0</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3 pb-3 border-bottom text-success" id="discountRow" style="display:none;">
+            <span>Discount</span>
+            <span class="fw-bold">-₹0</span>
+          </div>
+          <div class="d-flex justify-content-between mb-4">
+            <span class="fs-5 fw-bold">Total</span>
+            <span class="fs-5 fw-bold" style="color: var(--ks-primary);">₹0</span>
+          </div>
         </div>
 
-        <!-- DELIVERY / PICKUP INFORMATION -->
-        <div class="order-information" style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px;">
-          <h4>Order Information</h4>
-          <p><strong>Delivery Address:</strong> Customer Address Placeholder</p>
-          <p><strong>Fulfilment:</strong> Delivery / Pickup</p>
-          <p><strong>Estimated Preparation:</strong> Based on Home Cook Availability</p>
+        <div class="mb-4">
+          <div class="input-group">
+            <input type="text" class="form-control" id="couponInput" placeholder="Promo code">
+            <button class="btn btn-ks-secondary" type="button" id="applyCoupon">Apply</button>
+          </div>
         </div>
 
-        <div class="cart-actions" style="margin-top: 20px;">
-          <button class="btn primary" id="checkoutBtn" style="width: 100%; margin-bottom: 10px;">Proceed to Checkout</button>
-          <a href="{% url 'menu' %}" class="btn secondary" style="display: block; text-align: center; width: 100%;">Continue Shopping</a>
-        </div>
-      </aside>
-    </div>
-  </main>
-  
-  <footer class="site-footer">
-    <div class="container">
-      <div>
-        <h4>KitchenStation</h4>
-        <p>Homemade food. Local kitchens. Real connections.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
-          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
-          <li><a href="{% url 'offers' %}">Offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Account</h4>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="{% url 'cart' %}">Cart</a></li>
-        </ul>
+        <button class="btn btn-ks-primary w-100 mb-2" id="checkoutBtn">Proceed to Checkout</button>
+        <a href="{% url 'menu' %}" class="btn btn-outline-secondary w-100">Continue Shopping</a>
       </div>
     </div>
-    <div>
-      © 2026 KitchenStation
-    </div>
-  </footer>
-
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
-</body>
-</html>
-
-
+  </div>
+</div>
+{% endblock %}

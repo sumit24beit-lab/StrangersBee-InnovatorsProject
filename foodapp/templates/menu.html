@@ -1,199 +1,114 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'en' }}">
-<head>
-  <meta charset="utf-8">
-  <title>KitchenStation — Homemade Meals</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>KitchenStation</span></div>
 
-    <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}">Home Cooks</a>
-      <a href="{% url 'menu' %}" class="active">Homemade Meals</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="#">Orders</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="#">Profile</a>
-    </nav>
-  </header>
+{% block title %}KitchenStation — Homemade Meals{% endblock %}
 
-  <main class="main container">
-    <!-- 1. PAGE HEADER -->
-    <header class="page-header">
-      <h1>Homemade Meals</h1>
-      <p>Discover freshly prepared meals made by local home cooks.</p>
-      <p class="muted">From everyday comfort food to regional specialties, find homemade meals prepared with care.</p>
-    </header>
-
-    <!-- 2. SEARCH / DISCOVERY AREA -->
-    <section class="discovery-area">
-      <div class="search-bar">
-        <input type="text" placeholder="Search homemade meals...">
-        <button type="button">Search</button>
-      </div>
-      <div class="filters">
-        <select name="cuisine">
-          <option value="">All Cuisines</option>
-          <option value="north-indian">North Indian</option>
-          <option value="south-indian">South Indian</option>
-          <option value="maharashtrian">Maharashtrian</option>
-        </select>
-        <select name="preference">
-          <option value="">Any Preference</option>
-          <option value="veg">Vegetarian</option>
-          <option value="non-veg">Non-Vegetarian</option>
-        </select>
-        <select name="price">
-          <option value="">Any Price</option>
-          <option value="under-100">Under ₹100</option>
-          <option value="100-200">₹100 - ₹200</option>
-          <option value="over-200">Over ₹200</option>
-        </select>
-      </div>
-    </section>
-
-    <!-- 5. CATEGORIES -->
-    <section class="categories-section">
-      <h2>Explore by Cuisine</h2>
-      <div class="category-list">
-        <button type="button" class="category-btn">North Indian</button>
-        <button type="button" class="category-btn">South Indian</button>
-        <button type="button" class="category-btn">Maharashtrian</button>
-        <button type="button" class="category-btn">Gujarati</button>
-        <button type="button" class="category-btn">Punjabi</button>
-        <button type="button" class="category-btn">Bengali</button>
-        <button type="button" class="category-btn">Homemade Snacks</button>
-        <button type="button" class="category-btn">Homemade Desserts</button>
-      </div>
-    </section>
-
-    <!-- 3. FEATURED / POPULAR MEALS & 4. MEAL CARD INFORMATION -->
-    <section class="popular-meals">
-      <h2>Popular Homemade Meals</h2>
-      
-      <div class="meal-cards">
-        <div class="meal-card">
-          <div class="meal-image">[Image Placeholder]</div>
-          <h3>Homestyle Paneer Thali</h3>
-          <p class="price">₹180</p>
-          <p class="desc">Dal, rice, roti, seasonal sabzi and salad.</p>
-          <p class="cook">Prepared by: <strong>Asha's Kitchen</strong></p>
-          <p class="meta">
-            <span class="cuisine">North Indian</span> | 
-            <span class="preference">Vegetarian</span>
-          </p>
-          <p class="availability">Available Today</p>
-          <p class="rating">Rating: 4.8/5</p>
-          <button type="button" class="btn">View Details</button>
+{% block content %}
+<div class="container py-4">
+  <!-- Header & Search -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold mb-3">Discover Homemade Meals</h1>
+    <p class="lead text-muted mb-4">Find freshly prepared food from verified local home cooks.</p>
+    
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="input-group mb-3 ks-card p-2 flex-row border-0" style="background: transparent; box-shadow: none;">
+          <input type="text" class="form-control" placeholder="Search for meals, cuisines, or ingredients..." id="mealSearchInput" style="height: 50px;">
+          <button class="btn btn-ks-primary px-4" type="button" id="searchBtn">Search</button>
         </div>
-
-        <div class="meal-card">
-          <div class="meal-image">[Image Placeholder]</div>
-          <h3>Veg Biryani</h3>
-          <p class="price">₹150</p>
-          <p class="desc">Fragrant rice, vegetables and homemade spices.</p>
-          <p class="cook">Prepared by: <strong>Riya's Home Kitchen</strong></p>
-          <p class="meta">
-            <span class="cuisine">North Indian</span> | 
-            <span class="preference">Vegetarian</span>
-          </p>
-          <p class="availability">Available Today</p>
-          <p class="rating">Rating: 4.7/5</p>
-          <button type="button" class="btn">View Details</button>
-        </div>
-
-        <div class="meal-card">
-          <div class="meal-image">[Image Placeholder]</div>
-          <h3>Masala Dosa</h3>
-          <p class="price">₹90</p>
-          <p class="desc">Crispy dosa served with homemade chutney and sambar.</p>
-          <p class="cook">Prepared by: <strong>Meera's Kitchen</strong></p>
-          <p class="meta">
-            <span class="cuisine">South Indian</span> | 
-            <span class="preference">Vegetarian</span>
-          </p>
-          <p class="availability">Available Today</p>
-          <p class="rating">Rating: 4.9/5</p>
-          <button type="button" class="btn">View Details</button>
-        </div>
-
-        <div class="meal-card">
-          <div class="meal-image">[Image Placeholder]</div>
-          <h3>Rajma Rice</h3>
-          <p class="price">₹120</p>
-          <p class="desc">Homestyle rajma with steamed rice.</p>
-          <p class="cook">Prepared by: <strong>Neha's Kitchen</strong></p>
-          <p class="meta">
-            <span class="cuisine">North Indian</span> | 
-            <span class="preference">Vegetarian</span>
-          </p>
-          <p class="availability">Available Tomorrow</p>
-          <p class="rating">Rating: 4.6/5</p>
-          <button type="button" class="btn">View Details</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. HOME COOK CONNECTION -->
-    <section class="home-cook-connection">
-      <h2>Every Meal Has a Home Kitchen Behind It</h2>
-      <p>KitchenStation helps you discover homemade meals prepared by local cooks, giving you a chance to enjoy authentic food while supporting people who cook from home.</p>
-      <button type="button" class="btn">Meet Our Home Cooks</button>
-    </section>
-
-    <!-- 7. FINAL CTA -->
-    <section class="final-cta">
-      <h2>Looking for Something Homemade?</h2>
-      <p>Explore local home cooks and discover meals prepared just the way you like them.</p>
-      <a href="{% url 'restaurant' %}" class="btn primary">Explore Home Cooks</a>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div>
-        <h4>KitchenStation</h4>
-        <p>Homemade food. Local kitchens. Real connections.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
-          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
-          <li><a href="{% url 'offers' %}">Offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Account</h4>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="{% url 'cart' %}">Cart</a></li>
-        </ul>
       </div>
     </div>
-    <div>
-      © 2026 KitchenStation
+  </div>
+
+  <!-- Filters / Categories -->
+  <div class="mb-5">
+    <div class="d-flex flex-wrap gap-2 justify-content-center" id="categoryFilters">
+      <button class="btn btn-ks-primary rounded-pill">All</button>
+      <button class="btn btn-outline-secondary rounded-pill">North Indian</button>
+      <button class="btn btn-outline-secondary rounded-pill">South Indian</button>
+      <button class="btn btn-outline-secondary rounded-pill">Maharashtrian</button>
+      <button class="btn btn-outline-secondary rounded-pill">Gujarati</button>
+      <button class="btn btn-outline-secondary rounded-pill">Healthy / Diet</button>
+      <button class="btn btn-outline-secondary rounded-pill">Snacks</button>
+      <button class="btn btn-outline-secondary rounded-pill">Sweets</button>
     </div>
-  </footer>
+  </div>
 
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
-</body>
-</html>
+  <!-- Meals Grid -->
+  <div class="row g-4 mb-5" id="menuGrid">
+    <!-- These would normally be rendered via JS/Django, providing placeholders here -->
+    
+    <div class="col-md-4 col-sm-6">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-1">Homestyle Paneer Thali</h3>
+        <p class="text-muted small mb-1">By Asha's Kitchen</p>
+        <div class="mb-2">
+          <span class="ks-badge">North Indian</span>
+          <span class="ks-badge">Veg</span>
+        </div>
+        <p class="small mb-3">Authentic paneer sabzi with 3 rotis, dal, and rice. Freshly made.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5">₹180</strong>
+          <button class="btn btn-ks-primary btn-sm">Add</button>
+        </div>
+      </div>
+    </div>
 
+    <div class="col-md-4 col-sm-6">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-1">Veg Biryani</h3>
+        <p class="text-muted small mb-1">By Riya's Home Kitchen</p>
+        <div class="mb-2">
+          <span class="ks-badge">South Indian</span>
+          <span class="ks-badge">Veg</span>
+        </div>
+        <p class="small mb-3">Homemade spices and fresh preparation. Served with raita.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5">₹150</strong>
+          <button class="btn btn-ks-primary btn-sm">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-1">Masala Dosa</h3>
+        <p class="text-muted small mb-1">By Meera's Kitchen</p>
+        <div class="mb-2">
+          <span class="ks-badge">South Indian</span>
+          <span class="ks-badge">Veg</span>
+        </div>
+        <p class="small mb-3">Crispy dosa with homemade potato bhaji, sambar, and coconut chutney.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5">₹90</strong>
+          <button class="btn btn-ks-primary btn-sm">Add</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4 col-sm-6">
+      <div class="ks-card">
+        <h3 class="h5 fw-bold mb-1">Chicken Curry (Home Style)</h3>
+        <p class="text-muted small mb-1">By Rahul's Kitchen</p>
+        <div class="mb-2">
+          <span class="ks-badge-accent ks-badge">Non-Veg</span>
+        </div>
+        <p class="small mb-3">Slow-cooked chicken curry using family recipe. Comes with 2 parathas.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <strong class="fs-5">₹220</strong>
+          <button class="btn btn-ks-primary btn-sm">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Story CTA -->
+  <section class="mb-5 bg-white p-5 border rounded text-center" style="box-shadow: var(--ks-shadow); border-radius: var(--ks-radius);">
+    <h2 class="h3 fw-bold mb-3">Every Meal Has a Story</h2>
+    <p class="text-muted mb-4 max-w-md mx-auto">When you order on KitchenStation, you're not just getting food. You're supporting local home cooks sharing their passion, culture, and family recipes with the community.</p>
+    <a href="{% url 'restaurant' %}" class="btn btn-ks-secondary">Meet Our Home Cooks</a>
+  </section>
+
+</div>
+{% endblock %}

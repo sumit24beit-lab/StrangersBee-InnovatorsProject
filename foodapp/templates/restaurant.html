@@ -1,221 +1,113 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="{{ LANGUAGE_CODE|default:'en' }}">
-<head>
-  <meta charset="utf-8">
-  <title>KitchenStation — Discover Home Cooks</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="{% static 'foodapp/css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'foodapp/css/responsive.css' %}">
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand">🍴 <span>KitchenStation</span></div>
-    <nav class="nav">
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'restaurant' %}" class="active">Home Cooks</a>
-      <a href="{% url 'menu' %}">Homemade Meals</a>
-      <a href="{% url 'offers' %}">Offers</a>
-      <a href="#">Orders</a>
-      <a href="{% url 'contact' %}">Contact</a>
-      <a href="{% url 'cart' %}">Cart (<span id="cartCount">0</span>)</a>
-      <a href="#">Profile</a>
-    </nav>
-  </header>
 
-  <main class="main container">
-    <!-- PAGE HEADER -->
-    <header class="page-header">
-      <h1>Discover Home Cooks</h1>
-      <p>Meet local home cooks preparing fresh, homemade meals for their community.</p>
-      <p class="muted">Explore different cuisines, discover new kitchens and find meals prepared with a personal touch.</p>
-    </header>
+{% block title %}KitchenStation — Home Cooks{% endblock %}
 
-    <!-- SEARCH / DISCOVERY AREA -->
-    <section class="discovery-area">
-      <div class="search-bar">
-        <label for="cook-search">Search by home cook or cuisine</label>
-        <input type="text" id="cook-search" placeholder="E.g., North Indian, Asha's Kitchen...">
-        <button type="button">Search</button>
-      </div>
-      <div class="filters">
-        <div>
-          <label for="filter-location">Location</label>
-          <select id="filter-location" name="location">
-            <option value="">Any Location</option>
-            <option value="mumbai">Mumbai</option>
-            <option value="thane">Thane</option>
-            <option value="navi-mumbai">Navi Mumbai</option>
-          </select>
+{% block content %}
+<div class="container py-4">
+  <!-- Header & Search -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold mb-3">Discover Local Home Cooks</h1>
+    <p class="lead text-muted mb-4">Meet the passionate people cooking delicious homemade meals in your neighborhood.</p>
+    
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="input-group mb-3 ks-card p-2 flex-row border-0" style="background: transparent; box-shadow: none;">
+          <input type="text" class="form-control" placeholder="Search by cook name, cuisine, or location..." id="cookSearchInput" style="height: 50px;">
+          <button class="btn btn-ks-primary px-4" type="button" id="searchCooksBtn">Search</button>
         </div>
-        <div>
-          <label for="filter-cuisine">Cuisine</label>
-          <select id="filter-cuisine" name="cuisine">
-            <option value="">Any Cuisine</option>
-            <option value="north-indian">North Indian</option>
-            <option value="south-indian">South Indian</option>
-            <option value="maharashtrian">Maharashtrian</option>
-          </select>
-        </div>
-        <div>
-          <label for="filter-preference">Food Preference</label>
-          <select id="filter-preference" name="preference">
-            <option value="">Any</option>
-            <option value="veg">Vegetarian</option>
-            <option value="non-veg">Non-Vegetarian</option>
-          </select>
-        </div>
-        <div>
-          <label for="filter-rating">Rating</label>
-          <select id="filter-rating" name="rating">
-            <option value="">Any Rating</option>
-            <option value="4-plus">4.0 & Above</option>
-            <option value="4.5-plus">4.5 & Above</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPLORE BY CUISINE -->
-    <section class="categories-section">
-      <h2>Explore Home Cooks by Cuisine</h2>
-      <div class="category-list">
-        <button type="button" class="category-btn">North Indian</button>
-        <button type="button" class="category-btn">South Indian</button>
-        <button type="button" class="category-btn">Maharashtrian</button>
-        <button type="button" class="category-btn">Punjabi</button>
-        <button type="button" class="category-btn">Gujarati</button>
-        <button type="button" class="category-btn">Bengali</button>
-        <button type="button" class="category-btn">Vegetarian</button>
-        <button type="button" class="category-btn">Homemade Snacks</button>
-        <button type="button" class="category-btn">Homemade Desserts</button>
-      </div>
-    </section>
-
-    <!-- FEATURED HOME COOKS -->
-    <section class="featured-cooks">
-      <h2>Featured Home Cooks</h2>
-      
-      <div class="cook-cards">
-        <div class="cook-card">
-          <div class="cook-profile-image">[Image Placeholder]</div>
-          <h3>Asha's Kitchen</h3>
-          <p class="location">Location: Thane</p>
-          <p class="speciality">Speciality: North Indian Homemade Food</p>
-          <p class="desc">"Traditional North Indian meals prepared fresh in a home kitchen."</p>
-          <p class="rating">Rating: 4.8</p>
-          <p class="badge">Verified Home Cook</p>
-          <p class="availability">Availability Placeholder</p>
-          <button type="button" class="btn">View Kitchen</button>
-        </div>
-
-        <div class="cook-card">
-          <div class="cook-profile-image">[Image Placeholder]</div>
-          <h3>Riya's Home Kitchen</h3>
-          <p class="location">Location: Mumbai</p>
-          <p class="speciality">Speciality: South Indian Homemade Food</p>
-          <p class="desc">"Fresh dosa, idli, sambar and other South Indian favourites."</p>
-          <p class="rating">Rating: 4.7</p>
-          <p class="badge">Verified Home Cook</p>
-          <p class="availability">Availability Placeholder</p>
-          <button type="button" class="btn">View Kitchen</button>
-        </div>
-
-        <div class="cook-card">
-          <div class="cook-profile-image">[Image Placeholder]</div>
-          <h3>Meera's Kitchen</h3>
-          <p class="location">Location: Navi Mumbai</p>
-          <p class="speciality">Speciality: Homestyle Vegetarian Meals</p>
-          <p class="desc">"Simple, comforting vegetarian meals prepared with homemade ingredients."</p>
-          <p class="rating">Rating: 4.9</p>
-          <p class="badge">Verified Home Cook</p>
-          <p class="availability">Availability Placeholder</p>
-          <button type="button" class="btn">View Kitchen</button>
-        </div>
-
-        <div class="cook-card">
-          <div class="cook-profile-image">[Image Placeholder]</div>
-          <h3>Neha's Kitchen</h3>
-          <p class="location">Location: Mumbai</p>
-          <p class="speciality">Speciality: Maharashtrian Food</p>
-          <p class="desc">"Authentic Maharashtrian dishes prepared in traditional home style."</p>
-          <p class="rating">Rating: 4.8</p>
-          <p class="badge">Verified Home Cook</p>
-          <p class="availability">Availability Placeholder</p>
-          <button type="button" class="btn">View Kitchen</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- WHY HOME COOKS? -->
-    <section class="why-home-cooks">
-      <h2>More Than Just a Meal</h2>
-      <p>KitchenStation helps customers discover people who cook from home while giving home cooks an opportunity to share their food with their local community.</p>
-      
-      <div class="info-points">
-        <div class="point">
-          <h3>Homemade</h3>
-          <p>Food prepared in a home kitchen.</p>
-        </div>
-        <div class="point">
-          <h3>Local</h3>
-          <p>Discover cooks from your nearby community.</p>
-        </div>
-        <div class="point">
-          <h3>Personal</h3>
-          <p>Meals prepared by people who take pride in their cooking.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOME COOK CTA -->
-    <section class="home-cook-cta">
-      <h2>Have a Passion for Cooking?</h2>
-      <p>Share your homemade food with customers in your community and turn your cooking into an opportunity.</p>
-      <button type="button" class="btn primary">Become a Home Cook</button>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div>
-        <h4>KitchenStation</h4>
-        <p>Homemade food. Local kitchens. Real connections.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <ul>
-          <li><a href="{% url 'restaurant' %}">Home Cooks</a></li>
-          <li><a href="{% url 'menu' %}">Homemade Meals</a></li>
-          <li><a href="{% url 'offers' %}">Offers</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Support</h4>
-        <ul>
-          <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="#">Help</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Account</h4>
-        <ul>
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Orders</a></li>
-          <li><a href="{% url 'cart' %}">Cart</a></li>
-        </ul>
       </div>
     </div>
-    <div>
-      © 2026 KitchenStation
+  </div>
+
+  <!-- Filters -->
+  <div class="mb-5">
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+      <select class="form-select w-auto" id="filter-location">
+        <option value="">All Locations</option>
+        <option value="andheri">Andheri</option>
+        <option value="bandra">Bandra</option>
+        <option value="powai">Powai</option>
+      </select>
+      <select class="form-select w-auto" id="filter-cuisine">
+        <option value="">All Cuisines</option>
+        <option value="north-indian">North Indian</option>
+        <option value="south-indian">South Indian</option>
+        <option value="maharashtrian">Maharashtrian</option>
+      </select>
+      <select class="form-select w-auto" id="filter-rating">
+        <option value="">Any Rating</option>
+        <option value="4+">4.0 & Above</option>
+        <option value="4.5+">4.5 & Above</option>
+      </select>
     </div>
-  </footer>
+  </div>
 
-  <script src="{% static 'foodapp/js/main.js' %}"></script>
-  <script src="{% static 'foodapp/js/cart.js' %}"></script>
-</body>
-</html>
+  <!-- Cooks Grid -->
+  <div class="row g-4 mb-5" id="restaurantGrid">
+    
+    <div class="col-md-6 col-lg-4">
+      <div class="ks-card text-center">
+        <div class="mb-3">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Asha" class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
+        </div>
+        <h3 class="h4 fw-bold mb-1">Asha's Kitchen</h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> Andheri West</p>
+        <div class="mb-2">
+          <span class="ks-badge">North Indian</span>
+        </div>
+        <p class="small mb-3 text-muted">Specializes in authentic homemade thalis and parathas using cold-pressed oils.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <span class="ks-badge-accent ks-badge">★ 4.8</span>
+          <a href="#" class="btn btn-ks-secondary btn-sm">View Menu</a>
+        </div>
+      </div>
+    </div>
 
+    <div class="col-md-6 col-lg-4">
+      <div class="ks-card text-center">
+        <div class="mb-3">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Riya" class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
+        </div>
+        <h3 class="h4 fw-bold mb-1">Riya's Home Kitchen</h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> Powai</p>
+        <div class="mb-2">
+          <span class="ks-badge">South Indian</span>
+        </div>
+        <p class="small mb-3 text-muted">Serving traditional South Indian meals with freshly ground spices.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <span class="ks-badge-accent ks-badge">★ 4.7</span>
+          <a href="#" class="btn btn-ks-secondary btn-sm">View Menu</a>
+        </div>
+      </div>
+    </div>
 
+    <div class="col-md-6 col-lg-4">
+      <div class="ks-card text-center">
+        <div class="mb-3">
+          <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Meera" class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
+        </div>
+        <h3 class="h4 fw-bold mb-1">Meera's Kitchen</h3>
+        <p class="text-muted small mb-2"><i class="bi bi-geo-alt"></i> Bandra</p>
+        <div class="mb-2">
+          <span class="ks-badge">Homestyle Snacks</span>
+        </div>
+        <p class="small mb-3 text-muted">Healthy and diet-friendly meals prepared with care for everyday eating.</p>
+        <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+          <span class="ks-badge-accent ks-badge">★ 4.9</span>
+          <a href="#" class="btn btn-ks-secondary btn-sm">View Menu</a>
+        </div>
+      </div>
+    </div>
 
+  </div>
+
+  <!-- CTA -->
+  <section class="mb-5 bg-white p-5 border rounded text-center" style="box-shadow: var(--ks-shadow); border-radius: var(--ks-radius);">
+    <h2 class="h3 fw-bold mb-3">Cook From Home. Reach More Customers.</h2>
+    <p class="text-muted mb-4 max-w-md mx-auto">Turn your cooking into an opportunity. Join KitchenStation and share your homemade meals with customers in your local community.</p>
+    <a href="#" class="btn btn-ks-primary">Become a Home Cook</a>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,162 @@
+﻿import os
+
+content = """{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}KitchenStation — Checkout & Delivery{% endblock %}
+
+{% block content %}
+<div class="container py-4 checkout-page">
+  <div class="mb-4">
+    <h1 class="display-6 fw-bold">Checkout</h1>
+    <p class="text-muted">Enter delivery details and place your order</p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Form Section -->
+    <div class="col-lg-7">
+      <form id="deliveryForm">
+        {% csrf_token %}
+        <div class="ks-card mb-4">
+          <h3 class="h5 fw-bold mb-3">Delivery Information</h3>
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="custName" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="custPhone" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Delivery Address</label>
+              <textarea class="form-control" id="custAddr" rows="3" required></textarea>
+            </div>
+          </div>
+          
+          <div class="mt-4">
+            <label class="form-label fw-bold d-block">Address Type</label>
+            <div class="d-flex gap-2 small-chips">
+              <button type="button" class="btn btn-outline-secondary rounded-pill chip selected" data-type="home">Home</button>
+              <button type="button" class="btn btn-outline-secondary rounded-pill chip" data-type="work">Work</button>
+              <button type="button" class="btn btn-outline-secondary rounded-pill chip" data-type="other">Other</button>
+            </div>
+            <input type="hidden" id="addrTypeHidden" value="home">
+          </div>
+        </div>
+
+        <div class="ks-card mb-4">
+          <h3 class="h5 fw-bold mb-3">Delivery Time</h3>
+          <div class="d-flex gap-2 overflow-auto py-2 time-carousel">
+            <button type="button" class="btn btn-outline-secondary time-btn active">Asap (45 mins)</button>
+            <button type="button" class="btn btn-outline-secondary time-btn">1:00 PM</button>
+            <button type="button" class="btn btn-outline-secondary time-btn">1:30 PM</button>
+            <button type="button" class="btn btn-outline-secondary time-btn">2:00 PM</button>
+          </div>
+        </div>
+
+        <div class="ks-card mb-4">
+          <h3 class="h5 fw-bold mb-3">Payment Method</h3>
+          <div class="row g-3 payment-tiles">
+            <div class="col-6">
+              <label class="btn btn-outline-secondary w-100 text-start tile selected p-3">
+                <input type="radio" name="paymentMethod" value="cod" checked class="d-none">
+                <strong class="d-block">Cash on Delivery</strong>
+                <small class="text-muted">Pay at doorstep</small>
+              </label>
+            </div>
+            <div class="col-6">
+              <label class="btn btn-outline-secondary w-100 text-start tile p-3">
+                <input type="radio" name="paymentMethod" value="online" class="d-none">
+                <strong class="d-block">Online Payment</strong>
+                <small class="text-muted">Card / UPI / Netbanking</small>
+              </label>
+            </div>
+          </div>
+          <div id="onlinePaymentFields" class="mt-3" style="display:none;">
+            <p class="text-muted small mb-0">You will be redirected to the payment gateway after placing the order.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="col-lg-5">
+      <div class="ks-card position-sticky" style="top: 100px;">
+        <h3 class="h5 fw-bold mb-3 pb-3 border-bottom">Order Review</h3>
+        
+        <div id="order-items-preview" class="mb-3">
+          <!-- JS generated list of items -->
+        </div>
+
+        <div id="deliverySummary" class="bg-light p-3 rounded mb-3">
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Subtotal</span>
+            <span class="fw-bold" id="summ-sub">₹0</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Delivery Fee</span>
+            <span class="fw-bold" id="summ-del">₹0</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2 text-success" id="summ-discount-row" style="display:none;">
+            <span>Discount</span>
+            <span class="fw-bold" id="summ-disc">-₹0</span>
+          </div>
+          <div class="d-flex justify-content-between pt-2 mt-2 border-top">
+            <span class="fs-5 fw-bold">Total</span>
+            <span class="fs-5 fw-bold" style="color: var(--ks-primary);" id="summ-tot">₹0</span>
+          </div>
+        </div>
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" value="" id="termsCheck" required>
+          <label class="form-check-label small text-muted" for="termsCheck">
+            I agree to the Terms & Conditions and Cancellation Policy
+          </label>
+        </div>
+
+        <div class="d-flex gap-2">
+          <a href="{% url 'cart' %}" class="btn btn-outline-secondary w-50">Back to Cart</a>
+          <button type="button" class="btn btn-ks-primary w-50" id="placeOrderBtn">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'foodapp/js/animation.js' %}"></script>
+<script>
+  // Simple chip selection script
+  document.querySelectorAll('.small-chips .chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+          document.querySelectorAll('.small-chips .chip').forEach(c => c.classList.remove('selected', 'btn-ks-primary'));
+          document.querySelectorAll('.small-chips .chip').forEach(c => c.classList.add('btn-outline-secondary'));
+          btn.classList.add('selected', 'btn-ks-primary');
+          btn.classList.remove('btn-outline-secondary');
+          document.getElementById('addrTypeHidden').value = btn.getAttribute('data-type');
+      });
+  });
+
+  // Payment tile selection
+  document.querySelectorAll('.payment-tiles .tile').forEach(tile => {
+      tile.addEventListener('click', () => {
+          document.querySelectorAll('.payment-tiles .tile').forEach(t => t.classList.remove('border-primary', 'bg-light'));
+          tile.classList.add('border-primary', 'bg-light');
+          const method = tile.querySelector('input').value;
+          if(method === 'online') {
+              document.getElementById('onlinePaymentFields').style.display = 'block';
+          } else {
+              document.getElementById('onlinePaymentFields').style.display = 'none';
+          }
+      });
+  });
+</script>
+{% endblock %}
+"""
+
+with open("foodapp/templates/delivery.html", "w", encoding="utf-8") as f:
+    f.write(content)
+print("delivery.html updated.")
