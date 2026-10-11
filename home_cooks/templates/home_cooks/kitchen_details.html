@@ -1,0 +1,260 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+{% load static %}
+
+{% block title %}Asha's Kitchen Details — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="py-4">
+
+    <!-- Breadcrumb -->
+    <nav class="ks-breadcrumb mb-4" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'home_cooks' %}">Home Cooks</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'cook_profile' %}">Asha's Kitchen</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Kitchen Details
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="kitchen-page-header mb-5">
+        <span class="ks-badge mb-3">Verified Home Kitchen</span>
+        <h1 class="display-5 fw-bold mb-3">Asha's Kitchen</h1>
+        <p class="lead text-muted mb-0">
+            Learn more about how Asha prepares and serves her
+            homemade meals through KitchenStation.
+        </p>
+    </header>
+
+    <!-- Kitchen Overview -->
+    <section class="mb-5">
+        <div class="row g-4 align-items-stretch">
+
+            <div class="col-lg-6">
+                <div class="kitchen-image-card h-100">
+                    <img
+                        src="{% static 'foodapp/images/thali.jpg' %}"
+                        alt="Homemade food from Asha's Kitchen"
+                        class="kitchen-overview-image"
+                    >
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="ks-card kitchen-summary-card h-100">
+
+                    <span class="verified-badge mb-3">
+                        ✓ Verified Home Kitchen
+                    </span>
+
+                    <h2 class="h3 fw-bold mb-3">
+                        Homemade food with a personal touch
+                    </h2>
+
+                    <p class="text-muted kitchen-summary-description mb-4">
+                        Asha prepares North Indian meals from her
+                        home kitchen in Andheri West. Meals are
+                        prepared in small batches with a focus on
+                        freshness and familiar home-style flavours.
+                    </p>
+
+                    <div class="kitchen-detail-item">
+                        <strong>📍 Location</strong>
+                        <span>Andheri West, Mumbai</span>
+                    </div>
+
+                    <div class="kitchen-detail-item">
+                        <strong>🍲 Specialty</strong>
+                        <span>North Indian Vegetarian Meals</span>
+                    </div>
+
+                    <div class="kitchen-detail-item">
+                        <strong>★ Rating</strong>
+                        <span>4.8 / 5</span>
+                    </div>
+
+                    <div class="kitchen-detail-item">
+                        <strong>🕒 Preparation</strong>
+                        <span>Freshly prepared in small batches</span>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'cook_meals' %}"
+                           class="btn btn-ks-primary">
+                            Explore Meals
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How the Kitchen Works -->
+    <section class="mb-5">
+
+        <div class="mb-4">
+            <h2 class="h3 fw-bold mb-2">How the Kitchen Works</h2>
+            <p class="text-muted mb-0">
+                A simple approach to preparing and serving homemade meals.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="ks-card kitchen-info-card h-100">
+                    <div class="kitchen-process-icon">🥕</div>
+                    <h3 class="h5 fw-bold">Fresh Ingredients</h3>
+                    <p class="text-muted mb-0">
+                        Ingredients are selected for preparing
+                        fresh homemade meals.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="ks-card kitchen-info-card h-100">
+                    <div class="kitchen-process-icon">🍳</div>
+                    <h3 class="h5 fw-bold">Home-Style Cooking</h3>
+                    <p class="text-muted mb-0">
+                        Meals are prepared using familiar
+                        home-style cooking methods.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="ks-card kitchen-info-card h-100">
+                    <div class="kitchen-process-icon">📦</div>
+                    <h3 class="h5 fw-bold">Packed With Care</h3>
+                    <p class="text-muted mb-0">
+                        Orders are packed carefully before being
+                        handed over for delivery.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Kitchen Standards -->
+    <section class="mb-5">
+
+        <h2 class="h3 fw-bold mb-4">Kitchen Standards</h2>
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <div class="kitchen-standard-item">
+                    <span class="kitchen-standard-check">✓</span>
+                    Verified home cook
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="kitchen-standard-item">
+                    <span class="kitchen-standard-check">✓</span>
+                    Home-prepared meals
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="kitchen-standard-item">
+                    <span class="kitchen-standard-check">✓</span>
+                    Fresh meal preparation
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="kitchen-standard-item">
+                    <span class="kitchen-standard-check">✓</span>
+                    Transparent meal pricing
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Availability -->
+    <section class="mb-5">
+
+        <div class="ks-card availability-card">
+
+            <h2 class="h3 fw-bold mb-3">Availability</h2>
+
+            <p class="text-muted mb-4">
+                Asha's Kitchen currently accepts orders during
+                selected meal preparation hours.
+            </p>
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+                    <div class="availability-day">
+                        <span class="availability-label">WEEKDAYS</span>
+                        <h3 class="h6 fw-bold mt-2 mb-1">
+                            Monday – Friday
+                        </h3>
+                        <p class="text-muted mb-0">11:00 AM – 2:30 PM</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="availability-day">
+                        <span class="availability-label">WEEKEND</span>
+                        <h3 class="h6 fw-bold mt-2 mb-1">Saturday</h3>
+                        <p class="text-muted mb-0">11:00 AM – 3:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="availability-day">
+                        <span class="availability-label">WEEKEND</span>
+                        <h3 class="h6 fw-bold mt-2 mb-1">Sunday</h3>
+                        <p class="text-muted mb-0">Limited availability</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="small text-muted mt-4 mb-0">
+                These are sample schedule details for the UI.
+                Live availability will be connected to the backend later.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cook-profile-cta text-center mb-5">
+
+        <h2 class="h3 fw-bold mb-3">
+            Hungry for something homemade?
+        </h2>
+
+        <p class="mb-4">
+            Explore meals prepared by Asha's Kitchen.
+        </p>
+
+        <a href="{% url 'cook_meals' %}"
+           class="btn btn-ks-secondary">
+            Explore Meals
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,157 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+
+{% block title %}My Profile — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="my-profile-page">
+
+    <!-- Back Navigation -->
+    <nav class="my-profile-back mb-4" aria-label="Dashboard navigation">
+        <a href="{% url 'cook_dashboard' %}">
+            <span aria-hidden="true">←</span>
+            Back to Dashboard
+        </a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="my-profile-header mb-5">
+        <span class="ks-eyebrow">YOUR KITCHEN, YOUR STORY</span>
+        <h1 class="mt-2 mb-3">My Profile</h1>
+        <p class="my-profile-intro mb-0">
+            Manage your home cook and kitchen information.
+            Keep your details accurate so customers know who is
+            preparing their meals.
+        </p>
+    </header>
+
+    <!-- Profile Form -->
+    <section class="my-profile-form-card ks-card">
+        <div class="my-profile-form-heading">
+            <div>
+                <h2>Kitchen Information</h2>
+                <p class="mb-0">
+                    Review the details shown on your cook profile.
+                </p>
+            </div>
+
+            <span class="my-profile-avatar" aria-hidden="true">A</span>
+        </div>
+
+        <div class="my-profile-divider"></div>
+
+        <form class="my-profile-form">
+
+            <div class="row g-4">
+
+                <!-- Cook Name -->
+                <div class="col-md-6">
+                    <label for="cookName" class="form-label">
+                        Cook Name
+                    </label>
+                    <input
+                        type="text"
+                        id="cookName"
+                        name="cook_name"
+                        class="form-control ks-form-control"
+                        value="Asha"
+                        autocomplete="name"
+                    >
+                </div>
+
+                <!-- Kitchen Name -->
+                <div class="col-md-6">
+                    <label for="kitchenName" class="form-label">
+                        Kitchen Name
+                    </label>
+                    <input
+                        type="text"
+                        id="kitchenName"
+                        name="kitchen_name"
+                        class="form-control ks-form-control"
+                        value="Asha's Kitchen"
+                    >
+                </div>
+
+                <!-- Location -->
+                <div class="col-md-6">
+                    <label for="location" class="form-label">
+                        Location
+                    </label>
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        class="form-control ks-form-control"
+                        value="Andheri West, Mumbai"
+                        autocomplete="address-level2"
+                    >
+                    <p class="my-profile-field-help">
+                        Your area helps customers understand where
+                        your kitchen is located.
+                    </p>
+                </div>
+
+                <!-- Specialty Cuisine -->
+                <div class="col-md-6">
+                    <label for="specialty" class="form-label">
+                        Specialty Cuisine
+                    </label>
+                    <select
+                        id="specialty"
+                        name="specialty"
+                        class="form-select ks-form-control"
+                    >
+                        <option selected>North Indian</option>
+                        <option>South Indian</option>
+                        <option>Maharashtrian</option>
+                        <option>Gujarati</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <!-- About the Kitchen -->
+                <div class="col-12">
+                    <label for="about" class="form-label">
+                        About Your Kitchen
+                    </label>
+                    <textarea
+                        id="about"
+                        name="about"
+                        class="form-control ks-form-control my-profile-textarea"
+                        rows="5"
+                        placeholder="Describe your cooking style, favourite recipes, and the meals you prepare..."
+                    ></textarea>
+                    <p class="my-profile-field-help">
+                        Tell customers what makes your homemade meals
+                        special.
+                    </p>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="col-12">
+                    <div class="my-profile-form-footer">
+                        <p class="my-profile-backend-note mb-0">
+                            <span aria-hidden="true">ⓘ</span>
+                            Saving profile changes will be enabled
+                            when the backend is connected.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn btn-ks-primary my-profile-save-button"
+                            disabled
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </section>
+
+</div>
+
+{% endblock %}

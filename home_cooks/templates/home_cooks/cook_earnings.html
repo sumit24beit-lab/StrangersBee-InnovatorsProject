@@ -1,0 +1,212 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+
+{% block title %}My Earnings — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="cook-earnings-page">
+
+    <!-- Back Navigation -->
+    <nav class="cook-earnings-back mb-4" aria-label="Dashboard navigation">
+        <a href="{% url 'cook_dashboard' %}">
+            <span aria-hidden="true">←</span>
+            Back to Dashboard
+        </a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="cook-earnings-header mb-5">
+        <span class="ks-eyebrow">YOUR KITCHEN'S PERFORMANCE</span>
+        <h1 class="mt-2 mb-3">My Earnings</h1>
+        <p class="cook-earnings-intro mb-0">
+            Track your income from homemade meals and completed orders.
+        </p>
+    </header>
+
+    <!-- Earnings Overview -->
+    <section class="cook-earnings-summary mb-5"
+             aria-label="Earnings summary">
+
+        <article class="earnings-card">
+            <div class="earnings-card-top">
+                <span>Total Earnings</span>
+                <span class="earnings-card-icon" aria-hidden="true">₹</span>
+            </div>
+
+            <h2 class="earnings-amount">₹12,450</h2>
+            <p class="earnings-card-caption mb-0">
+                Sample lifetime earnings
+            </p>
+        </article>
+
+        <article class="earnings-card">
+            <div class="earnings-card-top">
+                <span>This Month</span>
+                <span class="earnings-card-icon" aria-hidden="true">↗</span>
+            </div>
+
+            <h2 class="earnings-amount">₹3,600</h2>
+            <p class="earnings-card-caption mb-0">
+                Sample monthly earnings
+            </p>
+        </article>
+
+        <article class="earnings-card">
+            <div class="earnings-card-top">
+                <span>Completed Orders</span>
+                <span class="earnings-card-icon" aria-hidden="true">✓</span>
+            </div>
+
+            <h2 class="earnings-count">48</h2>
+            <p class="earnings-card-caption mb-0">
+                Sample completed order count
+            </p>
+        </article>
+
+    </section>
+
+    <!-- Payment Information -->
+    <section class="earnings-section-card mb-5">
+        <div class="earnings-section-header mb-4">
+            <div>
+                <span class="ks-eyebrow">PAYOUT DETAILS</span>
+                <h2 class="mt-2 mb-0">Payment Overview</h2>
+            </div>
+
+            <span class="payment-method-indicator">
+                Payment setup pending
+            </span>
+        </div>
+
+        <div class="payment-overview-list">
+
+            <div class="payment-overview-row">
+                <div>
+                    <span class="payment-overview-label">
+                        Pending Settlement
+                    </span>
+                    <p class="payment-overview-description mb-0">
+                        Sample amount awaiting settlement
+                    </p>
+                </div>
+
+                <strong>₹450</strong>
+            </div>
+
+            <div class="payment-overview-row">
+                <div>
+                    <span class="payment-overview-label">
+                        Total Paid Out
+                    </span>
+                    <p class="payment-overview-description mb-0">
+                        Sample amount already paid
+                    </p>
+                </div>
+
+                <strong>₹12,000</strong>
+            </div>
+
+            <div class="payment-overview-row">
+                <div>
+                    <span class="payment-overview-label">
+                        Payment Method
+                    </span>
+                    <p class="payment-overview-description mb-0">
+                        Add a payment method when setup is available
+                    </p>
+                </div>
+
+                <span class="payment-method-badge">
+                    Not configured
+                </span>
+            </div>
+
+        </div>
+
+        <p class="payment-overview-notice mb-0">
+            Payment processing and settlement tracking will be
+            implemented later.
+        </p>
+    </section>
+
+    <!-- Recent Transactions -->
+    <section class="earnings-section-card">
+        <div class="earnings-section-header mb-4">
+            <div>
+                <span class="ks-eyebrow">RECENT ACTIVITY</span>
+                <h2 class="mt-2 mb-0">Recent Earnings</h2>
+            </div>
+
+            <span class="earnings-transaction-count">3 sample transactions</span>
+        </div>
+
+        <div class="earnings-transactions">
+
+            <!-- Transaction 1 -->
+            <article class="transaction-row">
+                <div class="transaction-main">
+                    <div class="transaction-icon" aria-hidden="true">₹</div>
+
+                    <div class="transaction-information">
+                        <h3>Order #KS1003</h3>
+                        <p>Homestyle Paneer Thali</p>
+                    </div>
+                </div>
+
+                <div class="transaction-result">
+                    <strong class="transaction-amount">+₹180</strong>
+                    <span class="transaction-status transaction-status-completed">
+                        Completed
+                    </span>
+                </div>
+            </article>
+
+            <!-- Transaction 2 -->
+            <article class="transaction-row">
+                <div class="transaction-main">
+                    <div class="transaction-icon" aria-hidden="true">₹</div>
+
+                    <div class="transaction-information">
+                        <h3>Order #KS1002</h3>
+                        <p>Homemade Veg Pulao</p>
+                    </div>
+                </div>
+
+                <div class="transaction-result">
+                    <strong class="transaction-amount">+₹120</strong>
+                    <span class="transaction-status transaction-status-processing">
+                        Processing
+                    </span>
+                </div>
+            </article>
+
+            <!-- Transaction 3 -->
+            <article class="transaction-row">
+                <div class="transaction-main">
+                    <div class="transaction-icon" aria-hidden="true">₹</div>
+
+                    <div class="transaction-information">
+                        <h3>Order #KS1001</h3>
+                        <p>Homestyle Paneer Thali × 2</p>
+                    </div>
+                </div>
+
+                <div class="transaction-result">
+                    <strong class="transaction-amount">+₹360</strong>
+                    <span class="transaction-status transaction-status-completed">
+                        Completed
+                    </span>
+                </div>
+            </article>
+
+        </div>
+
+        <p class="earnings-sample-note mb-0">
+            These transactions are examples, not actual payment records.
+        </p>
+    </section>
+
+</div>
+
+{% endblock %}

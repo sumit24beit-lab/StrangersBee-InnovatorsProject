@@ -1,0 +1,227 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+{% load static %}
+
+{% block title %}Homestyle Paneer Thali — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="meal-details-page">
+
+    <!-- Breadcrumb -->
+    <nav class="ks-breadcrumb mb-4" aria-label="Breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span aria-hidden="true">→</span>
+        <a href="{% url 'home_cooks' %}">Home Cooks</a>
+        <span aria-hidden="true">→</span>
+        <a href="{% url 'cook_meals' %}">Asha's Meals</a>
+        <span aria-hidden="true">→</span>
+        <span aria-current="page">Meal Details</span>
+    </nav>
+
+    <!-- Meal Overview -->
+    <section class="meal-overview-section mb-5">
+        <div class="row g-4 g-xl-5 align-items-stretch">
+
+            <!-- Meal Image -->
+            <div class="col-lg-6">
+                <div class="meal-detail-image-wrapper">
+                    <img
+                        src="{% static 'foodapp/images/thali.jpg' %}"
+                        alt="Homestyle Paneer Thali with traditional accompaniments"
+                        class="meal-detail-image"
+                    >
+                    <span class="meal-detail-image-badge">
+                        Homemade with care
+                    </span>
+                </div>
+            </div>
+
+            <!-- Meal Information -->
+            <div class="col-lg-6">
+                <div class="meal-detail-information">
+
+                    <span class="meal-diet-label">Vegetarian</span>
+
+                    <h1 class="meal-detail-title mt-3 mb-3">
+                        Homestyle Paneer Thali
+                    </h1>
+
+                    <p class="meal-detail-intro">
+                        A comforting North Indian meal prepared with
+                        home-style recipes and familiar ingredients.
+                    </p>
+
+                    <div class="meal-detail-rating mb-3">
+                        <span class="meal-detail-rating-score">★ 4.8</span>
+                        <span>Customer rating</span>
+                    </div>
+
+                    <div class="meal-detail-price mb-4">₹180</div>
+
+                    <div class="meal-detail-divider mb-4"></div>
+
+                    <!-- Cook Profile -->
+                    <div class="meal-cook-section mb-4">
+                        <h2 class="meal-section-label mb-3">Prepared by</h2>
+
+                        <div class="cook-mini-profile">
+                            <img
+                                src="{% static 'foodapp/images/thali.jpg' %}"
+                                alt="Asha's Kitchen"
+                                class="cook-mini-image"
+                            >
+
+                            <div class="cook-mini-information">
+                                <h3>Asha's Kitchen</h3>
+                                <p>Andheri West, Mumbai</p>
+                                <span class="cook-mini-verified">
+                                    ✓ Verified Home Cook
+                                </span>
+                            </div>
+
+                            <a href="{% url 'cook_profile' %}"
+                               class="cook-mini-link">
+                                View Kitchen
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="meal-quantity-section mb-4">
+                        <label for="quantity" class="form-label">
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            class="form-control meal-quantity-input"
+                            value="1"
+                            min="1"
+                            max="10"
+                            step="1"
+                        >
+
+                        <p class="meal-quantity-help mb-0">
+                            Choose between 1 and 10 servings.
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="meal-detail-actions">
+                        <a href="{% url 'cart' %}" class="btn btn-ks-primary">
+                            Add to Cart
+                        </a>
+
+                        <a href="{% url 'cook_meals' %}"
+                           class="btn btn-ks-secondary">
+                            Back to Meals
+                        </a>
+                    </div>
+
+                    <p class="meal-availability-note mt-3 mb-0">
+                        Meal availability and order acceptance will be
+                        confirmed when backend functionality is added.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Description -->
+    <section class="meal-description-section ks-card mb-5">
+        <span class="ks-eyebrow">FROM ASHA'S KITCHEN</span>
+        <h2 class="mt-2 mb-3">About This Meal</h2>
+
+        <p class="mb-0">
+            This homestyle paneer thali brings together paneer curry,
+            dal, seasonal vegetables, roti and rice for a satisfying
+            everyday meal. It is designed for customers who enjoy
+            familiar home-cooked flavours.
+        </p>
+    </section>
+
+    <!-- Meal Information -->
+    <section class="meal-information-section mb-5">
+        <div class="meal-section-heading mb-4">
+            <span class="ks-eyebrow">GOOD TO KNOW</span>
+            <h2 class="mt-2 mb-0">Meal Information</h2>
+        </div>
+
+        <div class="row g-3 g-lg-4">
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="meal-info-card h-100">
+                    <span class="meal-info-icon" aria-hidden="true">🌿</span>
+                    <h3>Meal Type</h3>
+                    <p>Vegetarian</p>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="meal-info-card h-100">
+                    <span class="meal-info-icon" aria-hidden="true">🍲</span>
+                    <h3>Cuisine</h3>
+                    <p>North Indian</p>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="meal-info-card h-100">
+                    <span class="meal-info-icon" aria-hidden="true">🍽️</span>
+                    <h3>Serving</h3>
+                    <p>1 person</p>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="meal-info-card h-100">
+                    <span class="meal-info-icon" aria-hidden="true">🏡</span>
+                    <h3>Preparation</h3>
+                    <p>Home-style cooking</p>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Ingredients -->
+    <section class="meal-ingredients-section ks-card mb-5">
+        <span class="ks-eyebrow">SIMPLE, FAMILIAR INGREDIENTS</span>
+        <h2 class="mt-2 mb-3">Main Ingredients</h2>
+
+        <div class="meal-ingredients-list">
+            <span>Paneer</span>
+            <span>Dal</span>
+            <span>Seasonal Vegetables</span>
+            <span>Wheat Roti</span>
+            <span>Rice</span>
+            <span>Indian Spices</span>
+        </div>
+
+        <p class="meal-allergen-note mt-3 mb-0">
+            Please confirm ingredients and allergen information with
+            the home cook before ordering if you have dietary concerns.
+        </p>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="meal-details-cta ks-card text-center">
+        <span class="ks-eyebrow">MADE TO FEEL LIKE HOME</span>
+        <h2 class="mt-2 mb-3">Find your next homemade favourite</h2>
+
+        <p class="mb-4">
+            Explore more meals prepared by Asha's Kitchen.
+        </p>
+
+        <a href="{% url 'cook_meals' %}" class="btn btn-ks-primary">
+            Explore More Meals
+        </a>
+    </section>
+
+</div>
+
+{% endblock %}

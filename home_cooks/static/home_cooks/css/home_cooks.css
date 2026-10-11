@@ -1,0 +1,3101 @@
+
+/* =========================================
+   KitchenStation — Home Cooks Application
+   Listing Page Styles
+   ========================================= */
+
+/* Page introduction */
+
+.ks-cooks-intro {
+    max-width: 42rem;
+    margin-inline: auto;
+}
+
+/* Breadcrumb */
+
+.ks-breadcrumb .breadcrumb {
+    margin-bottom: 0;
+    background: transparent;
+}
+
+.ks-breadcrumb .breadcrumb-item a {
+    color: var(--ks-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.ks-breadcrumb .breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.ks-breadcrumb .breadcrumb-item.active {
+    color: var(--ks-muted);
+    font-weight: 600;
+}
+
+.ks-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: var(--ks-muted);
+    font-weight: 700;
+}
+
+/* Search and filters */
+
+.ks-filters {
+    background-color: var(--ks-card);
+}
+
+.ks-filters label {
+    font-weight: 600;
+}
+
+.ks-search-group .form-control {
+    min-width: 0;
+}
+
+/* Home Cook profile cards */
+
+.ks-cook-list-card {
+    min-width: 0;
+}
+
+.ks-cook-description {
+    line-height: 1.6;
+}
+
+/* Featured homemade meals */
+
+.ks-featured-meal {
+    min-width: 0;
+}
+
+.ks-featured-meal p {
+    line-height: 1.55;
+}
+
+/* Become a Home Cook call to action */
+
+.ks-cook-cta {
+    background-color: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.ks-cook-cta-copy {
+    max-width: 36rem;
+    margin-inline: auto;
+}
+
+/* Responsive layout */
+
+@media (max-width: 575.98px) {
+    .ks-filters .ks-search-group {
+        flex-wrap: wrap;
+    }
+
+    .ks-filters .ks-search-group .form-control {
+        width: 100%;
+        flex: 1 1 100%;
+        border-radius: var(--ks-radius-sm);
+    }
+
+    .ks-filters .ks-search-group .btn {
+        width: 100%;
+        margin-top: 0.5rem;
+        border-radius: var(--ks-radius-sm) !important;
+    }
+}
+
+
+/* =========================================
+   Cook Profile Page
+   ========================================= */
+
+.cook-profile-card {
+    padding: clamp(1.25rem, 3vw, 3rem);
+}
+
+.cook-profile-image {
+    display: block;
+    width: min(100%, 240px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border: 3px solid var(--ks-border);
+    border-radius: 50%;
+    background-color: var(--ks-card);
+    box-shadow: var(--ks-shadow);
+    margin-inline: auto;
+}
+
+.verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: rgba(95, 141, 78, 0.15);
+    color: #41623A;
+    border: 1px solid var(--ks-primary);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.cook-tag {
+    display: inline-block;
+    background-color: rgba(95, 141, 78, 0.12);
+    color: var(--ks-primary);
+    border: 1px solid var(--ks-primary);
+    border-radius: 20px;
+    padding: 0.3rem 0.75rem;
+    margin: 0 0.3rem 0.4rem 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.cook-profile-description,
+.cook-about-text {
+    line-height: 1.8;
+    max-width: 52rem;
+}
+
+.kitchen-info-card {
+    padding: 1.25rem;
+    gap: 0.65rem;
+}
+
+.kitchen-info-card h5 {
+    color: var(--ks-text);
+    line-height: 1.4;
+}
+
+.kitchen-info-card p {
+    line-height: 1.65;
+}
+
+.ks-cook-meal-card {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.ks-cook-meal-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.ks-cook-meal-content h3 {
+    line-height: 1.4;
+}
+
+.cook-profile-cta {
+    padding: clamp(2rem, 5vw, 3.5rem) 1.5rem;
+    background-color: var(--ks-primary);
+    color: #fff;
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.cook-profile-cta h2 {
+    color: #fff;
+}
+
+.cook-profile-cta p {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+@media (max-width: 575.98px) {
+    .cook-profile-card {
+        padding: 1.25rem;
+    }
+
+    .cook-profile-image {
+        width: min(100%, 190px);
+    }
+
+    .cook-profile-cta {
+        padding: 2rem 1.25rem;
+    }
+}
+
+
+/* =========================================
+   Kitchen Details Page
+   ========================================= */
+
+.kitchen-page-header {
+    max-width: 52rem;
+}
+
+.kitchen-image-card {
+    overflow: hidden;
+    min-height: 320px;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.kitchen-overview-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.kitchen-summary-card {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    gap: 0.65rem;
+}
+
+.kitchen-summary-description {
+    line-height: 1.8;
+}
+
+.kitchen-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(45, 45, 45, 0.14);
+}
+
+.kitchen-detail-item:last-of-type {
+    border-bottom: none;
+}
+
+.kitchen-detail-item strong {
+    flex: 0 0 38%;
+    color: var(--ks-text);
+}
+
+.kitchen-detail-item span {
+    text-align: right;
+    color: var(--ks-muted);
+}
+
+.kitchen-info-card {
+    padding: 1.5rem;
+    gap: 0.65rem;
+}
+
+.kitchen-process-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: 0.5rem;
+    background: rgba(95, 141, 78, 0.12);
+    border: 1px solid rgba(95, 141, 78, 0.45);
+    border-radius: 14px;
+    font-size: 1.6rem;
+}
+
+.kitchen-info-card p {
+    line-height: 1.7;
+}
+
+.kitchen-standard-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    height: 100%;
+    padding: 1rem 1.15rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius-sm);
+    box-shadow: var(--ks-shadow);
+    font-weight: 600;
+}
+
+.kitchen-standard-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(95, 141, 78, 0.15);
+    color: var(--ks-primary);
+    font-weight: 800;
+}
+
+.availability-card {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.availability-day {
+    height: 100%;
+    padding: 1.25rem;
+    background: rgba(95, 141, 78, 0.07);
+    border: 1px solid rgba(45, 45, 45, 0.18);
+    border-radius: var(--ks-radius-sm);
+}
+
+.availability-label {
+    color: var(--ks-primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+@media (max-width: 767.98px) {
+    .kitchen-image-card,
+    .kitchen-overview-image {
+        min-height: 240px;
+    }
+
+    .kitchen-detail-item {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .kitchen-detail-item strong {
+        flex-basis: auto;
+    }
+
+    .kitchen-detail-item span {
+        text-align: left;
+    }
+}
+
+
+/* ==========================================
+   Cook Meals Page
+   ========================================== */
+
+.cook-meals-page {
+    padding-block: 2.5rem 4rem;
+}
+
+.cook-meals-header {
+    max-width: 760px;
+}
+
+.cook-meals-header h1 {
+    color: var(--ks-text);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+}
+
+.ks-eyebrow {
+    color: var(--ks-primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.cook-meals-intro {
+    max-width: 650px;
+    color: var(--ks-muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* Cook summary */
+
+.cook-meals-summary {
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.ks-badge-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.8rem;
+    background: rgba(95, 141, 78, 0.13);
+    border: 1px solid rgba(95, 141, 78, 0.55);
+    border-radius: 999px;
+    color: var(--ks-primary);
+    font-size: 0.8rem;
+    font-weight: 750;
+}
+
+.cook-summary-title {
+    color: var(--ks-text);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.cook-summary-meta {
+    color: var(--ks-muted);
+    line-height: 1.7;
+}
+
+.cook-summary-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+}
+
+.cook-rating-score {
+    color: var(--ks-text);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.cook-rating-caption {
+    color: var(--ks-muted);
+    font-size: 0.9rem;
+}
+
+/* Search and filters */
+
+.meal-filter-section {
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.meal-filter-heading h2 {
+    color: var(--ks-text);
+    font-weight: 800;
+}
+
+.meal-filter-heading p {
+    color: var(--ks-muted);
+    font-size: 0.92rem;
+}
+
+.meal-filter-section .form-label {
+    margin-bottom: 0.5rem;
+    color: var(--ks-text);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.ks-form-control {
+    min-height: 48px;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 10px;
+    background-color: var(--ks-card);
+    color: var(--ks-text);
+}
+
+.ks-form-control:focus {
+    border-color: var(--ks-primary);
+    box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.15);
+}
+
+/* Available meals heading */
+
+.available-meals-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.available-meals-heading h2 {
+    color: var(--ks-text);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.meal-count-label {
+    flex-shrink: 0;
+    padding: 0.45rem 0.8rem;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 999px;
+    color: var(--ks-text);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Meal cards */
+
+.meal-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.meal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 7px 7px 0 var(--ks-border);
+}
+
+.meal-image-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 225px;
+    background: rgba(95, 141, 78, 0.09);
+    border-bottom: 2px solid var(--ks-border);
+}
+
+.meal-card-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 250ms ease;
+}
+
+.meal-card:hover .meal-card-image {
+    transform: scale(1.035);
+}
+
+.meal-image-label {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.4rem 0.65rem;
+    background: var(--ks-card);
+    border: 1.5px solid var(--ks-border);
+    border-radius: 8px;
+    color: var(--ks-text);
+    font-size: 0.73rem;
+    font-weight: 750;
+}
+
+.meal-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
+}
+
+.meal-diet-label {
+    display: inline-block;
+    padding: 0.35rem 0.65rem;
+    background: rgba(95, 141, 78, 0.12);
+    border: 1px solid rgba(95, 141, 78, 0.4);
+    border-radius: 7px;
+    color: var(--ks-primary);
+    font-size: 0.75rem;
+    font-weight: 750;
+}
+
+.meal-card-title {
+    color: var(--ks-text);
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.meal-card-description {
+    flex: 1;
+    margin-bottom: 1.25rem;
+    color: var(--ks-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.meal-card-footer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(45, 45, 45, 0.15);
+}
+
+.meal-price {
+    color: var(--ks-text);
+    font-size: 1.4rem;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.meal-card-footer .btn {
+    flex-shrink: 0;
+}
+
+/* Page call to action */
+
+.cook-meals-cta {
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background: var(--ks-card);
+}
+
+.cook-meals-cta h2 {
+    color: var(--ks-text);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.cook-meals-cta p {
+    color: var(--ks-muted);
+    line-height: 1.7;
+}
+
+/* Responsive layout */
+
+@media (max-width: 767.98px) {
+    .cook-meals-page {
+        padding-block: 1.5rem 3rem;
+    }
+
+    .cook-meals-header h1 {
+        font-size: clamp(1.9rem, 7vw, 2.5rem);
+    }
+
+    .cook-summary-rating {
+        align-items: flex-start;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(45, 45, 45, 0.15);
+    }
+
+    .meal-image-wrap {
+        height: 215px;
+    }
+
+    .available-meals-heading {
+        align-items: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .meal-card,
+    .meal-card-image {
+        transition: none;
+    }
+
+    .meal-card:hover,
+    .meal-card:hover .meal-card-image {
+        transform: none;
+    }
+}
+
+
+/* ==========================================
+   Meal Details Page
+   ========================================== */
+
+.meal-details-page {
+    padding-block: 2.5rem 4rem;
+}
+
+/* Main meal image */
+
+.meal-detail-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    min-height: 340px;
+    aspect-ratio: 4 / 3;
+    background: rgba(95, 141, 78, 0.09);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.meal-detail-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    object-fit: cover;
+}
+
+.meal-detail-image-badge {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.55rem 0.85rem;
+    background: var(--ks-card);
+    border: 1.5px solid var(--ks-border);
+    border-radius: 9px;
+    color: var(--ks-text);
+    font-size: 0.8rem;
+    font-weight: 750;
+}
+
+/* Meal overview */
+
+.meal-detail-information {
+    padding-block: 0.25rem;
+}
+
+.meal-detail-title {
+    color: var(--ks-text);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+}
+
+.meal-detail-intro {
+    max-width: 560px;
+    color: var(--ks-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.meal-detail-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--ks-muted);
+    font-size: 0.9rem;
+}
+
+.meal-detail-rating-score {
+    color: var(--ks-text);
+    font-weight: 800;
+}
+
+.meal-detail-price {
+    color: var(--ks-text);
+    font-size: 2rem;
+    font-weight: 850;
+    letter-spacing: -0.025em;
+}
+
+.meal-detail-divider {
+    height: 1px;
+    background: rgba(45, 45, 45, 0.18);
+}
+
+.meal-section-label {
+    color: var(--ks-text);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+/* Cook profile */
+
+.cook-mini-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--ks-card);
+    border: 1.5px solid var(--ks-border);
+    border-radius: var(--ks-radius-sm);
+}
+
+.cook-mini-image {
+    flex-shrink: 0;
+    width: 66px;
+    height: 66px;
+    object-fit: cover;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 12px;
+}
+
+.cook-mini-information {
+    min-width: 0;
+    flex: 1;
+}
+
+.cook-mini-information h3 {
+    margin: 0 0 0.25rem;
+    color: var(--ks-text);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.cook-mini-information p {
+    margin: 0 0 0.3rem;
+    color: var(--ks-muted);
+    font-size: 0.83rem;
+}
+
+.cook-mini-verified {
+    color: var(--ks-primary);
+    font-size: 0.75rem;
+    font-weight: 750;
+}
+
+.cook-mini-link {
+    flex-shrink: 0;
+    color: var(--ks-primary);
+    font-size: 0.85rem;
+    font-weight: 750;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.cook-mini-link:hover {
+    color: var(--ks-text);
+}
+
+/* Quantity and actions */
+
+.meal-quantity-section {
+    max-width: 180px;
+}
+
+.meal-quantity-section .form-label {
+    color: var(--ks-text);
+    font-size: 0.9rem;
+    font-weight: 750;
+}
+
+.meal-quantity-input {
+    min-height: 48px;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 10px;
+    background: var(--ks-card);
+    color: var(--ks-text);
+}
+
+.meal-quantity-input:focus {
+    border-color: var(--ks-primary);
+    box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.15);
+}
+
+.meal-quantity-help {
+    margin-top: 0.4rem;
+    color: var(--ks-muted);
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+.meal-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.meal-detail-actions .btn {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.meal-availability-note {
+    max-width: 520px;
+    color: var(--ks-muted);
+    font-size: 0.8rem;
+    line-height: 1.65;
+}
+
+/* Description and ingredients */
+
+.meal-description-section,
+.meal-ingredients-section {
+    padding: clamp(1.35rem, 3vw, 2.25rem);
+}
+
+.meal-description-section h2,
+.meal-ingredients-section h2,
+.meal-section-heading h2 {
+    color: var(--ks-text);
+    font-weight: 850;
+    letter-spacing: -0.025em;
+}
+
+.meal-description-section > p {
+    max-width: 850px;
+    color: var(--ks-muted);
+    line-height: 1.85;
+}
+
+.meal-ingredients-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+
+.meal-ingredients-list span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.55rem 0.85rem;
+    background: rgba(95, 141, 78, 0.1);
+    border: 1px solid rgba(95, 141, 78, 0.4);
+    border-radius: 9px;
+    color: var(--ks-text);
+    font-size: 0.87rem;
+    font-weight: 650;
+}
+
+.meal-allergen-note {
+    color: var(--ks-muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+/* Meal information cards */
+
+.meal-info-card {
+    padding: 1.35rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.meal-info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 1rem;
+    background: rgba(95, 141, 78, 0.12);
+    border-radius: 12px;
+    font-size: 1.35rem;
+}
+
+.meal-info-card h3 {
+    margin-bottom: 0.45rem;
+    color: var(--ks-text);
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.meal-info-card p {
+    margin: 0;
+    color: var(--ks-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Final call to action */
+
+.meal-details-cta {
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background: var(--ks-card);
+}
+
+.meal-details-cta h2 {
+    color: var(--ks-text);
+    font-weight: 850;
+    letter-spacing: -0.03em;
+}
+
+.meal-details-cta p {
+    color: var(--ks-muted);
+    line-height: 1.7;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 767.98px) {
+    .meal-details-page {
+        padding-block: 1.5rem 3rem;
+    }
+
+    .meal-detail-image-wrapper,
+    .meal-detail-image {
+        min-height: 260px;
+    }
+
+    .meal-detail-title {
+        font-size: 2rem;
+    }
+
+    .cook-mini-profile {
+        flex-wrap: wrap;
+    }
+
+    .cook-mini-link {
+        margin-left: 82px;
+    }
+
+    .meal-detail-actions {
+        flex-direction: column;
+    }
+
+    .meal-detail-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .meal-detail-image {
+        scroll-behavior: auto;
+    }
+}
+
+
+/* ==========================================
+   Meal Details — Layout Correction
+   ========================================== */
+
+.meal-details-page {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding: 2rem 1.25rem 4rem;
+    box-sizing: border-box;
+}
+
+.meal-overview-section > .row {
+    align-items: start;
+}
+
+/* Keep the main meal image prominent and correctly proportioned */
+.meal-detail-image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+    height: auto;
+    overflow: hidden;
+}
+
+.meal-detail-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* Give the information column room to breathe */
+.meal-detail-information {
+    width: 100%;
+    min-width: 0;
+    padding: 0.5rem 0 0 0.25rem;
+}
+
+.meal-detail-title {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.15;
+    overflow-wrap: break-word;
+}
+
+.meal-detail-intro {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+}
+
+/* Critical fix: the cook's image must remain a thumbnail */
+.cook-mini-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.cook-mini-profile .cook-mini-image {
+    display: block;
+    flex: 0 0 68px;
+    width: 68px !important;
+    min-width: 68px;
+    max-width: 68px;
+    height: 68px !important;
+    min-height: 68px;
+    max-height: 68px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.cook-mini-information {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.cook-mini-information h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.cook-mini-link {
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+/* Make quantity and actions more deliberate */
+.meal-quantity-section {
+    width: 100%;
+    max-width: 180px;
+}
+
+.meal-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.meal-detail-actions .btn {
+    min-height: 46px;
+    padding: 0.7rem 1.15rem;
+}
+
+/* Give each lower section a consistent visual structure */
+.meal-description-section,
+.meal-ingredients-section {
+    width: 100%;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    box-sizing: border-box;
+}
+
+.meal-information-section {
+    width: 100%;
+}
+
+.meal-information-section .row {
+    align-items: stretch;
+}
+
+.meal-information-section .meal-info-card {
+    height: 100%;
+    min-height: 150px;
+    padding: 1.35rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.meal-info-card h3 {
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.meal-info-card p {
+    line-height: 1.6;
+}
+
+.meal-ingredients-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.meal-details-cta {
+    width: 100%;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    box-sizing: border-box;
+}
+
+/* Responsive layout */
+@media (min-width: 992px) {
+    .meal-overview-section > .row {
+        --bs-gutter-x: 2.5rem;
+    }
+
+    .meal-detail-image-wrapper {
+        position: sticky;
+        top: 1.5rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .meal-detail-information {
+        padding: 0;
+    }
+
+    .meal-detail-image-wrapper {
+        position: relative;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .meal-details-page {
+        padding: 1.25rem 0.85rem 3rem;
+    }
+
+    .cook-mini-profile {
+        flex-wrap: wrap;
+    }
+
+    .cook-mini-profile .cook-mini-image {
+        flex-basis: 60px;
+        width: 60px !important;
+        min-width: 60px;
+        max-width: 60px;
+        height: 60px !important;
+        min-height: 60px;
+        max-height: 60px;
+    }
+
+    .cook-mini-link {
+        margin-left: 0;
+    }
+
+    .meal-detail-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .meal-detail-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* Meal Details: Match image height to overview content */
+
+@media (min-width: 992px) {
+    .meal-overview-section > .row {
+        align-items: stretch !important;
+    }
+
+    .meal-overview-section > .row > .col-lg-6:first-child {
+        display: flex;
+    }
+
+    .meal-detail-image-wrapper {
+        position: relative;
+        top: auto;
+        display: flex;
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+        min-height: 400px;
+        aspect-ratio: auto;
+    }
+
+    .meal-detail-image {
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: auto;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .meal-detail-image-wrapper {
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    .meal-detail-image {
+        height: 100%;
+        min-height: 0;
+        aspect-ratio: auto;
+        object-fit: cover;
+    }
+}
+
+
+/* Meal Details: Keep the image in normal document flow */
+@media (min-width: 992px) {
+    .meal-overview-section .meal-detail-image-wrapper {
+        position: static !important;
+        top: auto !important;
+        align-self: flex-start;
+    }
+}
+
+
+/* Fix badge positioning without changing the meal image */
+.meal-overview-section .meal-detail-image-wrapper {
+    position: relative !important;
+    top: auto !important;
+}
+
+.meal-detail-image-badge {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    display: inline-flex;
+    width: fit-content;
+    max-width: calc(100% - 2rem);
+}
+
+
+/* ==========================================
+   Home Cook Dashboard
+   ========================================== */
+
+.cook-dashboard-page {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding: 2.5rem 1.25rem 4rem;
+    box-sizing: border-box;
+}
+
+.cook-dashboard-header {
+    max-width: 760px;
+}
+
+.cook-dashboard-header h1 {
+    color: var(--ks-text);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+}
+
+.cook-dashboard-intro {
+    color: var(--ks-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Kitchen status panel */
+
+.cook-dashboard-status {
+    padding: clamp(1.4rem, 3vw, 2.25rem);
+}
+
+.cook-dashboard-kitchen-name {
+    color: var(--ks-text);
+    font-size: 1.5rem;
+    font-weight: 850;
+}
+
+.cook-dashboard-location {
+    color: var(--ks-muted);
+    line-height: 1.7;
+}
+
+.cook-dashboard-live-status {
+    height: 100%;
+    padding: 1rem 1.25rem;
+    background: rgba(95, 141, 78, 0.08);
+    border: 1px solid rgba(95, 141, 78, 0.35);
+    border-radius: var(--ks-radius-sm);
+}
+
+.dashboard-status-label {
+    display: block;
+    color: var(--ks-muted);
+    font-size: 0.78rem;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.dashboard-status-value {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 0.65rem;
+    color: var(--ks-text);
+    font-weight: 750;
+}
+
+.kitchen-status-dot {
+    display: inline-block;
+    flex: 0 0 9px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--ks-primary);
+    box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.16);
+}
+
+/* Section headings */
+
+.cook-dashboard-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cook-dashboard-section-heading h2 {
+    color: var(--ks-text);
+    font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+    font-weight: 850;
+    letter-spacing: -0.03em;
+}
+
+/* Overview metric cards */
+
+.cook-dashboard-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.35rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.dashboard-metric-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem;
+}
+
+.dashboard-metric-label {
+    color: var(--ks-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.dashboard-metric-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    background: rgba(95, 141, 78, 0.12);
+    border: 1px solid rgba(95, 141, 78, 0.23);
+    border-radius: 12px;
+    font-size: 1.15rem;
+}
+
+.dashboard-metric-value {
+    margin: 1.1rem 0 0.45rem;
+    color: var(--ks-text);
+    font-size: 2.35rem;
+    font-weight: 850;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+.dashboard-rating-star {
+    margin-left: 0.2rem;
+    color: var(--ks-primary);
+    font-size: 1.45rem;
+}
+
+.dashboard-metric-caption {
+    margin-top: auto;
+    color: var(--ks-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+/* Kitchen management action cards */
+
+.cook-dashboard-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.cook-dashboard-action:hover {
+    transform: translateY(-3px);
+    box-shadow: 6px 6px 0 var(--ks-border);
+}
+
+.dashboard-action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1.15rem;
+    background: rgba(95, 141, 78, 0.12);
+    border: 1px solid rgba(95, 141, 78, 0.3);
+    border-radius: 13px;
+    color: var(--ks-text);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.cook-dashboard-action h3 {
+    margin-bottom: 0.65rem;
+    color: var(--ks-text);
+    font-size: 1.15rem;
+    font-weight: 850;
+}
+
+.cook-dashboard-action p {
+    flex: 1;
+    margin-bottom: 1.25rem;
+    color: var(--ks-muted);
+    font-size: 0.91rem;
+    line-height: 1.75;
+}
+
+.cook-dashboard-action .btn {
+    min-height: 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1rem;
+}
+
+/* Recent orders */
+
+.dashboard-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ks-primary);
+    font-size: 0.9rem;
+    font-weight: 750;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.dashboard-view-all:hover {
+    color: var(--ks-text);
+}
+
+.cook-dashboard-table-wrapper {
+    overflow: hidden;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.cook-dashboard-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--ks-text);
+    --bs-table-border-color: rgba(45, 45, 45, 0.12);
+}
+
+.cook-dashboard-table thead th {
+    padding: 1rem 1.25rem;
+    background: rgba(95, 141, 78, 0.09);
+    color: var(--ks-text);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.cook-dashboard-table tbody td {
+    padding: 1.1rem 1.25rem;
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.cook-dashboard-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.dashboard-order-id {
+    color: var(--ks-primary);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.dashboard-order-amount {
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.order-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 0.76rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.status-new {
+    background: rgba(201, 106, 74, 0.12);
+    border-color: rgba(201, 106, 74, 0.36);
+    color: #9b4b30;
+}
+
+.status-preparing {
+    background: rgba(160, 122, 42, 0.12);
+    border-color: rgba(160, 122, 42, 0.36);
+    color: #80601e;
+}
+
+.status-completed {
+    background: rgba(95, 141, 78, 0.13);
+    border-color: rgba(95, 141, 78, 0.38);
+    color: var(--ks-primary);
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 767.98px) {
+    .cook-dashboard-page {
+        padding: 1.5rem 0.85rem 3rem;
+    }
+
+    .cook-dashboard-header h1 {
+        font-size: 2.15rem;
+    }
+
+    .cook-dashboard-live-status {
+        padding: 0.9rem 1rem;
+    }
+
+    .cook-dashboard-section-heading {
+        align-items: flex-start;
+    }
+
+    .cook-dashboard-card,
+    .cook-dashboard-action {
+        padding: 1.2rem;
+    }
+
+    .recent-orders-heading {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cook-dashboard-table thead th,
+    .cook-dashboard-table tbody td {
+        padding: 0.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cook-dashboard-action {
+        transition: none;
+    }
+
+    .cook-dashboard-action:hover {
+        transform: none;
+    }
+}
+
+
+/* ==========================================
+   My Profile Page
+   ========================================== */
+
+.my-profile-page {
+    width: 100%;
+    max-width: 1000px;
+    margin-inline: auto;
+    padding: 2.5rem 1.25rem 4rem;
+    box-sizing: border-box;
+}
+
+/* Back navigation */
+
+.my-profile-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ks-primary);
+    font-size: 0.9rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.my-profile-back a:hover {
+    color: var(--ks-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.my-profile-back a span {
+    font-size: 1.2rem;
+}
+
+/* Page heading */
+
+.my-profile-header {
+    max-width: 700px;
+}
+
+.my-profile-header h1 {
+    color: var(--ks-text);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+}
+
+.my-profile-intro {
+    color: var(--ks-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Main profile form */
+
+.my-profile-form-card {
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    background: var(--ks-card);
+}
+
+.my-profile-form-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+}
+
+.my-profile-form-heading h2 {
+    margin-bottom: 0.5rem;
+    color: var(--ks-text);
+    font-size: 1.35rem;
+    font-weight: 850;
+    letter-spacing: -0.02em;
+}
+
+.my-profile-form-heading p {
+    color: var(--ks-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.my-profile-avatar {
+    display: inline-flex;
+    flex: 0 0 58px;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    background: rgba(95, 141, 78, 0.14);
+    border: 2px solid var(--ks-border);
+    border-radius: 16px;
+    color: var(--ks-primary);
+    font-size: 1.65rem;
+    font-weight: 850;
+}
+
+.my-profile-divider {
+    height: 1px;
+    margin: 1.5rem 0 1.75rem;
+    background: rgba(45, 45, 45, 0.16);
+}
+
+/* Form labels and controls */
+
+.my-profile-form .form-label {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: var(--ks-text);
+    font-size: 0.9rem;
+    font-weight: 750;
+}
+
+.my-profile-form .ks-form-control {
+    width: 100%;
+    min-height: 49px;
+    padding: 0.75rem 0.9rem;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 10px;
+    background-color: var(--ks-card);
+    color: var(--ks-text);
+    font-size: 0.94rem;
+    box-shadow: none;
+}
+
+.my-profile-form select.ks-form-control {
+    padding-right: 2.5rem;
+}
+
+.my-profile-form .ks-form-control:focus {
+    border-color: var(--ks-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.15);
+}
+
+.my-profile-form .my-profile-textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.my-profile-form .ks-form-control::placeholder {
+    color: var(--ks-muted);
+    opacity: 0.8;
+}
+
+.my-profile-field-help {
+    margin: 0.45rem 0 0;
+    color: var(--ks-muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+/* Form footer */
+
+.my-profile-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(45, 45, 45, 0.15);
+}
+
+.my-profile-backend-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    max-width: 480px;
+    color: var(--ks-muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.my-profile-backend-note span {
+    flex-shrink: 0;
+    color: var(--ks-primary);
+}
+
+.my-profile-save-button {
+    min-height: 46px;
+    padding: 0.7rem 1.3rem;
+    white-space: nowrap;
+}
+
+.my-profile-save-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 767.98px) {
+    .my-profile-page {
+        padding: 1.5rem 0.85rem 3rem;
+    }
+
+    .my-profile-header h1 {
+        font-size: 2.15rem;
+    }
+
+    .my-profile-form-heading h2 {
+        font-size: 1.2rem;
+    }
+
+    .my-profile-avatar {
+        flex-basis: 48px;
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+    }
+
+    .my-profile-form-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .my-profile-save-button {
+        width: 100%;
+    }
+}
+
+
+/* ==========================================
+   My Meals Page
+   ========================================== */
+
+.my-meals-page {
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: 2.5rem 1.25rem 4rem;
+    box-sizing: border-box;
+}
+
+/* Back navigation */
+
+.my-meals-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ks-primary);
+    font-size: 0.9rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.my-meals-back a:hover {
+    color: var(--ks-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.my-meals-back a span {
+    font-size: 1.2rem;
+}
+
+/* Page heading */
+
+.my-meals-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.my-meals-header h1 {
+    color: var(--ks-text);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+}
+
+.my-meals-intro {
+    max-width: 620px;
+    color: var(--ks-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.my-meals-add-button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 46px;
+    padding: 0.7rem 1.15rem;
+}
+
+.my-meals-add-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+/* Menu summary */
+
+.my-meals-summary {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.my-meals-summary-item {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.my-meals-summary-label {
+    color: var(--ks-muted);
+    font-size: 0.82rem;
+    font-weight: 650;
+}
+
+.my-meals-summary-item strong {
+    color: var(--ks-text);
+    font-size: 1.65rem;
+    font-weight: 850;
+    line-height: 1.2;
+}
+
+.my-meals-summary-divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(45, 45, 45, 0.17);
+}
+
+/* Menu section */
+
+.my-meals-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.my-meals-list-heading h2 {
+    margin: 0;
+    color: var(--ks-text);
+    font-size: 1.45rem;
+    font-weight: 850;
+    letter-spacing: -0.025em;
+}
+
+.my-meals-count {
+    padding: 0.4rem 0.75rem;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 999px;
+    color: var(--ks-text);
+    font-size: 0.8rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.my-meals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Individual meal card */
+
+.my-meal-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.my-meal-content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.my-meal-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+}
+
+.my-meal-title-row h3 {
+    margin: 0;
+    color: var(--ks-text);
+    font-size: 1.17rem;
+    font-weight: 850;
+    line-height: 1.45;
+}
+
+.my-meal-description {
+    margin: 0.65rem 0 0.85rem;
+    color: var(--ks-muted);
+    font-size: 0.92rem;
+    line-height: 1.75;
+}
+
+.my-meal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--ks-muted);
+    font-size: 0.83rem;
+}
+
+.my-meal-price {
+    color: var(--ks-text);
+    font-size: 1.25rem;
+    font-weight: 850;
+}
+
+.my-meal-meta-separator {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--ks-muted);
+}
+
+/* Availability badges */
+
+.my-meal-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.my-meal-status-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.my-meal-status-available {
+    color: var(--ks-primary);
+    background: rgba(95, 141, 78, 0.12);
+    border-color: rgba(95, 141, 78, 0.35);
+}
+
+.my-meal-status-unavailable {
+    color: #795c57;
+    background: rgba(121, 92, 87, 0.09);
+    border-color: rgba(121, 92, 87, 0.28);
+}
+
+/* Meal actions */
+
+.my-meal-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.my-meal-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 76px;
+    min-height: 40px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.my-meal-actions .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+}
+
+.my-meal-remove-button {
+    color: #9b4b30;
+    background: transparent;
+    border: 1.5px solid rgba(201, 106, 74, 0.65);
+    border-radius: 10px;
+}
+
+.my-meal-remove-button:disabled {
+    color: #9b4b30;
+    background: transparent;
+}
+
+/* Backend notice */
+
+.my-meals-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.15rem;
+    background: rgba(95, 141, 78, 0.07);
+    border: 1px solid rgba(95, 141, 78, 0.3);
+    border-radius: var(--ks-radius-sm);
+}
+
+.my-meals-notice-icon {
+    flex: 0 0 auto;
+    color: var(--ks-primary);
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.my-meals-notice p {
+    color: var(--ks-muted);
+    font-size: 0.84rem;
+    line-height: 1.7;
+}
+
+.my-meals-notice strong {
+    color: var(--ks-text);
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 767.98px) {
+    .my-meals-page {
+        padding: 1.5rem 0.85rem 3rem;
+    }
+
+    .my-meals-header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .my-meals-add-button {
+        align-self: flex-start;
+    }
+
+    .my-meals-summary {
+        gap: 0.85rem;
+        padding: 1rem;
+    }
+
+    .my-meals-summary-label {
+        font-size: 0.72rem;
+        line-height: 1.5;
+    }
+
+    .my-meals-summary-item strong {
+        font-size: 1.4rem;
+    }
+
+    .my-meal-card {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 1.15rem;
+        padding: 1.2rem;
+    }
+
+    .my-meal-actions {
+        padding-top: 1rem;
+        border-top: 1px solid rgba(45, 45, 45, 0.15);
+    }
+
+    .my-meal-actions .btn {
+        flex: 1;
+    }
+}
+
+@media (max-width: 380px) {
+    .my-meals-summary {
+        gap: 0.55rem;
+        padding: 0.85rem;
+    }
+
+    .my-meals-summary-label {
+        font-size: 0.66rem;
+    }
+
+    .my-meal-title-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+
+/* ==========================================
+   Cook Orders Page
+   ========================================== */
+
+.cook-orders-page {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding: 2.5rem 1.25rem 4rem;
+    box-sizing: border-box;
+}
+
+/* Back navigation */
+
+.cook-orders-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ks-primary);
+    font-size: 0.9rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.cook-orders-back a:hover {
+    color: var(--ks-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.cook-orders-back a span {
+    font-size: 1.2rem;
+}
+
+/* Page header */
+
+.cook-orders-header {
+    max-width: 760px;
+}
+
+.cook-orders-header h1 {
+    color: var(--ks-text);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+}
+
+.cook-orders-intro {
+    color: var(--ks-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Summary cards */
+
+.cook-orders-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.cook-orders-summary-card {
+    padding: 1.35rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.cook-orders-summary-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--ks-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.cook-orders-summary-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    background: rgba(95, 141, 78, 0.12);
+    border: 1px solid rgba(95, 141, 78, 0.28);
+    border-radius: 12px;
+    color: var(--ks-primary);
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.cook-orders-summary-card > strong {
+    display: block;
+    margin: 1rem 0 0.35rem;
+    color: var(--ks-text);
+    font-size: 2.35rem;
+    font-weight: 850;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+.cook-orders-summary-card > p {
+    margin: 0;
+    color: var(--ks-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+/* Recent order heading */
+
+.cook-orders-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cook-orders-section-heading h2 {
+    color: var(--ks-text);
+    font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+    font-weight: 850;
+    letter-spacing: -0.03em;
+}
+
+.cook-orders-count {
+    flex-shrink: 0;
+    padding: 0.45rem 0.75rem;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 999px;
+    color: var(--ks-text);
+    font-size: 0.8rem;
+    font-weight: 750;
+}
+
+/* Individual order cards */
+
+.cook-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+}
+
+.cook-order-card {
+    min-width: 0;
+    padding: clamp(1.2rem, 3vw, 1.75rem);
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.cook-order-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cook-order-heading-content {
+    min-width: 0;
+}
+
+.cook-order-eyebrow {
+    color: var(--ks-muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.cook-order-heading-content h3 {
+    margin: 0.3rem 0;
+    color: var(--ks-text);
+    font-size: 1.3rem;
+    font-weight: 850;
+    letter-spacing: -0.02em;
+}
+
+.cook-order-heading-content p {
+    margin: 0;
+    color: var(--ks-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.cook-order-status {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-size: 0.78rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.cook-order-status-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.order-status-new {
+    color: #805300;
+    background: #FCE8C9;
+    border-color: rgba(128, 83, 0, 0.22);
+}
+
+.order-status-preparing {
+    color: #244E86;
+    background: #DDE8F8;
+    border-color: rgba(36, 78, 134, 0.2);
+}
+
+.order-status-completed {
+    color: #315B2A;
+    background: #DFEBDD;
+    border-color: rgba(49, 91, 42, 0.22);
+}
+
+.cook-order-divider {
+    height: 1px;
+    margin: 1.25rem 0;
+    background: rgba(45, 45, 45, 0.15);
+}
+
+/* Order details */
+
+.cook-order-details {
+    display: grid;
+    grid-template-columns: 1.4fr 0.55fr 0.75fr;
+    gap: 1.35rem 1.5rem;
+}
+
+.cook-order-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.cook-order-detail > span {
+    color: var(--ks-muted);
+    font-size: 0.78rem;
+    font-weight: 650;
+}
+
+.cook-order-detail > strong {
+    color: var(--ks-text);
+    font-size: 0.93rem;
+    font-weight: 750;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.cook-order-detail .cook-order-total {
+    font-size: 1.15rem;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.cook-order-detail-address {
+    grid-column: 1 / -1;
+    padding: 0.9rem 1rem;
+    background: rgba(95, 141, 78, 0.07);
+    border: 1px solid rgba(45, 45, 45, 0.12);
+    border-radius: 9px;
+}
+
+/* Order actions */
+
+.cook-order-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(45, 45, 45, 0.15);
+}
+
+.cook-order-action-note {
+    margin: 0;
+    color: var(--ks-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.cook-order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.cook-order-actions .btn {
+    min-height: 42px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.cook-order-actions .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+    box-shadow: none;
+}
+
+.cook-order-reject-button {
+    color: #9b4b30;
+    background: transparent;
+    border: 1.5px solid rgba(201, 106, 74, 0.65);
+    border-radius: 10px;
+}
+
+.cook-order-reject-button:disabled {
+    color: #9b4b30;
+    background: transparent;
+}
+
+.cook-order-completed-button {
+    color: var(--ks-primary);
+    background: rgba(95, 141, 78, 0.1);
+    border: 1.5px solid rgba(95, 141, 78, 0.35);
+    border-radius: 10px;
+}
+
+/* Backend notice */
+
+.cook-orders-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.15rem;
+    background: rgba(95, 141, 78, 0.07);
+    border: 1px solid rgba(95, 141, 78, 0.3);
+    border-radius: var(--ks-radius-sm);
+}
+
+.cook-orders-notice > span {
+    flex-shrink: 0;
+    color: var(--ks-primary);
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.cook-orders-notice p {
+    color: var(--ks-muted);
+    font-size: 0.84rem;
+    line-height: 1.7;
+}
+
+.cook-orders-notice strong {
+    color: var(--ks-text);
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 767.98px) {
+    .cook-orders-page {
+        padding: 1.5rem 0.85rem 3rem;
+    }
+
+    .cook-orders-summary {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .cook-orders-summary-card {
+        padding: 1.1rem;
+    }
+
+    .cook-orders-summary-card > strong {
+        margin-top: 0.65rem;
+        font-size: 2rem;
+    }
+
+    .cook-order-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.1rem;
+    }
+
+    .cook-order-detail-meal,
+    .cook-order-detail-address {
+        grid-column: 1 / -1;
+    }
+
+    .cook-order-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cook-order-actions {
+        width: 100%;
+    }
+
+    .cook-order-actions .btn {
+        flex: 1;
+    }
+}
+
+@media (max-width: 420px) {
+    .cook-order-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .cook-orders-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .cook-order-actions {
+        flex-direction: column;
+    }
+
+    .cook-order-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* ==========================================
+   Cook Earnings Page
+   ========================================== */
+
+.cook-earnings-page {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding: 2.5rem 1.25rem 4rem;
+    box-sizing: border-box;
+}
+
+/* Back navigation */
+
+.cook-earnings-back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ks-primary);
+    font-size: 0.9rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.cook-earnings-back a:hover {
+    color: var(--ks-text);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.cook-earnings-back a span {
+    font-size: 1.2rem;
+}
+
+/* Page header */
+
+.cook-earnings-header {
+    max-width: 760px;
+}
+
+.cook-earnings-header h1 {
+    color: var(--ks-text);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+}
+
+.cook-earnings-intro {
+    color: var(--ks-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Earnings summary cards */
+
+.cook-earnings-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.earnings-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 1.4rem;
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.earnings-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--ks-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.earnings-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    background: rgba(95, 141, 78, 0.12);
+    border: 1px solid rgba(95, 141, 78, 0.28);
+    border-radius: 12px;
+    color: var(--ks-primary);
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.earnings-amount,
+.earnings-count {
+    margin: 1.1rem 0 0.45rem;
+    color: var(--ks-text);
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.earnings-amount {
+    color: var(--ks-primary);
+}
+
+.earnings-card-caption {
+    margin-top: auto;
+    color: var(--ks-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+/* Shared section cards */
+
+.earnings-section-card {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--ks-card);
+    border: 2px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+}
+
+.earnings-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.earnings-section-header h2 {
+    color: var(--ks-text);
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 850;
+    letter-spacing: -0.03em;
+}
+
+.payment-method-indicator,
+.earnings-transaction-count {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.7rem;
+    border: 1.5px solid var(--ks-border);
+    border-radius: 999px;
+    color: var(--ks-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.payment-method-indicator {
+    background: rgba(201, 106, 74, 0.08);
+    border-color: rgba(201, 106, 74, 0.35);
+    color: #9b4b30;
+}
+
+/* Payment overview */
+
+.payment-overview-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-overview-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(45, 45, 45, 0.14);
+}
+
+.payment-overview-row:first-child {
+    padding-top: 0;
+}
+
+.payment-overview-row:last-child {
+    border-bottom: none;
+}
+
+.payment-overview-label {
+    display: block;
+    color: var(--ks-text);
+    font-size: 0.92rem;
+    font-weight: 750;
+}
+
+.payment-overview-description {
+    margin-top: 0.3rem;
+    color: var(--ks-muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+.payment-overview-row > strong {
+    flex-shrink: 0;
+    color: var(--ks-text);
+    font-size: 1.1rem;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.payment-method-badge {
+    flex-shrink: 0;
+    padding: 0.45rem 0.65rem;
+    background: rgba(45, 45, 45, 0.04);
+    border: 1px solid rgba(45, 45, 45, 0.18);
+    border-radius: 8px;
+    color: var(--ks-muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.payment-overview-notice {
+    margin-top: 0.9rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(45, 45, 45, 0.14);
+    color: var(--ks-muted);
+    font-size: 0.81rem;
+    line-height: 1.7;
+}
+
+/* Recent transactions */
+
+.earnings-transactions {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(45, 45, 45, 0.14);
+}
+
+.transaction-row:first-child {
+    padding-top: 0;
+}
+
+.transaction-row:last-child {
+    border-bottom: none;
+}
+
+.transaction-main {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 0;
+}
+
+.transaction-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    background: rgba(95, 141, 78, 0.11);
+    border: 1px solid rgba(95, 141, 78, 0.25);
+    border-radius: 12px;
+    color: var(--ks-primary);
+    font-size: 1.1rem;
+    font-weight: 850;
+}
+
+.transaction-information {
+    min-width: 0;
+}
+
+.transaction-information h3 {
+    margin: 0 0 0.3rem;
+    color: var(--ks-text);
+    font-size: 0.98rem;
+    font-weight: 800;
+}
+
+.transaction-information p {
+    margin: 0;
+    color: var(--ks-muted);
+    font-size: 0.84rem;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.transaction-result {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.transaction-amount {
+    color: var(--ks-primary);
+    font-size: 1.15rem;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.transaction-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 0.74rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.transaction-status-completed {
+    background: rgba(95, 141, 78, 0.13);
+    border-color: rgba(95, 141, 78, 0.35);
+    color: var(--ks-primary);
+}
+
+.transaction-status-processing {
+    background: #FCE8C9;
+    border-color: rgba(128, 83, 0, 0.22);
+    color: #805300;
+}
+
+.earnings-sample-note {
+    margin-top: 0.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(45, 45, 45, 0.14);
+    color: var(--ks-muted);
+    font-size: 0.8rem;
+    line-height: 1.7;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 767.98px) {
+    .cook-earnings-page {
+        padding: 1.5rem 0.85rem 3rem;
+    }
+
+    .cook-earnings-summary {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+    }
+
+    .earnings-card {
+        padding: 1.2rem;
+    }
+
+    .earnings-amount,
+    .earnings-count {
+        margin-top: 0.75rem;
+    }
+
+    .earnings-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .payment-overview-row {
+        align-items: flex-start;
+    }
+
+    .payment-overview-row:last-child {
+        flex-wrap: wrap;
+    }
+
+    .transaction-row {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 420px) {
+    .payment-overview-row {
+        gap: 0.75rem;
+    }
+
+    .payment-method-badge {
+        white-space: normal;
+        text-align: center;
+    }
+
+    .transaction-main {
+        gap: 0.65rem;
+    }
+
+    .transaction-icon {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .transaction-information h3 {
+        font-size: 0.88rem;
+    }
+
+    .transaction-information p {
+        font-size: 0.77rem;
+    }
+
+    .transaction-amount {
+        font-size: 1rem;
+    }
+}

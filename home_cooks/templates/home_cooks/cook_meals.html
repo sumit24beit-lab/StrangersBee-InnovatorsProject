@@ -1,0 +1,344 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+{% load static %}
+
+{% block title %}Asha's Homemade Meals — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="cook-meals-page">
+
+    <!-- Breadcrumb -->
+    <nav class="ks-breadcrumb mb-4" aria-label="Breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span aria-hidden="true">→</span>
+        <a href="{% url 'home_cooks' %}">Home Cooks</a>
+        <span aria-hidden="true">→</span>
+        <a href="{% url 'cook_profile' %}">Asha's Kitchen</a>
+        <span aria-hidden="true">→</span>
+        <span aria-current="page">Homemade Meals</span>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="cook-meals-header mb-5">
+        <span class="ks-eyebrow">FRESH FROM THE HOME KITCHEN</span>
+        <h1 class="mt-2 mb-3">Meals from Asha's Kitchen</h1>
+        <p class="cook-meals-intro mb-0">
+            Explore homemade meals prepared with care using familiar
+            ingredients and traditional home-style recipes.
+        </p>
+    </header>
+
+    <!-- Cook Summary -->
+    <section class="cook-meals-summary ks-card mb-5"
+             aria-label="Home cook information">
+        <div class="row align-items-center g-3">
+            <div class="col-md-8">
+                <span class="ks-badge ks-badge-verified">
+                    ✓ Verified Home Cook
+                </span>
+
+                <h2 class="cook-summary-title mt-3 mb-2">
+                    Asha's Kitchen
+                </h2>
+
+                <p class="cook-summary-meta mb-0">
+                    Andheri West, Mumbai
+                    <span aria-hidden="true">·</span>
+                    North Indian
+                    <span aria-hidden="true">·</span>
+                    Vegetarian
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="cook-summary-rating">
+                    <span class="cook-rating-score">★ 4.8</span>
+                    <span class="cook-rating-caption">Customer rating</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="meal-filter-section ks-card mb-5"
+             aria-label="Search and filter meals">
+        <div class="meal-filter-heading mb-3">
+            <h2 class="h5 mb-1">Find your next meal</h2>
+            <p class="mb-0">Explore the menu from Asha's kitchen.</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-5">
+                <label for="mealSearch" class="form-label">
+                    Search meals
+                </label>
+                <input
+                    type="search"
+                    id="mealSearch"
+                    class="form-control ks-form-control"
+                    placeholder="Search by meal name..."
+                >
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <label for="mealCategory" class="form-label">
+                    Category
+                </label>
+                <select id="mealCategory" class="form-select ks-form-control">
+                    <option value="">All categories</option>
+                    <option>Thali</option>
+                    <option>Rice</option>
+                    <option>Bread</option>
+                    <option>Snacks</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+                <label for="mealDiet" class="form-label">Diet</label>
+                <select id="mealDiet" class="form-select ks-form-control">
+                    <option value="">All</option>
+                    <option>Vegetarian</option>
+                    <option>Non-Vegetarian</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 col-lg-2">
+                <label for="mealSort" class="form-label">Sort by</label>
+                <select id="mealSort" class="form-select ks-form-control">
+                    <option>Recommended</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Meals -->
+    <section class="available-meals-section mb-5">
+        <div class="available-meals-heading mb-4">
+            <div>
+                <span class="ks-eyebrow">MADE WITH CARE</span>
+                <h2 class="mt-2 mb-0">Available Meals</h2>
+            </div>
+
+            <span class="meal-count-label">6 meals</span>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Meal 1 -->
+            <div class="col-md-6 col-lg-4">
+                <article class="meal-card ks-card h-100">
+                    <div class="meal-image-wrap">
+                        <img
+                            src="{% static 'foodapp/images/thali.jpg' %}"
+                            class="meal-card-image"
+                            alt="Homestyle Paneer Thali"
+                            loading="lazy"
+                        >
+                        <span class="meal-image-label">Home favourite</span>
+                    </div>
+
+                    <div class="meal-card-body">
+                        <span class="meal-diet-label">Vegetarian</span>
+                        <h3 class="meal-card-title mt-2">
+                            Homestyle Paneer Thali
+                        </h3>
+                        <p class="meal-card-description">
+                            Paneer curry, dal, seasonal vegetables, roti and rice.
+                        </p>
+
+                        <div class="meal-card-footer">
+                            <strong class="meal-price">₹180</strong>
+                            <a href="{% url 'meal_details' %}"
+                               class="btn btn-ks-secondary">
+                                View Meal
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Meal 2 -->
+            <div class="col-md-6 col-lg-4">
+                <article class="meal-card ks-card h-100">
+                    <div class="meal-image-wrap">
+                        <img
+                            src="{% static 'foodapp/images/varan_bhaat.jpg' %}"
+                            class="meal-card-image"
+                            alt="Homestyle Varan Bhaat"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="meal-card-body">
+                        <span class="meal-diet-label">Vegetarian</span>
+                        <h3 class="meal-card-title mt-2">
+                            Homestyle Varan Bhaat
+                        </h3>
+                        <p class="meal-card-description">
+                            Comforting dal and rice prepared in a simple
+                            home-style manner.
+                        </p>
+
+                        <div class="meal-card-footer">
+                            <strong class="meal-price">₹130</strong>
+                            <a href="{% url 'meal_details' %}"
+                               class="btn btn-ks-secondary">
+                                View Meal
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Meal 3 -->
+            <div class="col-md-6 col-lg-4">
+                <article class="meal-card ks-card h-100">
+                    <div class="meal-image-wrap">
+                        <img
+                            src="{% static 'foodapp/images/misalpav.jpg' %}"
+                            class="meal-card-image"
+                            alt="Homestyle Misal Pav"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="meal-card-body">
+                        <span class="meal-diet-label">Vegetarian</span>
+                        <h3 class="meal-card-title mt-2">
+                            Homestyle Misal Pav
+                        </h3>
+                        <p class="meal-card-description">
+                            Maharashtrian sprouted curry served with pav.
+                        </p>
+
+                        <div class="meal-card-footer">
+                            <strong class="meal-price">₹120</strong>
+                            <a href="{% url 'meal_details' %}"
+                               class="btn btn-ks-secondary">
+                                View Meal
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Meal 4 -->
+            <div class="col-md-6 col-lg-4">
+                <article class="meal-card ks-card h-100">
+                    <div class="meal-image-wrap">
+                        <img
+                            src="{% static 'foodapp/images/puranpoli.jpg' %}"
+                            class="meal-card-image"
+                            alt="Traditional Puran Poli"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="meal-card-body">
+                        <span class="meal-diet-label">Vegetarian</span>
+                        <h3 class="meal-card-title mt-2">
+                            Traditional Puran Poli
+                        </h3>
+                        <p class="meal-card-description">
+                            Sweet flatbread with a traditional lentil
+                            and jaggery filling.
+                        </p>
+
+                        <div class="meal-card-footer">
+                            <strong class="meal-price">₹100</strong>
+                            <a href="{% url 'meal_details' %}"
+                               class="btn btn-ks-secondary">
+                                View Meal
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Meal 5 -->
+            <div class="col-md-6 col-lg-4">
+                <article class="meal-card ks-card h-100">
+                    <div class="meal-image-wrap">
+                        <img
+                            src="{% static 'foodapp/images/fried_rice.jpg' %}"
+                            class="meal-card-image"
+                            alt="Homestyle Vegetable Rice"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="meal-card-body">
+                        <span class="meal-diet-label">Vegetarian</span>
+                        <h3 class="meal-card-title mt-2">
+                            Homestyle Vegetable Rice
+                        </h3>
+                        <p class="meal-card-description">
+                            Rice cooked with vegetables and mild
+                            everyday spices.
+                        </p>
+
+                        <div class="meal-card-footer">
+                            <strong class="meal-price">₹140</strong>
+                            <a href="{% url 'meal_details' %}"
+                               class="btn btn-ks-secondary">
+                                View Meal
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Meal 6 -->
+            <div class="col-md-6 col-lg-4">
+                <article class="meal-card ks-card h-100">
+                    <div class="meal-image-wrap">
+                        <img
+                            src="{% static 'foodapp/images/food5.jpg' %}"
+                            class="meal-card-image"
+                            alt="Daily Homemade Special"
+                            loading="lazy"
+                        >
+                    </div>
+
+                    <div class="meal-card-body">
+                        <span class="meal-diet-label">Vegetarian</span>
+                        <h3 class="meal-card-title mt-2">
+                            Daily Homemade Special
+                        </h3>
+                        <p class="meal-card-description">
+                            A rotating home-style meal based on the
+                            day's preparation.
+                        </p>
+
+                        <div class="meal-card-footer">
+                            <strong class="meal-price">₹160</strong>
+                            <a href="{% url 'meal_details' %}"
+                               class="btn btn-ks-secondary">
+                                View Meal
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cook-meals-cta ks-card text-center">
+        <span class="ks-eyebrow">A TASTE OF HOME</span>
+        <h2 class="mt-2 mb-3">Enjoy food that feels like home</h2>
+        <p class="mb-4">
+            Find a meal that suits your taste and budget.
+        </p>
+        <a href="{% url 'home_cooks' %}" class="btn btn-ks-primary">
+            Explore Other Home Cooks
+        </a>
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,316 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+{% load static %}
+
+{% block title %}Cook Dashboard — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="cook-dashboard-page">
+
+    <!-- Welcome Header -->
+    <header class="cook-dashboard-header mb-5">
+        <span class="ks-eyebrow">HOME COOK DASHBOARD</span>
+        <h1 class="mt-2 mb-3">Welcome back, Asha!</h1>
+        <p class="cook-dashboard-intro mb-0">
+            Manage your kitchen, meals, customer orders and earnings
+            from one place.
+        </p>
+    </header>
+
+    <!-- Profile Status -->
+    <section class="cook-dashboard-status ks-card mb-5"
+             aria-label="Kitchen profile and status">
+        <div class="row align-items-center g-4">
+            <div class="col-md-8">
+                <span class="ks-badge ks-badge-verified">
+                    ✓ Verified Home Cook
+                </span>
+
+                <h2 class="cook-dashboard-kitchen-name mt-3 mb-2">
+                    Asha's Kitchen
+                </h2>
+
+                <p class="cook-dashboard-location mb-0">
+                    Andheri West, Mumbai
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="cook-dashboard-live-status">
+                    <span class="dashboard-status-label">
+                        Kitchen Status
+                    </span>
+
+                    <p class="dashboard-status-value mb-0">
+                        <span class="kitchen-status-dot"
+                              aria-hidden="true"></span>
+                        Accepting Orders
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Cards -->
+    <section class="cook-dashboard-section mb-5">
+        <div class="cook-dashboard-section-heading mb-4">
+            <div>
+                <span class="ks-eyebrow">AT A GLANCE</span>
+                <h2 class="mt-2 mb-0">Your Overview</h2>
+            </div>
+        </div>
+
+        <div class="row g-3 g-xl-4">
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="cook-dashboard-card h-100">
+                    <div class="dashboard-metric-top">
+                        <span class="dashboard-metric-label">Total Meals</span>
+                        <span class="dashboard-metric-icon" aria-hidden="true">
+                            🍲
+                        </span>
+                    </div>
+                    <p class="dashboard-metric-value">12</p>
+                    <p class="dashboard-metric-caption mb-0">
+                        Listed in your kitchen
+                    </p>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="cook-dashboard-card h-100">
+                    <div class="dashboard-metric-top">
+                        <span class="dashboard-metric-label">New Orders</span>
+                        <span class="dashboard-metric-icon" aria-hidden="true">
+                            🧾
+                        </span>
+                    </div>
+                    <p class="dashboard-metric-value">5</p>
+                    <p class="dashboard-metric-caption mb-0">
+                        Awaiting your attention
+                    </p>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="cook-dashboard-card h-100">
+                    <div class="dashboard-metric-top">
+                        <span class="dashboard-metric-label">
+                            Completed Orders
+                        </span>
+                        <span class="dashboard-metric-icon" aria-hidden="true">
+                            ✓
+                        </span>
+                    </div>
+                    <p class="dashboard-metric-value">48</p>
+                    <p class="dashboard-metric-caption mb-0">
+                        All-time completed orders
+                    </p>
+                </article>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <article class="cook-dashboard-card h-100">
+                    <div class="dashboard-metric-top">
+                        <span class="dashboard-metric-label">
+                            Average Rating
+                        </span>
+                        <span class="dashboard-metric-icon" aria-hidden="true">
+                            ★
+                        </span>
+                    </div>
+                    <p class="dashboard-metric-value">4.8<span class="dashboard-rating-star">★</span></p>
+                    <p class="dashboard-metric-caption mb-0">
+                        Based on customer feedback
+                    </p>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="cook-dashboard-section mb-5">
+        <div class="cook-dashboard-section-heading mb-4">
+            <div>
+                <span class="ks-eyebrow">KITCHEN MANAGEMENT</span>
+                <h2 class="mt-2 mb-0">Manage Your Kitchen</h2>
+            </div>
+        </div>
+
+        <div class="row g-3 g-xl-4">
+
+            <div class="col-md-6 col-lg-4">
+                <article class="cook-dashboard-action h-100">
+                    <span class="dashboard-action-icon" aria-hidden="true">
+                        👤
+                    </span>
+                    <h3>My Profile</h3>
+                    <p>
+                        Update your cook information, location and
+                        kitchen details.
+                    </p>
+                    <a href="{% url 'my_profile' %}"
+                       class="btn btn-ks-secondary">
+                        Manage Profile
+                    </a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="cook-dashboard-action h-100">
+                    <span class="dashboard-action-icon" aria-hidden="true">
+                        🍱
+                    </span>
+                    <h3>My Meals</h3>
+                    <p>
+                        Manage your menu, meal descriptions, prices
+                        and availability.
+                    </p>
+                    <a href="{% url 'my_meals' %}"
+                       class="btn btn-ks-secondary">
+                        Manage Meals
+                    </a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="cook-dashboard-action h-100">
+                    <span class="dashboard-action-icon" aria-hidden="true">
+                        📦
+                    </span>
+                    <h3>Orders</h3>
+                    <p>
+                        Review incoming orders and update their
+                        preparation status.
+                    </p>
+                    <a href="{% url 'cook_orders' %}"
+                       class="btn btn-ks-secondary">
+                        View Orders
+                    </a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="cook-dashboard-action h-100">
+                    <span class="dashboard-action-icon" aria-hidden="true">
+                        ₹
+                    </span>
+                    <h3>Earnings</h3>
+                    <p>
+                        Track completed sales and your earnings
+                        from meal orders.
+                    </p>
+                    <a href="{% url 'cook_earnings' %}"
+                       class="btn btn-ks-secondary">
+                        View Earnings
+                    </a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="cook-dashboard-action h-100">
+                    <span class="dashboard-action-icon" aria-hidden="true">
+                        🏡
+                    </span>
+                    <h3>Kitchen Details</h3>
+                    <p>
+                        Review the kitchen information customers
+                        see on your public profile.
+                    </p>
+                    <a href="{% url 'kitchen_details' %}"
+                       class="btn btn-ks-secondary">
+                        View Kitchen
+                    </a>
+                </article>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <article class="cook-dashboard-action h-100">
+                    <span class="dashboard-action-icon" aria-hidden="true">
+                        🌐
+                    </span>
+                    <h3>Public Profile</h3>
+                    <p>
+                        Preview your kitchen's public-facing page
+                        on KitchenStation.
+                    </p>
+                    <a href="{% url 'cook_profile' %}"
+                       class="btn btn-ks-secondary">
+                        View Public Profile
+                    </a>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Recent Orders -->
+    <section class="cook-dashboard-section mb-5">
+        <div class="cook-dashboard-section-heading recent-orders-heading mb-4">
+            <div>
+                <span class="ks-eyebrow">LATEST ACTIVITY</span>
+                <h2 class="mt-2 mb-0">Recent Orders</h2>
+            </div>
+
+            <a href="{% url 'cook_orders' %}"
+               class="dashboard-view-all">
+                View All Orders <span aria-hidden="true">→</span>
+            </a>
+        </div>
+
+        <div class="cook-dashboard-table-wrapper">
+            <div class="table-responsive">
+                <table class="table cook-dashboard-table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order</th>
+                            <th scope="col">Meal</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="dashboard-order-id">#KS1001</td>
+                            <td>Homestyle Paneer Thali</td>
+                            <td class="dashboard-order-amount">₹180</td>
+                            <td>
+                                <span class="order-status-badge status-new">
+                                    New
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="dashboard-order-id">#KS1002</td>
+                            <td>Homestyle Vegetable Rice</td>
+                            <td class="dashboard-order-amount">₹140</td>
+                            <td>
+                                <span class="order-status-badge status-preparing">
+                                    Preparing
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="dashboard-order-id">#KS1003</td>
+                            <td>Traditional Puran Poli</td>
+                            <td class="dashboard-order-amount">₹100</td>
+                            <td>
+                                <span class="order-status-badge status-completed">
+                                    Completed
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}

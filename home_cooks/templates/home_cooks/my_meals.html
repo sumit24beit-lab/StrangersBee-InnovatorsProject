@@ -1,0 +1,163 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+
+{% block title %}My Meals — KitchenStation{% endblock %}
+
+{% block content %}
+
+<div class="my-meals-page">
+
+    <!-- Back Navigation -->
+    <nav class="my-meals-back mb-4" aria-label="Dashboard navigation">
+        <a href="{% url 'cook_dashboard' %}">
+            <span aria-hidden="true">←</span>
+            Back to Dashboard
+        </a>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="my-meals-header mb-5">
+        <div>
+            <span class="ks-eyebrow">YOUR HOMEMADE MENU</span>
+            <h1 class="mt-2 mb-3">My Meals</h1>
+            <p class="my-meals-intro mb-0">
+                Manage the homemade meals you offer to customers.
+                Keep your menu clear, fresh and up to date.
+            </p>
+        </div>
+
+        <button type="button"
+                class="btn btn-ks-primary my-meals-add-button"
+                disabled>
+            <span aria-hidden="true">＋</span>
+            Add New Meal
+        </button>
+    </header>
+
+    <!-- Menu Summary -->
+    <section class="my-meals-summary mb-4"
+             aria-label="Menu summary">
+        <div class="my-meals-summary-item">
+            <span class="my-meals-summary-label">Listed Meals</span>
+            <strong>2</strong>
+        </div>
+
+        <div class="my-meals-summary-divider" aria-hidden="true"></div>
+
+        <div class="my-meals-summary-item">
+            <span class="my-meals-summary-label">Available Now</span>
+            <strong>1</strong>
+        </div>
+
+        <div class="my-meals-summary-divider" aria-hidden="true"></div>
+
+        <div class="my-meals-summary-item">
+            <span class="my-meals-summary-label">Unavailable</span>
+            <strong>1</strong>
+        </div>
+    </section>
+
+    <!-- Meal List -->
+    <section class="my-meals-list-section">
+        <div class="my-meals-list-heading mb-3">
+            <h2>Menu Items</h2>
+            <span class="my-meals-count">2 meals</span>
+        </div>
+
+        <div class="my-meals-list">
+
+            <!-- Meal 1 -->
+            <article class="my-meal-card">
+                <div class="my-meal-content">
+                    <div class="my-meal-title-row">
+                        <h3>Homestyle Paneer Thali</h3>
+                        <span class="my-meal-status my-meal-status-available">
+                            <span class="my-meal-status-dot"
+                                  aria-hidden="true"></span>
+                            Available
+                        </span>
+                    </div>
+
+                    <p class="my-meal-description">
+                        Paneer curry, dal, rice, chapati and salad.
+                    </p>
+
+                    <div class="my-meal-meta">
+                        <span class="my-meal-price">₹180</span>
+                        <span class="my-meal-meta-separator"
+                              aria-hidden="true"></span>
+                        <span>Homemade meal</span>
+                    </div>
+                </div>
+
+                <div class="my-meal-actions">
+                    <button type="button"
+                            class="btn btn-ks-secondary"
+                            disabled>
+                        Edit
+                    </button>
+
+                    <button type="button"
+                            class="btn my-meal-remove-button"
+                            disabled>
+                        Remove
+                    </button>
+                </div>
+            </article>
+
+            <!-- Meal 2 -->
+            <article class="my-meal-card">
+                <div class="my-meal-content">
+                    <div class="my-meal-title-row">
+                        <h3>Homemade Veg Pulao</h3>
+                        <span class="my-meal-status my-meal-status-unavailable">
+                            <span class="my-meal-status-dot"
+                                  aria-hidden="true"></span>
+                            Unavailable
+                        </span>
+                    </div>
+
+                    <p class="my-meal-description">
+                        Fragrant rice cooked with seasonal vegetables
+                        and spices.
+                    </p>
+
+                    <div class="my-meal-meta">
+                        <span class="my-meal-price">₹120</span>
+                        <span class="my-meal-meta-separator"
+                              aria-hidden="true"></span>
+                        <span>Homemade meal</span>
+                    </div>
+                </div>
+
+                <div class="my-meal-actions">
+                    <button type="button"
+                            class="btn btn-ks-secondary"
+                            disabled>
+                        Edit
+                    </button>
+
+                    <button type="button"
+                            class="btn my-meal-remove-button"
+                            disabled>
+                        Remove
+                    </button>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Backend Notice -->
+    <aside class="my-meals-notice mt-4">
+        <span class="my-meals-notice-icon" aria-hidden="true">ⓘ</span>
+        <p class="mb-0">
+            <strong>Menu management is not connected yet.</strong>
+            Adding, editing and removing meals will be enabled
+            when the backend and database are connected.
+        </p>
+    </aside>
+
+</div>
+
+{% endblock %}

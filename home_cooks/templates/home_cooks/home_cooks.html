@@ -1,0 +1,487 @@
+
+{% extends 'home_cooks/base_home_cooks.html' %}
+{% load static %}
+
+{% block title %}KitchenStation — Meet Your Home Cooks{% endblock %}
+
+{% block content %}
+<div class="py-4">
+
+    <!-- Breadcrumb -->
+    <nav class="ks-breadcrumb mb-4" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Home Cooks
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Page Introduction -->
+    <section class="text-center mb-5">
+        <h1 class="display-5 fw-bold mb-3">
+            Meet Your Home Cooks
+        </h1>
+
+        <p class="lead text-muted mb-0 mx-auto ks-cooks-intro">
+            KitchenStation connects you with verified local home cooks
+            who prepare homemade meals from their own kitchens — fresh,
+            affordable food made with care, not restaurant kitchens.
+        </p>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="ks-card ks-filters mb-5 p-3 p-md-4">
+        <div class="row g-3 align-items-end">
+
+            <div class="col-lg-5">
+                <label for="cookSearchInput"
+                       class="form-label text-muted small mb-1">
+                    Search
+                </label>
+
+                <div class="input-group ks-search-group">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="cookSearchInput"
+                        placeholder="Search by cook name, cuisine, or location..."
+                    >
+
+                    <button class="btn btn-ks-primary px-4"
+                            type="button">
+                        Search
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <label for="filter-cuisine"
+                       class="form-label text-muted small mb-1">
+                    Cuisine
+                </label>
+
+                <select class="form-select" id="filter-cuisine">
+                    <option value="">All Cuisines</option>
+                    <option value="north-indian">North Indian</option>
+                    <option value="south-indian">South Indian</option>
+                    <option value="maharashtrian">Maharashtrian</option>
+                    <option value="gujarati">Gujarati</option>
+                    <option value="mughlai">Mughlai</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-lg-2">
+                <label for="filter-diet"
+                       class="form-label text-muted small mb-1">
+                    Diet
+                </label>
+
+                <select class="form-select" id="filter-diet">
+                    <option value="">All</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="non-vegetarian">Non-Vegetarian</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                <label for="sort-cooks"
+                       class="form-label text-muted small mb-1">
+                    Sort
+                </label>
+
+                <select class="form-select" id="sort-cooks">
+                    <option value="featured">Featured</option>
+                    <option value="rating">Highest Rated</option>
+                    <option value="name">Name A–Z</option>
+                </select>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Home Cook Listing -->
+    <section class="mb-5" aria-label="Available home cooks">
+        <div class="row g-4">
+
+            <!-- Cook 1 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-cook-list-card text-center">
+                    <div class="mb-3">
+                        <img
+                            src="{% static 'foodapp/images/thali.jpg' %}"
+                            alt="Asha's Kitchen"
+                            class="ks-avatar mx-auto"
+                        >
+                    </div>
+
+                    <h3 class="h4 fw-bold mb-1">Asha's Kitchen</h3>
+                    <p class="text-muted small mb-2">Andheri West</p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">North Indian</span>
+                        <span class="ks-badge">Vegetarian</span>
+                    </div>
+
+                    <p class="small mb-3 text-muted ks-cook-description">
+                        Authentic homemade thalis and parathas, cooked
+                        with cold-pressed oils and family masalas.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center
+                                flex-wrap gap-2">
+                        <span class="ks-badge ks-badge-accent">★ 4.8</span>
+                        <span class="ks-badge">Verified</span>
+                        <a href="{% url 'cook_profile' %}"
+                           class="btn btn-ks-secondary btn-sm">
+                            View Kitchen
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cook 2 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-cook-list-card text-center">
+                    <div class="mb-3">
+                        <img
+                            src="{% static 'foodapp/images/food5.jpg' %}"
+                            alt="Riya's Home Kitchen"
+                            class="ks-avatar mx-auto"
+                        >
+                    </div>
+
+                    <h3 class="h4 fw-bold mb-1">Riya's Home Kitchen</h3>
+                    <p class="text-muted small mb-2">Powai</p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">South Indian</span>
+                        <span class="ks-badge">Vegetarian</span>
+                    </div>
+
+                    <p class="small mb-3 text-muted ks-cook-description">
+                        Traditional South Indian meals with freshly ground
+                        spices and homemade coconut chutneys.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center
+                                flex-wrap gap-2">
+                        <span class="ks-badge ks-badge-accent">★ 4.7</span>
+                        <span class="ks-badge">Verified</span>
+                        <a href="#" class="btn btn-ks-secondary btn-sm">
+                            View Kitchen
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cook 3 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-cook-list-card text-center">
+                    <div class="mb-3">
+                        <img
+                            src="{% static 'foodapp/images/misalpav.jpg' %}"
+                            alt="Meera's Kitchen"
+                            class="ks-avatar mx-auto"
+                        >
+                    </div>
+
+                    <h3 class="h4 fw-bold mb-1">Meera's Kitchen</h3>
+                    <p class="text-muted small mb-2">Bandra</p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">Maharashtrian</span>
+                        <span class="ks-badge">Vegetarian</span>
+                    </div>
+
+                    <p class="small mb-3 text-muted ks-cook-description">
+                        Comforting homestyle snacks and everyday meals
+                        prepared with light, balanced flavours.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center
+                                flex-wrap gap-2">
+                        <span class="ks-badge ks-badge-accent">★ 4.9</span>
+                        <span class="ks-badge">Verified</span>
+                        <a href="#" class="btn btn-ks-secondary btn-sm">
+                            View Kitchen
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cook 4 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-cook-list-card text-center">
+                    <div class="mb-3">
+                        <img
+                            src="{% static 'foodapp/images/chickenbiryani.jpg' %}"
+                            alt="Rahul's Kitchen"
+                            class="ks-avatar mx-auto"
+                        >
+                    </div>
+
+                    <h3 class="h4 fw-bold mb-1">Rahul's Kitchen</h3>
+                    <p class="text-muted small mb-2">Juhu</p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">North Indian</span>
+                        <span class="ks-badge ks-badge-accent">
+                            Non-Vegetarian
+                        </span>
+                    </div>
+
+                    <p class="small mb-3 text-muted ks-cook-description">
+                        Slow-cooked home-style curries and biryanis from
+                        a family recipe passed down for generations.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center
+                                flex-wrap gap-2">
+                        <span class="ks-badge ks-badge-accent">★ 4.6</span>
+                        <span class="ks-badge">Verified</span>
+                        <a href="#" class="btn btn-ks-secondary btn-sm">
+                            View Kitchen
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cook 5 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-cook-list-card text-center">
+                    <div class="mb-3">
+                        <img
+                            src="{% static 'foodapp/images/fried_rice.jpg' %}"
+                            alt="Fatima's Tandoor"
+                            class="ks-avatar mx-auto"
+                        >
+                    </div>
+
+                    <h3 class="h4 fw-bold mb-1">Fatima's Tandoor</h3>
+                    <p class="text-muted small mb-2">Kurla</p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">Mughlai</span>
+                        <span class="ks-badge ks-badge-accent">
+                            Non-Vegetarian
+                        </span>
+                    </div>
+
+                    <p class="small mb-3 text-muted ks-cook-description">
+                        Aromatic gravies and weekend specials prepared
+                        in small batches from Fatima's home kitchen.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center
+                                flex-wrap gap-2">
+                        <span class="ks-badge ks-badge-accent">★ 4.8</span>
+                        <span class="ks-badge">Verified</span>
+                        <a href="#" class="btn btn-ks-secondary btn-sm">
+                            View Kitchen
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cook 6 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-cook-list-card text-center">
+                    <div class="mb-3">
+                        <img
+                            src="{% static 'foodapp/images/puranpoli.jpg' %}"
+                            alt="Kavita's Gujarati Thali"
+                            class="ks-avatar mx-auto"
+                        >
+                    </div>
+
+                    <h3 class="h4 fw-bold mb-1">
+                        Kavita's Gujarati Thali
+                    </h3>
+                    <p class="text-muted small mb-2">Vile Parle</p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">Gujarati</span>
+                        <span class="ks-badge">Vegetarian</span>
+                    </div>
+
+                    <p class="small mb-3 text-muted ks-cook-description">
+                        Sweet-and-savoury Gujarati thalis with dal, shaak,
+                        rotli, and homemade pickle.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center
+                                flex-wrap gap-2">
+                        <span class="ks-badge ks-badge-accent">★ 4.9</span>
+                        <span class="ks-badge">Verified</span>
+                        <a href="#" class="btn btn-ks-secondary btn-sm">
+                            View Kitchen
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Featured Homemade Meals -->
+    <section class="mb-5" aria-labelledby="featured-meals-heading">
+        <div class="d-flex justify-content-between align-items-end
+                    mb-4 gap-3 flex-wrap">
+            <div>
+                <h2 id="featured-meals-heading" class="h3 fw-bold mb-1">
+                    Featured Homemade Meals
+                </h2>
+                <p class="text-muted mb-0">
+                    A taste of what local home cooks are preparing this week.
+                </p>
+            </div>
+
+            <a href="{% url 'menu' %}"
+               class="btn btn-ks-secondary btn-sm">
+                Explore Meals
+            </a>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Featured Meal 1 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-featured-meal">
+                    <img
+                        src="{% static 'foodapp/images/thali.jpg' %}"
+                        alt="Homestyle Paneer Thali"
+                        class="ks-meal-img"
+                    >
+
+                    <h3 class="h5 fw-bold mb-1">
+                        Homestyle Paneer Thali
+                    </h3>
+
+                    <p class="text-muted small mb-1">
+                        By Asha's Kitchen
+                    </p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">North Indian</span>
+                        <span class="ks-badge">Veg</span>
+                    </div>
+
+                    <p class="small mb-3">
+                        Dal, rice, roti, and sabzi — a complete homemade plate.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center">
+                        <strong class="fs-5">₹180</strong>
+                        <a href="{% url 'menu' %}"
+                           class="btn btn-ks-primary btn-sm">
+                            View Meal
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Featured Meal 2 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-featured-meal">
+                    <img
+                        src="{% static 'foodapp/images/varan_bhaat.jpg' %}"
+                        alt="Veg Biryani"
+                        class="ks-meal-img"
+                    >
+
+                    <h3 class="h5 fw-bold mb-1">Veg Biryani</h3>
+
+                    <p class="text-muted small mb-1">
+                        By Riya's Home Kitchen
+                    </p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">South Indian</span>
+                        <span class="ks-badge">Veg</span>
+                    </div>
+
+                    <p class="small mb-3">
+                        Fragrant rice with homemade spices, served with
+                        cooling raita.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center">
+                        <strong class="fs-5">₹150</strong>
+                        <a href="{% url 'menu' %}"
+                           class="btn btn-ks-primary btn-sm">
+                            View Meal
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Featured Meal 3 -->
+            <div class="col-sm-6 col-lg-4">
+                <article class="ks-card ks-featured-meal">
+                    <img
+                        src="{% static 'foodapp/images/chickenbiryani.jpg' %}"
+                        alt="Chicken Curry (Home Style)"
+                        class="ks-meal-img"
+                    >
+
+                    <h3 class="h5 fw-bold mb-1">
+                        Chicken Curry (Home Style)
+                    </h3>
+
+                    <p class="text-muted small mb-1">
+                        By Rahul's Kitchen
+                    </p>
+
+                    <div class="mb-2">
+                        <span class="ks-badge">North Indian</span>
+                        <span class="ks-badge ks-badge-accent">Non-Veg</span>
+                    </div>
+
+                    <p class="small mb-3">
+                        Slow-cooked family curry, packed with two fresh parathas.
+                    </p>
+
+                    <div class="mt-auto pt-3 border-top d-flex
+                                justify-content-between align-items-center">
+                        <strong class="fs-5">₹220</strong>
+                        <a href="{% url 'menu' %}"
+                           class="btn btn-ks-primary btn-sm">
+                            View Meal
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Become a Home Cook CTA -->
+    <section class="mb-5 p-4 p-md-5 text-center ks-cook-cta">
+        <h2 class="h3 fw-bold mb-3">
+            Become a Home Cook
+        </h2>
+
+        <p class="text-muted mb-4 mx-auto ks-cook-cta-copy">
+            Cook from home and reach more customers in your neighbourhood.
+            Share your homemade meals on KitchenStation and turn your
+            kitchen into a local favourite.
+        </p>
+
+        <a href="#" class="btn btn-ks-primary">
+            Become a Home Cook
+        </a>
+    </section>
+
+</div>
+{% endblock %}
