@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'foodapp',
     'home_cooks',
+    'accounts',
 ]
 
 MIDDLEWARE = [
