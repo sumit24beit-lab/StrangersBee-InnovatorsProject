@@ -1,0 +1,186 @@
+
+{% extends "base.html" %}
+
+{% block title %}Create Account | KitchenStation{% endblock %}
+
+{% block extra_css %}
+<style>
+    .account-page {
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 20px;
+        background: var(--ks-background, #F8F5F0);
+    }
+
+    .account-card {
+        width: 100%;
+        max-width: 480px;
+        padding: 36px;
+        background: #FFFDF8;
+        border: 1px solid #e5dfd5;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(45, 45, 45, 0.07);
+    }
+
+    .account-icon {
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 20px;
+        border-radius: 16px;
+        background: #e7efdf;
+        font-size: 28px;
+    }
+
+    .account-card h1 {
+        color: #2D2D2D;
+        font-size: 30px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .account-description {
+        color: #716e67;
+        margin-bottom: 26px;
+    }
+
+    .account-card .form-label {
+        color: #2D2D2D;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .account-card .form-control {
+        min-height: 46px;
+        border: 1px solid #d8d1c6;
+        border-radius: 10px;
+        background: #fff;
+        padding: 11px 14px;
+    }
+
+    .account-card .form-control:focus {
+        border-color: #5F8D4E;
+        box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.15);
+    }
+
+    .account-submit {
+        width: 100%;
+        min-height: 48px;
+        border: none;
+        border-radius: 10px;
+        background: #5F8D4E;
+        color: white;
+        font-weight: 700;
+        margin-top: 8px;
+    }
+
+    .account-submit:hover {
+        background: #4b733d;
+        color: white;
+    }
+
+    .account-switch {
+        margin-top: 24px;
+        text-align: center;
+        color: #716e67;
+        font-size: 14px;
+    }
+
+    .account-switch a {
+        color: #5F8D4E;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .account-switch a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+        .account-card {
+            padding: 26px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="account-page">
+    <div class="account-card">
+        <div class="account-icon" aria-hidden="true">🍲</div>
+
+        <h1>Create your account</h1>
+        <p class="account-description">
+            Join KitchenStation and discover food made with a homemade touch.
+        </p>
+
+        <form>
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Full name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    name="full_name"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">
+                    Confirm password
+                </label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    name="confirm_password"
+                    placeholder="Enter your password again"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <button type="button" class="btn account-submit">
+                Create Account
+            </button>
+        </form>
+
+        <p class="account-switch">
+            Already have an account?
+            <a href="{% url 'accounts_login' %}">Login</a>
+        </p>
+    </div>
+</section>
+{% endblock %}
