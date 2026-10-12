@@ -4,7 +4,7 @@ from .models import CustomerProfile,Address,Restaurant,Menu,Offer,Order,OrderIte
 # Register your models here.
 @admin.register(CustomerProfile)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('user','email','password','primary_mobile_number','date_joined')
+    list_display = ('user', 'email', 'primary_mobile_number', 'date_joined')
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
@@ -26,7 +26,7 @@ class MenuAdmin(admin.ModelAdmin):
 
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ('menu_item','discount_price','offer_valid_until')
+    list_display = ('menu_item', 'original_price', 'discount_percent', 'offer_valid_until', )
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -38,4 +38,4 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):   
-    list_display=('name','email','subject','created_at')  
+    list_display=('customer','email','subject','created_at')  

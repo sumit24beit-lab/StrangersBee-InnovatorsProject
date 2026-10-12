@@ -1,14 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from decimal import Decimal, ROUND_HALF_UP
+
+STANDARD_DELIVERY_CHARGE = Decimal("40.00")
 
 # Create your models here.
-
-# Helper choices
-SPICE_CHOICES = [
-    ('spicy', 'Spicy'),
-    ('normal', 'Normal'),
-    ('not', 'Not Spicy'),
-]
 
 # Helper choices
 SPICE_CHOICES = [
@@ -55,7 +50,6 @@ class CustomerProfile(models.Model):
     middle_name = models.CharField(max_length=100,blank=True)
     last_name = models.CharField(max_length=100,blank=True)
     email=models.EmailField()
-    password=models.CharField(max_length=200,blank=True)
     primary_mobile_number = models.CharField(max_length=10,blank=True,null=True)
     alternate_mobile_number = models.CharField(max_length=10,blank=True, null=True)    
     date_joined=models.DateTimeField(auto_now_add=True)
@@ -63,7 +57,15 @@ class CustomerProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
-        return self.name
+        full_name = " ".join(
+            part for part in [
+                self.first_name,
+                self.middle_name,
+                self.last_name
+            ]
+            if part
+        )
+        return full_name or self.user or self.email
 
 class Address(models.Model):
     customer=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name="customer_addresses")
@@ -71,7 +73,7 @@ class Address(models.Model):
     city=models.CharField(max_length=120)
     area=models.CharField(max_length=120)
     state=models.CharField(max_length=160,default='Maharashtra')
-    pincode=models.CharField(max_length=10,default=True)
+    pincode=models.CharField(max_length=10)
     address_type=models.CharField(max_length=200,choices=[('home','Home'),('office','Office'),('other','Other')])
     created_at_date=models.DateTimeField(auto_now_add=True)
     def __str__(self):
@@ -111,38 +113,56 @@ class Menu(models.Model):
         return f"{self.name}-{self.restaurant.name}"
     
 class Offer(models.Model):
-    menu_item=models.ForeignKey(Menu,on_delete=models.CASCADE,related_name="offers")
+    menu_item=models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="offers")
     original_price=models.DecimalField(max_digits=8,decimal_places=2)
-    discount_price=models.PositiveIntegerField(default=0)
+    discount_percent=models.PositiveIntegerField(default=0)
     offer_valid_until=models.DateTimeField(blank=True,null=True)    
     def discounted_price(self):
-        return round(float(self.menu_item.price) * (1 - (self.discount_percent/100.0)), 2)
+        discount_amount = (
+            self.original_price
+            * Decimal(self.discount_percent)
+            / Decimal("100")
+        ).quantize(
+            Decimal("0.01"),
+            rounding=ROUND_HALF_UP
+        )
+        return self.original_price - discount_amount
     def __str__(self):
-        return f"{self.menu_item.name} ({self.discount_price}% off)"
+        return f"{self.menu_item.name} ({self.discount_percent}% off)"
 
 class Order(models.Model):
     customer=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name="orders")
     address=models.ForeignKey(Address,on_delete=models.CASCADE,related_name="orders")
     created_at=models.DateTimeField(auto_now_add=True)
     status=models.CharField(max_length=20,choices=ORDER_CHOICE,default='pending')
-    delivery_charge=models.DecimalField(max_digits=6,decimal_places=2,default=40.00)
-    subtotal=models.DecimalField(max_digits=10,decimal_places=2,default=0.0)
-    tax=models.DecimalField(max_digits=7,decimal_places=2,default=0.0)
-    total=models.DecimalField(max_digits=10,decimal_places=2,default=0.0)
-    payment_mode=models.CharField(max_length=20,blank=True,default=True)
+    delivery_charge=models.DecimalField(max_digits=6,decimal_places=2,default=STANDARD_DELIVERY_CHARGE)
+    subtotal=models.DecimalField(max_digits=10,decimal_places=2,default=Decimal("0.00"))
+    tax=models.DecimalField(max_digits=7,decimal_places=2,default=Decimal("0.00"))
+    total=models.DecimalField(max_digits=10,decimal_places=2,default=Decimal("0.00"))
+    payment_mode=models.CharField(max_length=20,blank=True,default="")
     def calculate_totals(self):
         items = self.items.all()
-        subtotal = sum([it.price * it.quantity for it in items])
-        tax = round(subtotal * 0.05, 2)
-        delivery_fee = self.delivery_fee if subtotal < 500 else 0.00
-        total = round(subtotal + tax + delivery_fee, 2)
+        subtotal = sum(
+            (item.price * item.quantity for item in items),
+            Decimal("0.00")
+        )
+        tax = (subtotal * Decimal("0.05")).quantize(
+            Decimal("0.01"),
+            rounding=ROUND_HALF_UP
+        )
+        if subtotal <= Decimal("500.00"):
+            delivery_fee = STANDARD_DELIVERY_CHARGE
+        else:
+            delivery_fee = Decimal("0.00")
+        total = subtotal + tax + delivery_fee
         self.subtotal = subtotal
         self.tax = tax
+        self.delivery_charge = delivery_fee
         self.total = total
-        self.save()
+        self.save(update_fields=["subtotal", "tax", "delivery_charge", "total",])
         return self.total
     def __str__(self):
-        return f"Order: {self.id}-{self.customer.name if self.customer else 'Guest'}"    
+        return f"Order: {self.id}-{self.customer}" 
 
 class OrderItem(models.Model):
     order=models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
@@ -157,9 +177,9 @@ class OrderItem(models.Model):
         return f"{self.quantity} x {self.name}"    
 
 class Contact(models.Model):
-    name=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name='contact')
-    email=models.CharField()
+    customer=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name='contacts')
+    email=models.EmailField()
     subject=models.CharField(max_length=200)
     created_at=models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.name
+        return f"Contact from {self.customer} - {self.subject}"
