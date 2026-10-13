@@ -1,4 +1,3 @@
-
 {% extends 'home_cooks/base_home_cooks.html' %}
 
 {% block title %}My Meals — KitchenStation{% endblock %}
@@ -6,6 +5,14 @@
 {% block content %}
 
 <div class="my-meals-page">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="status">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 
     <!-- Back Navigation -->
     <nav class="my-meals-back mb-4" aria-label="Dashboard navigation">
@@ -26,34 +33,33 @@
             </p>
         </div>
 
-        <button type="button"
-                class="btn btn-ks-primary my-meals-add-button"
-                disabled>
+        <a href="{% url 'add_meal' %}"
+            class="btn btn-ks-primary my-meals-add-button">
             <span aria-hidden="true">＋</span>
             Add New Meal
-        </button>
+        </a>
     </header>
 
     <!-- Menu Summary -->
     <section class="my-meals-summary mb-4"
-             aria-label="Menu summary">
+            aria-label="Menu summary">
         <div class="my-meals-summary-item">
             <span class="my-meals-summary-label">Listed Meals</span>
-            <strong>2</strong>
+            <strong>{{ total_meals }}</strong>
         </div>
 
         <div class="my-meals-summary-divider" aria-hidden="true"></div>
 
         <div class="my-meals-summary-item">
             <span class="my-meals-summary-label">Available Now</span>
-            <strong>1</strong>
+            <strong>{{ available_meals }}</strong>
         </div>
 
         <div class="my-meals-summary-divider" aria-hidden="true"></div>
 
         <div class="my-meals-summary-item">
             <span class="my-meals-summary-label">Unavailable</span>
-            <strong>1</strong>
+            <strong>{{ unavailable_meals }}</strong>
         </div>
     </section>
 
@@ -61,89 +67,78 @@
     <section class="my-meals-list-section">
         <div class="my-meals-list-heading mb-3">
             <h2>Menu Items</h2>
-            <span class="my-meals-count">2 meals</span>
+            <span class="my-meals-count">
+                {{ total_meals }} meal{{total_meals|pluralize }}
+            </span>
         </div>
 
         <div class="my-meals-list">
 
-            <!-- Meal 1 -->
+            {% for meal in meals %}
             <article class="my-meal-card">
                 <div class="my-meal-content">
                     <div class="my-meal-title-row">
-                        <h3>Homestyle Paneer Thali</h3>
-                        <span class="my-meal-status my-meal-status-available">
-                            <span class="my-meal-status-dot"
-                                  aria-hidden="true"></span>
-                            Available
-                        </span>
+                        <h3>{{ meal.name }}</h3>
+                        {% if meal.available %}
+                            <span class="my-meal-status my-meal-status-available">
+                                <span class="my-meal-status-dot"
+                                    aria-hidden="true"></span>
+                                Available
+                            </span>
+                        {% else %}
+                            <span class="my-meal-status my-meal-status-unavailable">
+                                <span class="my-meal-status-dot"
+                                    aria-hidden="true"></span>
+                                Unavailable
+                            </span>
+                        {% endif %}
                     </div>
 
                     <p class="my-meal-description">
-                        Paneer curry, dal, rice, chapati and salad.
+                        {{ meal.description|default:"No description provided yet." }}
                     </p>
 
                     <div class="my-meal-meta">
-                        <span class="my-meal-price">₹180</span>
+                        <span class="my-meal-price">₹{{ meal.price }}</span>
                         <span class="my-meal-meta-separator"
                               aria-hidden="true"></span>
-                        <span>Homemade meal</span>
+                        <span>{{ meal.get_category_display }}</span>
                     </div>
                 </div>
 
                 <div class="my-meal-actions">
-                    <button type="button"
-                            class="btn btn-ks-secondary"
-                            disabled>
+                    <a
+                        href="{% url 'edit_meal' meal.pk %}"
+                        class="btn btn-ks-secondary"
+                    >
                         Edit
-                    </button>
-
-                    <button type="button"
-                            class="btn my-meal-remove-button"
-                            disabled>
-                        Remove
-                    </button>
+                    </a>
+                    <form method="post" action="{% url 'toggle_meal_availability' meal.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn my-meal-remove-button">
+                            {% if meal.available %}
+                                Mark Unavailable
+                            {% else %}
+                                Mark Available
+                            {% endif %}
+                        </button>
+                    </form>
                 </div>
+
             </article>
 
-            <!-- Meal 2 -->
-            <article class="my-meal-card">
-                <div class="my-meal-content">
-                    <div class="my-meal-title-row">
-                        <h3>Homemade Veg Pulao</h3>
-                        <span class="my-meal-status my-meal-status-unavailable">
-                            <span class="my-meal-status-dot"
-                                  aria-hidden="true"></span>
-                            Unavailable
-                        </span>
-                    </div>
-
-                    <p class="my-meal-description">
-                        Fragrant rice cooked with seasonal vegetables
-                        and spices.
-                    </p>
-
-                    <div class="my-meal-meta">
-                        <span class="my-meal-price">₹120</span>
-                        <span class="my-meal-meta-separator"
-                              aria-hidden="true"></span>
-                        <span>Homemade meal</span>
-                    </div>
-                </div>
-
-                <div class="my-meal-actions">
-                    <button type="button"
-                            class="btn btn-ks-secondary"
-                            disabled>
-                        Edit
-                    </button>
-
-                    <button type="button"
-                            class="btn my-meal-remove-button"
-                            disabled>
-                        Remove
-                    </button>
-                </div>
-            </article>
+            {% empty %}
+            <div class="ks-card p-4 text-center">
+                <h3 class="h5 fw-bold">You haven't added any meals yet</h3>
+                <p class="text-muted mb-3">
+                    Add your first homemade meal to start building your menu.
+                </p>
+                <a href="{% url 'add_meal' %}"
+                    class="btn btn-ks-primary">
+                    Add Your First Meal
+                </a>
+            </div>
+            {% endfor %}
 
         </div>
     </section>

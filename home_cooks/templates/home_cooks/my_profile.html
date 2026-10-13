@@ -26,6 +26,14 @@
         </p>
     </header>
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="status">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <!-- Profile Form -->
     <section class="my-profile-form-card ks-card">
         <div class="my-profile-form-heading">
@@ -41,7 +49,8 @@
 
         <div class="my-profile-divider"></div>
 
-        <form class="my-profile-form">
+        <form class="my-profile-form" method="post">
+            {% csrf_token %}
 
             <div class="row g-4">
 
@@ -50,14 +59,10 @@
                     <label for="cookName" class="form-label">
                         Cook Name
                     </label>
-                    <input
-                        type="text"
-                        id="cookName"
-                        name="cook_name"
-                        class="form-control ks-form-control"
-                        value="Asha"
-                        autocomplete="name"
-                    >
+                    {{ form.cook_name }}
+                    {% for error in form.cook_name.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
                 <!-- Kitchen Name -->
@@ -65,32 +70,35 @@
                     <label for="kitchenName" class="form-label">
                         Kitchen Name
                     </label>
-                    <input
-                        type="text"
-                        id="kitchenName"
-                        name="kitchen_name"
-                        class="form-control ks-form-control"
-                        value="Asha's Kitchen"
-                    >
+                    {{ form.kitchen_name }}
+                    {% for error in form.kitchen_name.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
                 <!-- Location -->
                 <div class="col-md-6">
-                    <label for="location" class="form-label">
-                        Location
+                    <label for="area" class="form-label">
+                        Area
                     </label>
-                    <input
-                        type="text"
-                        id="location"
-                        name="location"
-                        class="form-control ks-form-control"
-                        value="Andheri West, Mumbai"
-                        autocomplete="address-level2"
-                    >
+                    {{ form.area }}
+                    {% for error in form.area.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                     <p class="my-profile-field-help">
                         Your area helps customers understand where
                         your kitchen is located.
                     </p>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="city" class="form-label">
+                        City
+                    </label>
+                    {{ form.city }}
+                    {% for error in form.city.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
                 <!-- Specialty Cuisine -->
@@ -98,17 +106,10 @@
                     <label for="specialty" class="form-label">
                         Specialty Cuisine
                     </label>
-                    <select
-                        id="specialty"
-                        name="specialty"
-                        class="form-select ks-form-control"
-                    >
-                        <option selected>North Indian</option>
-                        <option>South Indian</option>
-                        <option>Maharashtrian</option>
-                        <option>Gujarati</option>
-                        <option>Other</option>
-                    </select>
+                    {{ form.specialty_cuisine }}
+                    {% for error in form.specialty_cuisine.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
                 <!-- About the Kitchen -->
@@ -116,13 +117,10 @@
                     <label for="about" class="form-label">
                         About Your Kitchen
                     </label>
-                    <textarea
-                        id="about"
-                        name="about"
-                        class="form-control ks-form-control my-profile-textarea"
-                        rows="5"
-                        placeholder="Describe your cooking style, favourite recipes, and the meals you prepare..."
-                    ></textarea>
+                    {{ form.about }}
+                    {% for error in form.about.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                     <p class="my-profile-field-help">
                         Tell customers what makes your homemade meals
                         special.
@@ -139,9 +137,8 @@
                         </p>
 
                         <button
-                            type="button"
+                            type="submit"
                             class="btn btn-ks-primary my-profile-save-button"
-                            disabled
                         >
                             Save Changes
                         </button>

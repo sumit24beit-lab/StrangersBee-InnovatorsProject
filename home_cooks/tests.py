@@ -170,6 +170,248 @@ class MealDetailViewTests(TestCase):
             )
             response = self.client.get(url)
             self.assertEqual(response.status_code, 404)
-            
-            
-    
+
+class HomeCookProfileEditTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="profile_editor",
+            email="profile@example.com",
+            password="test-password-123",
+        )
+    def valid_profile_data(self):
+        return {
+            "cook_name": "Asha",
+            "kitchen_name": "Asha's Kitchen",
+            "area": "Andheri West",
+            "city": "Mumbai",
+            "specialty_cuisine": "north_indian",
+            "about": "Homemade North Indian meals.",
+        }
+    def test_profile_page_requires_login(self):
+        response = self.client.get(
+            reverse("my_profile")
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse("login"), response.url)
+    def test_logged_in_cook_can_view_profile_form(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("my_profile")
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "My Profile")
+        self.assertContains(response, 'name="cook_name"')
+        self.assertContains(response, 'name="kitchen_name"')
+    def test_logged_in_cook_can_create_profile(self):
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("my_profile"),
+            self.valid_profile_data(),
+        )
+        self.assertEqual(response.status_code, 302)
+        profile = HomeCook.objects.get(user=self.user)
+        self.assertEqual(profile.cook_name, "Asha")
+        self.assertEqual(
+            profile.kitchen_name,
+            "Asha's Kitchen",
+        )
+        self.assertFalse(profile.is_verified)
+    def test_logged_in_cook_can_update_own_profile(self):
+        profile = HomeCook.objects.create(
+            user=self.user,
+            cook_name="Asha",
+            kitchen_name="Old Kitchen",
+            area="Andheri",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+            is_verified=True,
+        )
+        self.client.force_login(self.user)
+        data = self.valid_profile_data()
+        data["kitchen_name"] = "Updated Kitchen"
+        response = self.client.post(
+            reverse("my_profile"),
+            data,
+        )
+        self.assertEqual(response.status_code, 302)
+        profile.refresh_from_db()
+        self.assertEqual(profile.kitchen_name, "Updated Kitchen",)
+        self.assertTrue(profile.is_verified)
+    def test_invalid_profile_is_not_saved(self):
+        self.client.force_login(self.user)
+        data = self.valid_profile_data()
+        data["cook_name"] = ""
+        response = self.client.post(
+            reverse("my_profile"),
+            data,
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(
+            HomeCook.objects.filter(user=self.user).exists()
+        )
+
+class MealManagementTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="meal_owner",
+            password="test-password-123",
+        )
+        self.cook = HomeCook.objects.create(
+            user=self.user,
+            cook_name="Asha",
+            kitchen_name="Asha's Kitchen",
+            area="Andheri West",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+        )
+        self.other_user = User.objects.create_user(
+            username="other_cook",
+            password="test-password-123",
+        )
+        self.other_cook = HomeCook.objects.create(
+            user=self.other_user,
+            cook_name="Riya",
+            kitchen_name="Riya's Kitchen",
+            area="Powai",
+            city="Mumbai",
+            specialty_cuisine="south_indian",
+        )
+    def valid_meal_data(self):
+        return {
+            "name": "Homestyle Paneer Thali",
+            "description": "Paneer, dal, rice and roti.",
+            "price": "180.00",
+            "category": "lunch",
+            "ingredients": "Paneer, dal, rice, wheat roti",
+            "nutrients": "Protein and carbohydrates",
+            "spice_level": "normal",
+            "meal_time": "lunch",
+            "food_type": "heavy",
+            "nutrient_function": "protein",
+            "available": "on",
+        }
+    def test_add_meal_requires_login(self):
+        response=self.client.get(reverse("add_meal"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse("login"), response.url)
+    def test_logged_in_cook_can_open_add_meal_form(self):
+        self.client.force_login(self.user)
+        response=self.client.get(reverse("add_meal"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Add New Meal")
+        self.assertContains(response, 'name="name"')
+    def test_meal_is_created_for_logged_in_cook(self):
+        self.client.force_login(self.user)
+        data=self.valid_meal_data()
+        data["home_cook"]=str(self.other_cook.pk)
+        response=self.client.post(reverse("add_meal"), data,)
+        self.assertRedirects(response, reverse("my_meals"))
+        meal=Menu.objects.get(name="Homestyle Paneer Thali")
+        self.assertEqual(meal.home_cook, self.cook)
+        self.assertEqual(meal.price, Decimal("180.00"))
+        self.assertTrue(meal.available)
+    def test_invalid_meal_is_not_saved(self):
+        self.client.force_login(self.user)
+        data=self.valid_meal_data()
+        data["name"]=""
+        response=self.client.post(reverse("add_meal"), data,)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(
+            Menu.objects.filter(
+                home_cook=self.cook
+            ).exists()
+        )
+    def test_account_without_cook_profile_is_redirected(self):
+        user_without_profile = User.objects.create_user(
+            username="customer_without_cook_profile",
+            password="test-password-123",
+        )
+        self.client.force_login(user_without_profile)
+        response=self.client.get(reverse("add_meal"))
+        self.assertRedirects(
+            response,
+            reverse("my_profile"),
+        )
+
+class MealOwnershipTests(TestCase):
+    def setUp(self):
+        self.user=User.objects.create_user(
+            username="cook_one",
+            password="test-password-123",
+        )
+        self.cook=HomeCook.objects.create(
+            user=self.user,
+            cook_name="Asha",
+            kitchen_name="Asha's Kitchen",
+            area="Andheri West",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+        )
+        self.other_user=User.objects.create_user(
+            username="cook_two",
+            password="test-password-123",
+        )
+        self.other_cook=HomeCook.objects.create(
+            user=self.other_user,
+            cook_name="Riya",
+            kitchen_name="Riya's Kitchen",
+            area="Powai",
+            city="Mumbai",
+            specialty_cuisine="south_indian",
+        )
+        self.own_meal=Menu.objects.create(
+            home_cook=self.cook,
+            name="Asha's Thali",
+            description="Homemade meal",
+            price=Decimal("180.00"),
+            category="lunch",
+            available=True,
+        )
+        self.other_meal=Menu.objects.create(
+            home_cook=self.other_cook,
+            name="Riya's Pulao",
+            description="Vegetable pulao",
+            price=Decimal("120.00"),
+            category="lunch",
+            available=True,
+        )
+    def test_cook_can_edit_own_meal(self):
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("edit_meal", args=[self.own_meal.pk]),
+            {
+                "name": "Updated Asha Thali",
+                "description": "Updated description",
+                "price": "200.00",
+                "category": "lunch",
+                "ingredients": "Rice, vegetables",
+                "nutrients": "Carbohydrates",
+                "spice_level": "normal",
+                "meal_time": "lunch",
+                "food_type": "heavy",
+                "nutrient_function": "starchy",
+                "available": "on",
+            },
+        )
+        self.assertRedirects(response, reverse("my_meals"))
+        self.own_meal.refresh_from_db()
+        self.assertEqual(self.own_meal.name, "Updated Asha Thali")
+        self.assertEqual(self.own_meal.home_cook, self.cook)
+    def test_cook_cannot_edit_another_cooks_meal(self):
+        self.client.force_login(self.user)
+        response=self.client.get(reverse("edit_meal", args=[self.other_meal.pk]))
+        self.assertEqual(response.status_code, 404)
+        self.other_meal.refresh_from_db()
+        self.assertEqual(self.other_meal.name, "Riya's Pulao")
+    def test_cook_can_toggle_own_meal_availability(self):
+        self.client.force_login(self.user)
+        response=self.client.post(reverse("toggle_meal_availability", args=[self.own_meal.pk],))
+        self.assertRedirects(response, reverse("my_meals"))
+        self.own_meal.refresh_from_db()
+        self.assertFalse(self.own_meal.available)
+    def test_cook_cannot_toggle_another_cooks_meal(self):
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("toggle_meal_availability", args=[self.other_meal.pk],))
+        self.assertEqual(response.status_code, 404)
+        self.other_meal.refresh_from_db()
+        self.assertTrue(self.other_meal.available)
