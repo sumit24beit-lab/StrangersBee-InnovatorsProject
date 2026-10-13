@@ -12,4 +12,7 @@ urlpatterns = [
     path('my-meals/', my_meals_view, name='my_meals'),
     path('orders/', cook_orders_view, name='cook_orders'),
     path('earnings/', cook_earnings_view, name='cook_earnings'),
+    path('cook_profile/<int:cook_id>/', cook_profile_view, name='cook_profile_detail'),
+    path('cook-meals/<int:cook_id>/', cook_meals_view, name='cook_meals_by_cook'),
+    path('meal-details/<int:meal_id>/', meal_details_view, name='meal_detail_by_id'),
 ]

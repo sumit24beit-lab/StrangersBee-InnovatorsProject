@@ -1,45 +1,54 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from decimal import Decimal
+from home_cooks.models import HomeCook
 from .models import (
     CustomerProfile, 
     Address,
-    Restaurant,
     Menu,
     Order,
     OrderItem,
     Offer,
 )
+
+User=get_user_model()
+
 # Create your tests here.
 class OrderCalculationTests(TestCase):
     def setUp(self):
         # Create a customer for the test orders.
-            self.customer = CustomerProfile.objects.create(
-                user="test_customer",
-                first_name="Aditi",
-                last_name="Shah",
-                email="aditi.test@example.com",
-            )
-            # Create a delivery address
-            self.address = Address.objects.create(
-                customer=self.customer,
-                address_line="Test Address",
-                city="Mumbai",
-                area="Andheri",
-                pincode="400001",
-                address_type="home"
-            )
-            # Create a sample food provider and meal.
-            self.restaurant = Restaurant.objects.create(
-                name="Test Home Kitchen",
-                address = "Test Address, Mumbai",
-                isluxury = "medium"
-            )
-            self.meal = Menu.objects.create(
-                restaurant=self.restaurant,
-                name="Test Meal",
-                price=Decimal("100.00"),
-                category="lunch"
-            )
+        self.customer = CustomerProfile.objects.create(
+            user="test_customer",
+            first_name="Aditi",
+            last_name="Shah",
+            email="aditi.test@example.com",
+        )
+        self.address = Address.objects.create(
+            customer=self.customer,
+            address_line="Test Address",
+            city="Mumbai",
+            area="Andheri",
+            pincode="400001",
+            address_type="home",
+        )
+        self.cook_user = User.objects.create_user(
+            username="test_cook",
+            password="test-password-123",
+        )
+        self.home_cook = HomeCook.objects.create(
+            user=self.cook_user,
+            cook_name="Test Cook",
+            kitchen_name="Test Home Kitchen",
+            area="Andheri",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+        )
+        self.meal = Menu.objects.create(
+            home_cook=self.home_cook,
+            name="Test Meal",
+            price=Decimal("100.00"),
+            category="lunch"
+        )
     def create_order(self, quantity):
         order = Order.objects.create(
             customer=self.customer,

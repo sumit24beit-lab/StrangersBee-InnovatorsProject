@@ -1,8 +1,7 @@
-
 {% extends 'home_cooks/base_home_cooks.html' %}
 {% load static %}
 
-{% block title %}Homestyle Paneer Thali — KitchenStation{% endblock %}
+{% block title %}{% if meal %}{{ meal.name }}{% else %}Homestyle Paneer Thali{% endif %} — KitchenStation{% endblock %}
 
 {% block content %}
 
@@ -14,7 +13,13 @@
         <span aria-hidden="true">→</span>
         <a href="{% url 'home_cooks' %}">Home Cooks</a>
         <span aria-hidden="true">→</span>
-        <a href="{% url 'cook_meals' %}">Asha's Meals</a>
+        <a href="{% if meal %}{% url 'cook_meals_by_cook' meal.home_cook.pk %}{% else %}{% url 'cook_meals' %}{% endif %}">
+            {% if meal %}
+                {{ meal.home_cook.kitchen_name }}'s Meals
+            {% else %}
+                Asha's Meals
+            {% endif %}
+        </a>
         <span aria-hidden="true">→</span>
         <span aria-current="page">Meal Details</span>
     </nav>
@@ -26,11 +31,19 @@
             <!-- Meal Image -->
             <div class="col-lg-6">
                 <div class="meal-detail-image-wrapper">
-                    <img
-                        src="{% static 'foodapp/images/thali.jpg' %}"
-                        alt="Homestyle Paneer Thali with traditional accompaniments"
-                        class="meal-detail-image"
-                    >
+                    {% if meal and meal.image %}
+                        <img 
+                            src="{{ meal.image.url }}"
+                            alt="{{ meal.name }}"
+                            class="meal-detail-image"
+                        >
+                    {% else %}
+                        <img
+                            src="{% static 'foodapp/images/thali.jpg' %}"
+                            alt="{% if meal %}{{ meal.name }}{% else %}Homestyle Paneer Thali{% endif %}"
+                            class="meal-detail-image"
+                        >
+                    {% endif %}            
                     <span class="meal-detail-image-badge">
                         Homemade with care
                     </span>
@@ -40,24 +53,41 @@
             <!-- Meal Information -->
             <div class="col-lg-6">
                 <div class="meal-detail-information">
-
-                    <span class="meal-diet-label">Vegetarian</span>
+                    {% if not meal %}
+                        <span class="meal-diet-label">Vegetarian</span>
+                    {% endif %}
 
                     <h1 class="meal-detail-title mt-3 mb-3">
-                        Homestyle Paneer Thali
+                        {% if meal %}
+                            {{ meal.name }}
+                        {% else %}
+                            Homestyle Paneer Thali
+                        {% endif %}
                     </h1>
 
                     <p class="meal-detail-intro">
-                        A comforting North Indian meal prepared with
-                        home-style recipes and familiar ingredients.
+                        {% if meal %}
+                            {{ meal.description|default:"Homemade food prepared with care."}}
+                        {% else %}
+                            A comforting North Indian meal prepared with
+                            home-style recipes and familiar ingredients.
+                        {% endif %}    
                     </p>
 
-                    <div class="meal-detail-rating mb-3">
-                        <span class="meal-detail-rating-score">★ 4.8</span>
-                        <span>Customer rating</span>
-                    </div>
+                    {% if not meal %}
+                        <div class="meal-detail-rating mb-3">
+                            <span class="meal-detail-rating-score">★ 4.8</span>
+                            <span>Customer rating</span>
+                        </div>
+                    {% endif %}
 
-                    <div class="meal-detail-price mb-4">₹180</div>
+                    <div class="meal-detail-price mb-4">
+                        {% if meal %}
+                            ₹{{ meal.price }}
+                        {% else %}
+                            ₹180
+                        {% endif %}
+                    </div>
 
                     <div class="meal-detail-divider mb-4"></div>
 
@@ -68,20 +98,42 @@
                         <div class="cook-mini-profile">
                             <img
                                 src="{% static 'foodapp/images/thali.jpg' %}"
-                                alt="Asha's Kitchen"
+                                alt="{% if meal %}{{ meal.home_cook.kitchen_name }}{% else %}Asha's Kitchen{% endif %}"
                                 class="cook-mini-image"
                             >
 
                             <div class="cook-mini-information">
-                                <h3>Asha's Kitchen</h3>
-                                <p>Andheri West, Mumbai</p>
-                                <span class="cook-mini-verified">
-                                    ✓ Verified Home Cook
-                                </span>
+                                <h3>
+                                    {% if meal %}
+                                        {{ meal.home_cook.kitchen_name }}
+                                    {% else %}    
+                                        Asha's Kitchen
+                                    {% endif %}
+                                </h3>
+                                <p>
+                                    {% if meal %}
+                                        {{ meal.home_cook.area }}, {{ meal.home_cook.city }}
+                                    {% else %}
+                                        Andheri West, Mumbai
+                                    {% endif %}
+                                </p>
+                                {% if meal %}
+                                    {% if meal.home_cook.is_verified %}
+                                        <span class="cook-mini-verified">
+                                            ✓ Verified Home Cook
+                                        </span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="cook-mini-verified">
+                                        ✓ Verified Home Cook
+                                    </span>
+                                {% endif %}   
                             </div>
 
-                            <a href="{% url 'cook_profile' %}"
-                               class="cook-mini-link">
+                            <a 
+                                href="{% if meal %}{% url 'cook_profile_detail' meal.home_cook.pk %}{% else %}{% url 'cook_profile' %}{% endif %}"
+                                class="cook-mini-link"
+                            >
                                 View Kitchen
                             </a>
                         </div>
@@ -133,14 +185,24 @@
 
     <!-- Description -->
     <section class="meal-description-section ks-card mb-5">
-        <span class="ks-eyebrow">FROM ASHA'S KITCHEN</span>
+        <span class="ks-eyebrow">
+            {% if meal %}
+                FROM {{ meal.home_cook.kitchen_name|upper }}
+            {% else %}
+                FROM ASHA'S KITCHEN
+            {% endif %}    
+        </span>
         <h2 class="mt-2 mb-3">About This Meal</h2>
 
         <p class="mb-0">
-            This homestyle paneer thali brings together paneer curry,
-            dal, seasonal vegetables, roti and rice for a satisfying
-            everyday meal. It is designed for customers who enjoy
-            familiar home-cooked flavours.
+            {% if meal %}
+                {{ meal.description|default:"Homemade food prepared with care." }}
+            {% else %}
+                This homestyle paneer thali brings together paneer curry,
+                dal, seasonal vegetables, roti and rice for a satisfying
+                everyday meal. It is designed for customers who enjoy
+                familiar home-cooked flavours.
+            {% endif %}
         </p>
     </section>
 
@@ -152,39 +214,54 @@
         </div>
 
         <div class="row g-3 g-lg-4">
-
             <div class="col-sm-6 col-lg-3">
                 <article class="meal-info-card h-100">
-                    <span class="meal-info-icon" aria-hidden="true">🌿</span>
-                    <h3>Meal Type</h3>
-                    <p>Vegetarian</p>
+                    <h3>Category</h3>
+                    <p>
+                        {% if meal %}
+                            {{ meal.get_category_display }}
+                        {% else %}
+                            Vegetarian
+                        {% endif %}
+                    </p>
                 </article>
             </div>
-
             <div class="col-sm-6 col-lg-3">
                 <article class="meal-info-card h-100">
-                    <span class="meal-info-icon" aria-hidden="true">🍲</span>
                     <h3>Cuisine</h3>
-                    <p>North Indian</p>
+                    <p>
+                        {% if meal %}
+                            {{ meal.home_cook.get_specialty_cuisine_display }}
+                        {% else %}
+                            North Indian
+                        {% endif %}
+                    </p>
                 </article>
             </div>
-
             <div class="col-sm-6 col-lg-3">
                 <article class="meal-info-card h-100">
-                    <span class="meal-info-icon" aria-hidden="true">🍽️</span>
-                    <h3>Serving</h3>
-                    <p>1 person</p>
+                    <h3>Spice Level</h3>
+                    <p>
+                        {% if meal %}
+                            {{ meal.get_spice_level_display }}
+                        {% else %}
+                            Mild
+                        {% endif %}
+                    </p>
                 </article>
             </div>
-
             <div class="col-sm-6 col-lg-3">
                 <article class="meal-info-card h-100">
-                    <span class="meal-info-icon" aria-hidden="true">🏡</span>
-                    <h3>Preparation</h3>
-                    <p>Home-style cooking</p>
+                    <h3>Food Type</h3>
+                    <p>
+                        {% if meal %}
+                            {{ meal.get_food_type_display }}
+                        {% else %}
+                            Home-style cooking
+                        {% endif %}
+                    </p>
                 </article>
             </div>
-
         </div>
     </section>
 
@@ -194,12 +271,20 @@
         <h2 class="mt-2 mb-3">Main Ingredients</h2>
 
         <div class="meal-ingredients-list">
-            <span>Paneer</span>
-            <span>Dal</span>
-            <span>Seasonal Vegetables</span>
-            <span>Wheat Roti</span>
-            <span>Rice</span>
-            <span>Indian Spices</span>
+            {% if meal %}
+                {% if meal.ingredients %}
+                    {{ meal.ingredients|linebreaks }}
+                {% else %}
+                    <p>Ingredient details have not been provided yet.</p>
+                {% endif %}
+            {% else %}
+                <span>Paneer</span>
+                <span>Dal</span>
+                <span>Seasonal Vegetables</span>
+                <span>Wheat Roti</span>
+                <span>Rice</span>
+                <span>Indian Spices</span>
+            {% endif %}
         </div>
 
         <p class="meal-allergen-note mt-3 mb-0">
@@ -214,7 +299,11 @@
         <h2 class="mt-2 mb-3">Find your next homemade favourite</h2>
 
         <p class="mb-4">
-            Explore more meals prepared by Asha's Kitchen.
+            {% if meal %}
+                Explore more meals prepared by {{ meal.home_cook.kitchen_name }}.
+            {% else %}
+                Explore more meals prepared by Asha's Kitchen.
+            {% endif %}
         </p>
 
         <a href="{% url 'cook_meals' %}" class="btn btn-ks-primary">

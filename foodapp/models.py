@@ -95,7 +95,11 @@ class Restaurant(models.Model):
         return self.name
 
 class Menu(models.Model):
-    restaurant=models.ForeignKey(Restaurant,on_delete=models.CASCADE,related_name="menu_items")
+    home_cook = models.ForeignKey(
+        "home_cooks.HomeCook",
+        on_delete=models.CASCADE,
+        related_name="menu_items",
+    )
     name=models.CharField(max_length=200)
     description=models.TextField(blank=True)
     price=models.DecimalField(max_digits=8,decimal_places=2)
@@ -110,7 +114,7 @@ class Menu(models.Model):
     nutrient_function = models.CharField(max_length=20, choices=NUTRI_CHOICES, default='starchy')
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"{self.name}-{self.restaurant.name}"
+        return f"{self.name}-{self.home_cook.kitchen_name}"
     
 class Offer(models.Model):
     menu_item=models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="offers")

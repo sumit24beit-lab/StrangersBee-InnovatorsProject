@@ -20,8 +20,23 @@ class RestaurantAdmin(admin.ModelAdmin):
 
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ('name','restaurant','price','available','spice_level','meal_time','food_type','nutrient_function')
-    list_filter = ('restaurant','available','spice_level','meal_time','food_type')
+    list_display = (
+        'name',
+        'home_cook',
+        'price',
+        'available',
+        'spice_level',
+        'meal_time',
+        'food_type',
+        'nutrient_function',
+    )
+    list_filter = (
+        'home_cook',
+        'available',
+        'spice_level',
+        'meal_time',
+        'food_type',
+    )
     search_fields = ('name','ingredients')
 
 @admin.register(Offer)
