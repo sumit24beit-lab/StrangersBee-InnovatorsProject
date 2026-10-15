@@ -9,46 +9,112 @@
     <h1 class="display-6 fw-bold mb-0">Order History</h1>
   </div>
   
-  <div class="row">
-    <div class="col-lg-8 mx-auto">
-      <div class="ks-card h-auto mb-3 p-3">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
-          <div>
-            <span class="badge bg-success mb-1">Delivered</span>
-            <p class="text-muted small mb-0">#KS-84920 • 22 Aug 2026</p>
-          </div>
-          <div class="text-end">
-            <h4 class="h6 fw-bold mb-0">₹360</h4>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <p class="mb-1 fw-bold">Asha's Kitchen</p>
-            <p class="small text-muted mb-0">2x Homestyle Paneer Thali</p>
-          </div>
-          <button class="btn btn-ks-primary btn-sm">Reorder</button>
-        </div>
-      </div>
+  
+<div class="row">
+  <div class="col-lg-8 mx-auto">
 
+    {% for order in orders %}
       <div class="ks-card h-auto mb-3 p-3">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+
+        <div class="d-flex justify-content-between align-items-center
+                    border-bottom pb-2 mb-3">
           <div>
-            <span class="badge bg-success mb-1">Delivered</span>
-            <p class="text-muted small mb-0">#KS-84110 • 15 Aug 2026</p>
+            {% if order.status == "delivery" %}
+              <span class="badge bg-success mb-1">
+                {{ order.get_status_display }}
+              </span>
+            {% elif order.status == "cancelled" %}
+              <span class="badge bg-danger mb-1">
+                {{ order.get_status_display }}
+              </span>
+            {% elif order.status == "on_the_way" %}
+              <span class="badge bg-primary mb-1">
+                {{ order.get_status_display }}
+              </span>
+            {% else %}
+              <span class="badge bg-warning text-dark mb-1">
+                {{ order.get_status_display }}
+              </span>
+            {% endif %}
+
+            <p class="text-muted small mb-0">
+              #KS-{{ order.id }}
+              &bull;
+              {{ order.created_at|date:"d M Y" }}
+            </p>
           </div>
+
           <div class="text-end">
-            <h4 class="h6 fw-bold mb-0">₹150</h4>
+            <h4 class="h6 fw-bold mb-0">
+              ₹{{ order.total|floatformat:2 }}
+            </h4>
           </div>
         </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <p class="mb-1 fw-bold">Riya's Home Kitchen</p>
-            <p class="small text-muted mb-0">1x Veg Biryani</p>
-          </div>
-          <button class="btn btn-ks-primary btn-sm">Reorder</button>
+
+        <div class="mb-3">
+          {% for item in order.items.all %}
+            <div class="d-flex justify-content-between align-items-start gap-3 py-2">
+              <div>
+                <p class="mb-1 fw-bold">
+                  {% if item.menu_item %}
+                    {{ item.menu_item.home_cook.kitchen_name }}
+                  {% else %}
+                    Home-cooked meal
+                  {% endif %}
+                </p>
+
+                <p class="small text-muted mb-0">
+                  {{ item.quantity }}x {{ item.name }}
+                </p>
+              </div>
+
+              <span class="text-nowrap">
+                ₹{{ item.line_total|floatformat:2 }}
+              </span>
+            </div>
+          {% empty %}
+            <p class="small text-muted">
+              No items recorded for this order.
+            </p>
+          {% endfor %}
         </div>
+
+        <div class="border-top pt-3">
+          <p class="small text-muted mb-1">
+            Delivery to:
+            {{ order.address.area }}, {{ order.address.city }}
+          </p>
+
+          <div class="d-flex justify-content-between small">
+            <span class="text-muted">Subtotal</span>
+            <span>₹{{ order.subtotal|floatformat:2 }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between small mt-1">
+            <span class="text-muted">Tax</span>
+            <span>₹{{ order.tax|floatformat:2 }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between small mt-1">
+            <span class="text-muted">Delivery fee</span>
+            <span>₹{{ order.delivery_charge|floatformat:2 }}</span>
+          </div>
+        </div>
+
       </div>
-    </div>
+    {% empty %}
+      <div class="ks-card h-auto mb-3 p-4 text-center">
+        <h2 class="h5 fw-bold">No orders yet</h2>
+        <p class="text-muted">
+          Your placed orders will appear here.
+        </p>
+        <a href="{% url 'menu' %}" class="btn btn-ks-primary">
+          Browse Homemade Meals
+        </a>
+      </div>
+    {% endfor %}
+
   </div>
+</div>
 </div>
 {% endblock %}

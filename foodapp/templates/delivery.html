@@ -13,34 +13,59 @@
   <div class="row g-4">
     <!-- Form Section -->
     <div class="col-lg-7">
-      <form id="deliveryForm">
+      <form id="deliveryForm" data-place-order-url="{% url 'place_order' %}">
         {% csrf_token %}
         <div class="ks-card h-auto mb-4">
           <h3 class="h5 fw-bold mb-3">Delivery Information</h3>
           
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="custName" required>
+              <label class="form-label" for="custName">Full Name</label>
+              <input 
+                type="text"
+                class="form-control" 
+                id="custName" 
+                value="{{ profile.first_name }} {{ profile.last_name }}"
+                readonly
+                required
+              >
             </div>
+
             <div class="col-md-6">
-              <label class="form-label">Phone Number</label>
-              <input type="tel" class="form-control" id="custPhone" required>
+              <label class="form-label" for="custPhone">Phone Number</label>
+              <input 
+                type="tel" 
+                class="form-control" 
+                id="custPhone" 
+                value="{{ profile.primary_mobile_number|default:'' }}"
+                placeholder="Enter 10-digit mobile number"
+                maxlength="15"
+                autocomplete="tel"
+                required
+              >
             </div>
+
             <div class="col-12">
-              <label class="form-label">Delivery Address</label>
-              <textarea class="form-control" id="custAddr" rows="3" required></textarea>
+              <label class="form-label" for="custAddress">Select Saved Delivery Address</label>
+              <select class="form-select" id="custAddress" required>
+                <option value="">Choose a saved address</option>
+                {% for address in addresses %}
+                  <option value="{{ address.id }}">
+                    {{ address.get_address_type_display }} -
+                    {{ address.address_line }}, {{ address.area }},
+                    {{ address.city }}, {{ address.state }} {{ address.pincode }}
+                  </option>
+                {% endfor %}
+              </select>
+              <a href="{% url 'customer_addresses' %}" class="btn btn-outline-secondary btn-sm mt-2">
+                Manage Saved Addresses
+              </a>
+              {% if not addresses %}
+                <p class="text-danger small mt-2 mb-0">
+                  You need to add a saved address before placing an order.
+                </p>
+              {% endif %}
             </div>
-          </div>
-          
-          <div class="mt-4">
-            <label class="form-label fw-bold d-block">Address Type</label>
-            <div class="d-flex gap-2 small-chips">
-              <button type="button" class="btn btn-outline-secondary rounded-pill chip selected" data-type="home">Home</button>
-              <button type="button" class="btn btn-outline-secondary rounded-pill chip" data-type="work">Work</button>
-              <button type="button" class="btn btn-outline-secondary rounded-pill chip" data-type="other">Other</button>
-            </div>
-            <input type="hidden" id="addrTypeHidden" value="home">
           </div>
         </div>
 
@@ -58,22 +83,40 @@
           <h3 class="h5 fw-bold mb-3">Payment Method</h3>
           <div class="row g-3 payment-tiles">
             <div class="col-6">
-              <label class="btn btn-outline-secondary w-100 text-start tile selected p-3">
-                <input type="radio" name="paymentMethod" value="cod" checked class="d-none">
+              <input 
+                type="radio"
+                id="paymentCOD"
+                name="paymentMethod"
+                value="cod"
+                class="visually-hidden"
+                checked
+              >
+              <label
+                for="paymentCOD"
+                class="btn btn-outline-secondary w-100 text-start tile selected p-3"
+              >
                 <strong class="d-block">Cash on Delivery</strong>
                 <small class="text-muted">Pay at doorstep</small>
               </label>
             </div>
             <div class="col-6">
-              <label class="btn btn-outline-secondary w-100 text-start tile p-3">
-                <input type="radio" name="paymentMethod" value="online" class="d-none">
+              <input 
+                type="radio"
+                id="paymentOnline"
+                name="paymentMethod"
+                value="online"
+                class="visually-hidden"
+                checked
+              >
+              <label
+                for="paymentOnline"
+                class="btn btn-outline-secondary w-100 text-start tile selected p-3"
+                aria-disabled="true"
+              >
                 <strong class="d-block">Online Payment</strong>
-                <small class="text-muted">Card / UPI / Netbanking</small>
+                <small class="text-muted">Coming soon</small>
               </label>
             </div>
-          </div>
-          <div id="onlinePaymentFields" class="mt-3" style="display:none;">
-            <p class="text-muted small mb-0">You will be redirected to the payment gateway after placing the order.</p>
           </div>
         </div>
       </form>
@@ -84,7 +127,7 @@
       <div class="ks-card h-auto position-sticky" style="top: 100px;">
         <h3 class="h5 fw-bold mb-3 pb-3 border-bottom">Order Review</h3>
         
-        <div id="order-items-preview" class="mb-3">
+        <div id="order-items-preview" class="mb-3 checkout-items-preview">
           <!-- JS generated list of items -->
         </div>
 
@@ -126,30 +169,32 @@
 
 {% block extra_js %}
 <script src="{% static 'foodapp/js/animation.js' %}"></script>
-<script>
-  // Simple chip selection script
-  document.querySelectorAll('.small-chips .chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-          document.querySelectorAll('.small-chips .chip').forEach(c => c.classList.remove('selected', 'btn-ks-primary'));
-          document.querySelectorAll('.small-chips .chip').forEach(c => c.classList.add('btn-outline-secondary'));
-          btn.classList.add('selected', 'btn-ks-primary');
-          btn.classList.remove('btn-outline-secondary');
-          document.getElementById('addrTypeHidden').value = btn.getAttribute('data-type');
-      });
-  });
 
-  // Payment tile selection
-  document.querySelectorAll('.payment-tiles .tile').forEach(tile => {
-      tile.addEventListener('click', () => {
-          document.querySelectorAll('.payment-tiles .tile').forEach(t => t.classList.remove('border-primary', 'bg-light'));
-          tile.classList.add('border-primary', 'bg-light');
-          const method = tile.querySelector('input').value;
-          if(method === 'online') {
-              document.getElementById('onlinePaymentFields').style.display = 'block';
-          } else {
-              document.getElementById('onlinePaymentFields').style.display = 'none';
-          }
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const paymentOptions = document.querySelectorAll(
+      'input[name="paymentMethod"]'
+    );
+
+    function updatePaymentSelection() {
+      paymentOptions.forEach(input => {
+        const label = document.querySelector(
+          `label[for="${input.id}"]`
+        );
+
+        if (!label) return;
+
+        label.classList.toggle('selected', input.checked);
+        label.classList.toggle('border-primary', input.checked);
+        label.classList.toggle('bg-light', input.checked);
       });
+    }
+
+    paymentOptions.forEach(input => {
+      input.addEventListener('change', updatePaymentSelection);
+    });
+
+    updatePaymentSelection();
   });
 </script>
 {% endblock %}

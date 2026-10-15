@@ -110,69 +110,165 @@
 {% block content %}
 <section class="account-page">
     <div class="account-card">
-        <div class="account-icon" aria-hidden="true">🍲</div>
-
+        <div class="account-icon" aria-hidden="true">KS</div>
         <h1>Create your account</h1>
         <p class="account-description">
             Join KitchenStation and discover food made with a homemade touch.
         </p>
 
-        <form>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}" role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
             <div class="mb-3">
-                <label for="fullName" class="form-label">Full name</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="fullName"
-                    name="full_name"
-                    placeholder="Enter your full name"
-                    autocomplete="name"
-                    required
-                >
+                <label for="{{ form.full_name.id_for_label }}" class="form-label">
+                    Full name
+                </label>
+                {{ form.full_name }}
+                {% for error in form.full_name.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="you@example.com"
-                    autocomplete="email"
-                    required
-                >
+                <label for="{{ form.username.id_for_label }}" class="form-label">
+                    Username
+                </label>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    name="password"
-                    placeholder="Create a password"
-                    autocomplete="new-password"
-                    required
-                >
+                <label for="{{ form.email.id_for_label }}" class="form-label">
+                    Email address
+                </label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
             </div>
 
             <div class="mb-3">
-                <label for="confirmPassword" class="form-label">
+                <label for="{{ form.password1.id_for_label }}" class="form-label">
+                    Password
+                </label>
+                {{ form.password1 }}
+                {% for error in form.password1.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">
                     Confirm password
                 </label>
-                <input
-                    type="password"
-                    class="form-control"
-                    id="confirmPassword"
-                    name="confirm_password"
-                    placeholder="Enter your password again"
-                    autocomplete="new-password"
-                    required
-                >
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
             </div>
 
-            <button type="button" class="btn account-submit">
+            <div class="mb-3">
+                <label for="{{ form.role.id_for_label }}" class="form-label">
+                    Account type
+                </label>
+                {{ form.role }}
+                {% for error in form.role.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div id="homeCookFields"
+                 {% if form.role.value != 'home_cook' %}hidden{% endif %}>
+                <h2 class="h5 mt-4 mb-3">Your kitchen details</h2>
+
+                <div class="mb-3">
+                    <label for="{{ form.cook_name.id_for_label }}" class="form-label">
+                        Cook name
+                    </label>
+                    {{ form.cook_name }}
+                    {% for error in form.cook_name.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.kitchen_name.id_for_label }}" class="form-label">
+                        Kitchen name
+                    </label>
+                    {{ form.kitchen_name }}
+                    {% for error in form.kitchen_name.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.area.id_for_label }}" class="form-label">
+                        Area
+                    </label>
+                    {{ form.area }}
+                    {% for error in form.area.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.city.id_for_label }}" class="form-label">
+                        City
+                    </label>
+                    {{ form.city }}
+                    {% for error in form.city.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.specialty_cuisine.id_for_label }}" class="form-label">
+                        Specialty cuisine
+                    </label>
+                    {{ form.specialty_cuisine }}
+                    {% for error in form.specialty_cuisine.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.about.id_for_label }}" class="form-label">
+                        About your kitchen
+                    </label>
+                    {{ form.about }}
+                    {% for error in form.about.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                {{ form.accept_terms }}
+                <label for="{{ form.accept_terms.id_for_label }}" class="form-check-label">
+                    {{ form.accept_terms.label }}
+                </label>
+                {% for error in form.accept_terms.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn account-submit">
                 Create Account
             </button>
         </form>
@@ -183,4 +279,22 @@
         </p>
     </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const roleSelect = document.getElementById("id_role");
+    const homeCookFields = document.getElementById("homeCookFields");
+
+    if (!roleSelect || !homeCookFields) {
+        return;
+    }
+
+    function updateHomeCookFields() {
+        homeCookFields.hidden = roleSelect.value !== "home_cook";
+    }
+
+    roleSelect.addEventListener("change", updateHomeCookFields);
+    updateHomeCookFields();
+});
+</script>
 {% endblock %}

@@ -1,4 +1,4 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}KitchenStation — Home{% endblock %}
@@ -10,11 +10,11 @@
       <div class="col-md-8 mx-auto text-center">
         <h1 class="display-4 fw-bold mb-3">Homemade Food, From Local Kitchens to Your Table.</h1>
         <p class="lead mb-4">Discover delicious homemade meals prepared by local home cooks and enjoy fresh, affordable food made with care.</p>
-        <div class="d-flex gap-3 justify-content-center">
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
           <a href="{% url 'restaurant' %}" class="btn btn-ks-secondary btn-lg">Explore Home Cooks</a>
           <a href="{% url 'menu' %}" class="btn btn-ks-accent btn-lg">Explore Homemade Meals</a>
         </div>
-        <div class="d-flex justify-content-center gap-4 mt-4">
+        <div class="d-flex justify-content-center gap-2 gap-md-4 mt-4 flex-wrap">
           <span class="ks-badge"><i class="bi bi-check-circle"></i> Freshly Prepared</span>
           <span class="ks-badge"><i class="bi bi-check-circle"></i> Affordable</span>
           <span class="ks-badge"><i class="bi bi-check-circle"></i> Local</span>
@@ -24,7 +24,7 @@
   </section>
 
   <section class="mb-5">
-    <div class="d-flex justify-content-between align-items-end mb-4">
+    <div class="d-flex justify-content-between align-items-end mb-4 gap-3 flex-wrap">
       <div>
         <h2 class="h3 fw-bold mb-1">Discover Home Cooks Near You</h2>
         <p class="text-muted mb-0">Explore local home cooks and discover the meals and cuisines they prepare from their own kitchens.</p>
@@ -34,7 +34,10 @@
     
     <div class="row g-4" id="homeCooksList">
       <div class="col-md-4">
-        <div class="ks-card">
+        <div class="ks-card text-center">
+          <div class="mb-3 d-flex justify-content-center">
+            <img src="{% static 'foodapp/images/thali.jpg' %}" alt="Asha" class="ks-avatar">
+          </div>
           <h3 class="h5 fw-bold">Asha's Kitchen</h3>
           <p class="text-muted mb-2">North Indian</p>
           <div class="mt-auto pt-3 border-top">
@@ -43,7 +46,10 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="ks-card">
+        <div class="ks-card text-center">
+          <div class="mb-3 d-flex justify-content-center">
+            <img src="{% static 'foodapp/images/food5.jpg' %}" alt="Riya" class="ks-avatar">
+          </div>
           <h3 class="h5 fw-bold">Riya's Home Kitchen</h3>
           <p class="text-muted mb-2">South Indian</p>
           <div class="mt-auto pt-3 border-top">
@@ -52,7 +58,10 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="ks-card">
+        <div class="ks-card text-center">
+          <div class="mb-3 d-flex justify-content-center">
+            <img src="{% static 'foodapp/images/misalpav.jpg' %}" alt="Meera" class="ks-avatar">
+          </div>
           <h3 class="h5 fw-bold">Meera's Kitchen</h3>
           <p class="text-muted mb-2">Homestyle Meals</p>
           <div class="mt-auto pt-3 border-top">
@@ -64,7 +73,7 @@
   </section>
 
   <section class="mb-5">
-    <div class="d-flex justify-content-between align-items-end mb-4">
+    <div class="d-flex justify-content-between align-items-end mb-4 gap-3 flex-wrap">
       <div>
         <h2 class="h3 fw-bold mb-1">Today's Homemade Favorites</h2>
         <p class="text-muted mb-0">Explore freshly prepared meals from local home cooks.</p>
@@ -75,6 +84,7 @@
     <div class="row g-4" id="mealsList">
       <div class="col-md-4">
         <div class="ks-card">
+          <img src="{% static 'foodapp/images/thali.jpg' %}" alt="Homestyle Paneer Thali" class="ks-meal-img">
           <h3 class="h5 fw-bold mb-1">Homestyle Paneer Thali</h3>
           <p class="text-muted small mb-2">Dal, Rice, Roti and Sabzi</p>
           <p class="mb-3"><span class="ks-badge">Freshly Prepared</span></p>
@@ -86,6 +96,7 @@
       </div>
       <div class="col-md-4">
         <div class="ks-card">
+          <img src="{% static 'foodapp/images/varan_bhaat.jpg' %}" alt="Veg Biryani" class="ks-meal-img">
           <h3 class="h5 fw-bold mb-1">Veg Biryani</h3>
           <p class="text-muted small mb-3">Homemade spices and fresh preparation</p>
           <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
@@ -96,6 +107,7 @@
       </div>
       <div class="col-md-4">
         <div class="ks-card">
+          <img src="{% static 'foodapp/images/food5.jpg' %}" alt="Masala Dosa" class="ks-meal-img">
           <h3 class="h5 fw-bold mb-1">Masala Dosa</h3>
           <p class="text-muted small mb-3">South Indian home-style</p>
           <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">

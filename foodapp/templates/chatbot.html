@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load static %}
+<!-- Floating Chatbot (Advisor + Order Assistant) -->
+<div class="chatbot-container">
+  <!-- Advisor Bot -->
+  <div id="advisor-bot" class="chat-window hidden">
+    <div class="chat-header">
+      <img src="{% static 'images/bot-icon-advisor.png' %}" alt="Advisor Bot" />
+      <span>Smart Advisor</span>
+      <button class="close-btn" onclick="toggleChat('advisor-bot')">×</button>
+    </div>
+    <div class="chat-body" id="advisor-body">
+      <div class="bot-msg">Hi! I’m your Smart Advisor 🤖<br>Ask about menu, offers, or discounts.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="advisor-input" placeholder="Ask about menu, offers..." />
+      <button onclick="sendMsg('advisor')">Send</button>
+    </div>
+  </div>
+
+  <!-- Order Bot -->
+  <div id="order-bot" class="chat-window hidden">
+    <div class="chat-header">
+      <img src="{% static 'images/bot-icon-order.png' %}" alt="Order Bot" />
+      <span>Order Assistant</span>
+      <button class="close-btn" onclick="toggleChat('order-bot')">×</button>
+    </div>
+    <div class="chat-body" id="order-body">
+      <div class="bot-msg">Hi! Need help tracking or modifying your order ? 🛵</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="order-input" placeholder="Track or modify your order..." />
+      <button onclick="sendMsg('order')">Send</button>
+    </div>
+  </div>
+
+  <!-- Floating Icons -->
+  <img src="{% static 'images/bot-icon-advisor.png' %}" class="chat-float-left" title="Smart Advisor" onclick="toggleChat('advisor-bot')" />
+  <img src="{% static 'images/bot-icon-order.png' %}" class="chat-float-right" title="Order Assistant" onclick="toggleChat('order-bot')" />
+</div>

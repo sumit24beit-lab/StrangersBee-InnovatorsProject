@@ -1,0 +1,9 @@
+@media (max-width:600px) {
+  .nav a { display:none }
+  .brand { font-size:18px }
+  .hero h1 { font-size:22px }
+  .hero-search input { width:160px }
+  .cards { gap:12px }
+  .menu-grid { grid-template-columns:1fr }
+  .cart-summary { width:100% }
+}

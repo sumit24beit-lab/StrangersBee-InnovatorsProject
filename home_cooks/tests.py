@@ -4,6 +4,7 @@ from .models import HomeCook
 from decimal import Decimal
 from django.urls import reverse
 from foodapp.models import Menu
+from accounts.models import AccountProfile
 
 # Create your tests here.
 User = get_user_model()
@@ -178,6 +179,10 @@ class HomeCookProfileEditTests(TestCase):
             email="profile@example.com",
             password="test-password-123",
         )
+        AccountProfile.objects.create(
+            user=self.user,
+            role=AccountProfile.HOME_COOK,
+        )
     def valid_profile_data(self):
         return {
             "cook_name": "Asha",
@@ -256,6 +261,10 @@ class MealManagementTests(TestCase):
             username="meal_owner",
             password="test-password-123",
         )
+        AccountProfile.objects.create(
+                    user=self.user,
+                    role=AccountProfile.HOME_COOK,
+        )
         self.cook = HomeCook.objects.create(
             user=self.user,
             cook_name="Asha",
@@ -326,6 +335,10 @@ class MealManagementTests(TestCase):
             username="customer_without_cook_profile",
             password="test-password-123",
         )
+        AccountProfile.objects.update_or_create(
+            user=user_without_profile,
+            defaults={"role": AccountProfile.HOME_COOK},
+        )
         self.client.force_login(user_without_profile)
         response=self.client.get(reverse("add_meal"))
         self.assertRedirects(
@@ -338,6 +351,10 @@ class MealOwnershipTests(TestCase):
         self.user=User.objects.create_user(
             username="cook_one",
             password="test-password-123",
+        )
+        AccountProfile.objects.create(
+                    user=self.user,
+                    role=AccountProfile.HOME_COOK,
         )
         self.cook=HomeCook.objects.create(
             user=self.user,

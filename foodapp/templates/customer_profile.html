@@ -13,8 +13,8 @@
             JD
           </div>
         </div>
-        <h2 class="h5 fw-bold mb-1">John Doe</h2>
-        <p class="text-muted small">john.doe@example.com</p>
+        <h2 class="h5 fw-bold mb-1">{{ profile.first_name }} {{ profile.last_name }}</h2>
+        <p class="text-muted small">{{ profile.email }}</p>
         <button class="btn btn-outline-secondary btn-sm w-100 mt-2">Edit Profile</button>
       </div>
       
@@ -24,7 +24,7 @@
             <a href="#" class="nav-link text-dark fw-bold bg-light rounded"><i class="bi bi-person me-2"></i> Account Info</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link text-dark"><i class="bi bi-geo-alt me-2"></i> Saved Addresses</a>
+            <a href="{% url 'customer_addresses' %}" class="nav-link text-dark"><i class="bi bi-geo-alt me-2"></i> Saved Addresses</a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link text-dark"><i class="bi bi-bag me-2"></i> Order History</a>
@@ -39,25 +39,77 @@
     <div class="col-md-8">
       <div class="ks-card h-auto">
         <h3 class="h5 fw-bold mb-4 border-bottom pb-3">Personal Information</h3>
-        <form>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label class="form-label text-muted small">Full Name</label>
-              <input type="text" class="form-control" value="John Doe">
+          <form method="post">
+            {% csrf_token %}
+
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="{{ form.first_name.id_for_label }}"
+                      class="form-label text-muted small">First Name</label>
+                {{ form.first_name }}
+                {% for error in form.first_name.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-4">
+                <label for="{{ form.middle_name.id_for_label }}"
+                      class="form-label text-muted small">Middle Name</label>
+                {{ form.middle_name }}
+                {% for error in form.middle_name.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-4">
+                <label for="{{ form.last_name.id_for_label }}"
+                      class="form-label text-muted small">Last Name</label>
+                {{ form.last_name }}
+                {% for error in form.last_name.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="{{ form.primary_mobile_number.id_for_label }}"
+                      class="form-label text-muted small">Primary Phone</label>
+                {{ form.primary_mobile_number }}
+                {% for error in form.primary_mobile_number.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label for="{{ form.alternate_mobile_number.id_for_label }}"
+                      class="form-label text-muted small">Alternate Phone</label>
+                {{ form.alternate_mobile_number }}
+                {% for error in form.alternate_mobile_number.errors %}
+                  <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label text-muted small">Email Address</label>
+                <input type="email"
+                      class="form-control"
+                      value="{{ profile.email }}"
+                      disabled>
+                <div class="form-text">Your account email cannot be changed here.</div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <label class="form-label text-muted small">Phone Number</label>
-              <input type="tel" class="form-control" value="+91 9876543210">
+
+            {% if form.non_field_errors %}
+              <div class="text-danger mt-3">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+
+            <div class="mt-4 text-end">
+              <button type="submit" class="btn btn-ks-primary">
+                Save Changes
+              </button>
             </div>
-            <div class="col-12">
-              <label class="form-label text-muted small">Email Address</label>
-              <input type="email" class="form-control" value="john.doe@example.com" disabled>
-            </div>
-          </div>
-          <div class="mt-4 text-end">
-            <button type="button" class="btn btn-ks-primary">Save Changes</button>
-          </div>
-        </form>
+          </form>
       </div>
     </div>
   </div>

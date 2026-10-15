@@ -5,12 +5,12 @@
 
 {% block content %}
 <div class="container py-4">
-  <div class="ks-card p-0 overflow-hidden mb-5 border-0 shadow-none">
-    <div style="height: 200px; background: url('{% static 'foodapp/images/cook_placeholder.jpg' %}') center/cover;"></div>
-    <div class="px-4 pb-4 position-relative">
-      <img src="{% static 'foodapp/images/cook_placeholder.jpg' %}" alt="Cook" class="rounded-circle border border-4 border-white position-absolute" style="width: 120px; height: 120px; top: -60px; object-fit: cover;">
+  <div class="ks-card p-0 overflow-hidden mb-5">
+    <img src="{% static 'foodapp/images/home-hero.jpg' %}" alt="Cook banner" class="ks-cook-banner">
+    <div class="ks-cook-profile-body">
+      <img src="{% static 'foodapp/images/thali.jpg' %}" alt="Cook" class="ks-avatar-lg ks-cook-profile-photo">
       
-      <div class="pt-5 mt-2 d-flex justify-content-between align-items-start">
+      <div class="ks-cook-profile-meta">
         <div>
           <h1 class="h3 fw-bold mb-1">Asha's Kitchen</h1>
           <p class="text-muted mb-2"><i class="bi bi-geo-alt"></i> Andheri West • <span class="ks-badge">North Indian</span></p>
@@ -29,6 +29,7 @@
   <div class="row g-4">
     <div class="col-md-4">
       <div class="ks-card">
+        <img src="{% static 'foodapp/images/thali.jpg' %}" alt="Homestyle Paneer Thali" class="ks-meal-img">
         <h3 class="h5 fw-bold mb-1">Homestyle Paneer Thali</h3>
         <p class="text-muted small mb-3">Fresh paneer gravy with 3 rotis, dal, and rice.</p>
         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
@@ -39,6 +40,7 @@
     </div>
     <div class="col-md-4">
       <div class="ks-card">
+        <img src="{% static 'foodapp/images/fried_rice.jpg' %}" alt="Rajma Chawal" class="ks-meal-img">
         <h3 class="h5 fw-bold mb-1">Rajma Chawal</h3>
         <p class="text-muted small mb-3">Authentic punjabi rajma cooked overnight, served with jeera rice.</p>
         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
@@ -49,6 +51,7 @@
     </div>
     <div class="col-md-4">
       <div class="ks-card opacity-75">
+        <img src="{% static 'foodapp/images/puranpoli.jpg' %}" alt="Aloo Paratha (2 pcs)" class="ks-meal-img">
         <h3 class="h5 fw-bold mb-1">Aloo Paratha (2 pcs)</h3>
         <p class="text-muted small mb-3">Stuffed with seasoned potatoes, served with homemade curd and pickle.</p>
         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">

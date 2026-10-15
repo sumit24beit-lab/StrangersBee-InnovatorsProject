@@ -1,4 +1,4 @@
-﻿/* KitchenStation Design System */
+/* KitchenStation Design System */
 :root {
   --ks-bg: #F8F5F0;
   --ks-primary: #5F8D4E;
@@ -114,22 +114,154 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid var(--ks-border);
   border-radius: var(--ks-radius);
   box-shadow: var(--ks-shadow);
-  padding: 1.5rem;
+  padding: 1rem 1rem 1.1rem;
   transition: all 0.2s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 0.35rem;
 }
 .ks-card:hover {
   transform: translate(-2px, -2px);
   box-shadow: var(--ks-shadow-hover);
 }
-.ks-card img {
+
+.ks-card h3,
+.ks-card h4,
+.ks-card h5 {
+  margin-bottom: 0.15rem;
+}
+
+/* Meal images inside cards — header, not the whole card */
+.ks-meal-img,
+.ks-card img:not(.ks-avatar):not(.ks-avatar-lg):not(.ks-avatar-sm):not(.ks-cook-banner):not(.ks-cart-thumb):not(.ks-cook-profile-photo) {
+  display: block;
+  width: 100%;
+  height: 150px;
+  min-height: 150px;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  border: 2px solid var(--ks-border);
+  margin-bottom: 0.25rem;
+  background-color: rgba(95, 141, 78, 0.08);
+}
+
+/* Meal detail hero image */
+.ks-meal-hero {
+  display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--ks-radius);
+  border: 2px solid var(--ks-border);
+  box-shadow: var(--ks-shadow);
+}
+
+/* Cook profile avatars */
+.ks-avatar,
+.ks-avatar-lg,
+.ks-avatar-sm {
+  display: block;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  border: 2px solid var(--ks-border);
+  background-color: rgba(95, 141, 78, 0.08);
+}
+
+.ks-avatar {
+  width: 88px;
+  height: 88px;
+}
+
+.ks-avatar-lg {
+  width: 112px;
+  height: 112px;
+}
+
+.ks-avatar-sm {
+  width: 56px;
+  height: 56px;
+}
+
+/* Cook profile banner + overlapping photo */
+.ks-cook-banner {
+  display: block;
+  width: 100%;
+  height: 168px;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: var(--ks-radius) var(--ks-radius) 0 0;
+}
+
+.ks-cook-profile-body {
+  position: relative;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.ks-cook-profile-photo {
+  position: absolute;
+  top: -56px;
+  left: 1.5rem;
+  width: 112px;
+  height: 112px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  border: 3px solid var(--ks-card);
+  background-color: rgba(95, 141, 78, 0.08);
+}
+
+.ks-cook-profile-meta {
+  padding-top: 4.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Cart item row + thumbnail */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(45, 45, 45, 0.12);
+}
+
+.cart-item:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ks-cart-thumb {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  flex-shrink: 0;
+  object-fit: cover;
+  object-position: center;
   border-radius: var(--ks-radius-sm);
   border: 2px solid var(--ks-border);
-  object-fit: cover;
-  width: 100%;
-  margin-bottom: 1rem;
+}
+
+.cart-item h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.15rem;
+}
+
+.cart-item .qty {
+  display: flex;
+  align-items: center;
+  margin-top: 0.35rem;
 }
 
 /* FORMS */
@@ -169,7 +301,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--ks-radius);
   border: 2px solid var(--ks-border);
   box-shadow: var(--ks-shadow);
-  padding: 4rem 2rem;
+  padding: 3.25rem 2rem;
   margin-bottom: 3rem;
   text-align: center;
 }
@@ -178,11 +310,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
   margin-bottom: 1rem;
 }
-.ks-hero p.lead {
-  font-size: 1.25rem;
-  opacity: 0.9;
-  max-width: 600px;
-  margin: 0 auto 2rem auto;
+.ks-hero .d-flex.gap-3 {
+  row-gap: 0.75rem;
+}
+
+.ks-card h3.h5 {
+  margin-bottom: 0.35rem;
 }
 
 /* FOOTER */
@@ -219,4 +352,117 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2rem;
   border-top: 1px solid #ddd;
   color: var(--ks-muted);
+}
+
+/* RESPONSIVE IMAGE BEHAVIOR */
+@media (max-width: 767.98px) {
+  .ks-meal-img,
+  .ks-card img:not(.ks-avatar):not(.ks-avatar-lg):not(.ks-avatar-sm):not(.ks-cook-banner):not(.ks-cart-thumb):not(.ks-cook-profile-photo) {
+    height: 130px;
+    min-height: 130px;
+  }
+  .ks-meal-hero {
+    height: 220px;
+  }
+  .ks-cook-banner {
+    height: 132px;
+  }
+  .ks-avatar {
+    width: 76px;
+    height: 76px;
+  }
+  .ks-avatar-lg {
+    width: 88px;
+    height: 88px;
+  }
+  .ks-cook-profile-photo {
+    top: -44px;
+    left: 1.25rem;
+    width: 88px;
+    height: 88px;
+  }
+  .ks-cook-profile-body {
+    padding: 0 1.25rem 1.25rem;
+  }
+  .ks-cook-profile-meta {
+    padding-top: 3.25rem;
+  }
+  .ks-cart-thumb {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+  }
+  .ks-hero {
+    padding: 2.5rem 1.25rem;
+  }
+  .ks-hero .d-flex.justify-content-center {
+    row-gap: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .ks-meal-img,
+  .ks-card img:not(.ks-avatar):not(.ks-avatar-lg):not(.ks-avatar-sm):not(.ks-cook-banner):not(.ks-cart-thumb):not(.ks-cook-profile-photo) {
+    height: 140px;
+    min-height: 140px;
+  }
+  .ks-meal-hero {
+    height: 260px;
+  }
+  .ks-hero {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .ks-meal-img,
+  .ks-card img:not(.ks-avatar):not(.ks-avatar-lg):not(.ks-avatar-sm):not(.ks-cook-banner):not(.ks-cart-thumb):not(.ks-cook-profile-photo) {
+    height: 180px;
+    min-height: 180px;
+  }
+  .ks-meal-hero {
+    height: 340px;
+  }
+}
+
+/* Prevent image overflow in all containers */
+img {
+  max-width: 100%;
+}
+
+.ks-card {
+  min-width: 0;
+}
+
+/* Image-to-text spacing inside meal cards */
+.ks-card .ks-meal-img + h3,
+.ks-card .ks-meal-img + h4,
+.ks-card .ks-meal-img + h5 {
+  margin-top: 0;
+}
+
+/* Checkout order review */
+.checkout-items-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px !important;
+}
+
+.checkout-items-preview .checkout-item {
+    min-height: 0;
+    padding: 4px 0;
+}
+
+.checkout-items-preview img {
+    display: block;
+    border: 1px solid rgba(45, 45, 45, 0.12);
+}
+
+.checkout-items-preview .flex-grow-1 {
+    min-width: 0;
+}
+
+.checkout-items-preview .fw-bold {
+    overflow-wrap: anywhere;
 }

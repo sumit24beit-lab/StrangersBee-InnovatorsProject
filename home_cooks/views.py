@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import HomeCook
 from foodapp.models import Menu
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from .decorators import home_cook_required
 from .forms import HomeCookForm, MenuForm
 from django.views.decorators.http import require_POST
 
@@ -66,10 +66,11 @@ def meal_details_view(request, meal_id=None):
         {"meal": meal},
     )
 
+@home_cook_required
 def dashboard_view(request):
     return render(request, 'home_cooks/dashboard.html')
 
-@login_required(login_url="login")
+@home_cook_required
 def my_profile_view(request):
     profile = HomeCook.objects.filter(user=request.user).first()
     if request.method == "POST":
@@ -92,7 +93,7 @@ def my_profile_view(request):
         },
     )
 
-@login_required(login_url="login")
+@home_cook_required
 def my_meals_view(request):
     cook = HomeCook.objects.filter(
         user=request.user
@@ -113,7 +114,7 @@ def my_meals_view(request):
         },
     )
 
-@login_required(login_url="login")
+@home_cook_required
 def add_meal_view(request):
     cook = HomeCook.objects.filter(user=request.user).first()
     if cook is None:
@@ -138,7 +139,7 @@ def add_meal_view(request):
         },
     )
 
-@login_required(login_url="login")
+@home_cook_required
 def edit_meal_view(request, meal_id):
     cook = HomeCook.objects.filter(user=request.user).first()
     if cook is None:
@@ -163,7 +164,7 @@ def edit_meal_view(request, meal_id):
         },
     )
 
-@login_required(login_url="login")
+@home_cook_required
 @require_POST
 def toggle_meal_availability_view(request, meal_id):
     cook = HomeCook.objects.filter(
@@ -194,9 +195,10 @@ def toggle_meal_availability_view(request, meal_id):
         )
     return redirect("my_meals")
 
-
+@home_cook_required
 def cook_orders_view(request):
     return render(request, 'home_cooks/cook_orders.html')
 
+@home_cook_required
 def cook_earnings_view(request):
     return render(request, 'home_cooks/cook_earnings.html')
