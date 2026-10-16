@@ -622,3 +622,169 @@ class CookOrderManagementTests(TestCase):
         self.assertRedirects(response, reverse("cook_orders"))
         order.refresh_from_db()
         self.assertEqual(order.status, "pending")
+
+class CookEarningsViewTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="earnings_cook",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=self.user,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.cook = HomeCook.objects.create(
+            user=self.user,
+            cook_name="Asha",
+            kitchen_name="Asha's Kitchen",
+            area="Andheri West",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+            is_verified=True,
+        )
+        self.other_user = User.objects.create_user(
+            username="earnings_other_cook",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=self.other_user,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.other_cook = HomeCook.objects.create(
+            user=self.other_user,
+            cook_name="Riya",
+            kitchen_name="Riya's Kitchen",
+            area="Powai",
+            city="Mumbai",
+            specialty_cuisine="south_indian",
+            is_verified=True,
+        )
+        self.customer = CustomerProfile.objects.create(
+            user="earnings_customer",
+            first_name="Rahul",
+            last_name="Sharma",
+            email="earnings_customer@example.com",
+        )
+        self.address = Address.objects.create(
+            customer=self.customer,
+            address_line="101 Sample Road",
+            area="Andheri West",
+            city="Mumbai",
+            state="Maharashtra",
+            pincode="400053",
+            address_type="home",
+        )
+        self.meal = Menu.objects.create(
+            home_cook=self.cook,
+            name="Asha's Paneer Thali",
+            description="Paneer, rice and roti",
+            price=Decimal("180.00"),
+            category="lunch",
+            available=True,
+        )
+        self.other_meal = Menu.objects.create(
+            home_cook=self.other_cook,
+            name="Riya's Vegetable Pulao",
+            description="Homemade vegetable pulao",
+            price=Decimal("120.00"),
+            category="lunch",
+            available=True,
+        )
+        self.client.force_login(self.user)
+    def create_order(self, status, meal=None, quantity=1):
+        meal = meal or self.meal
+        order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status=status,
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=meal,
+            name=meal.name,
+            price=meal.price,
+            quantity=quantity,
+        )
+        return order
+    def test_earnings_page_requires_home_cook_login(self):
+        self.client.logout()
+        response = self.client.get(reverse("cook_earnings"))
+        self.assertEqual(response.status_code, 302)
+    def test_only_delivered_orders_count_towards_sales(self):
+        self.create_order(status="delivery")
+        self.create_order(status="cancelled", quantity=2)
+        self.create_order(status="pending")
+        response=self.client.get(reverse("cook_earnings"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.context["total_sales"],
+            Decimal("180.00"),
+        )
+        self.assertEqual(
+            response.context["monthly_sales"],
+            Decimal("180.00"),
+        )
+        self.assertEqual(
+            response.context["completed_orders_count"],
+            1,
+        )
+    def test_undelivered_orders_are_counted_separately(self):
+        self.create_order(status="pending")
+        self.create_order(status="preparing")
+        self.create_order(status="on_the_way")
+        self.create_order(status="cancelled")
+        response=self.client.get(reverse("cook_earnings"))
+        self.assertEqual(
+            response.context["sales_awaiting_delivery"],
+            Decimal("540.00"),
+        )
+        self.assertEqual(
+            response.context["total_sales"],
+            Decimal("0.00"),
+        )
+        self.assertEqual(
+            response.context["completed_orders_count"],
+            0,
+        )
+    def test_earnings_include_only_this_cooks_meals(self):
+        order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status="delivery",
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=self.meal,
+            name=self.meal.name,
+            price=self.meal.price,
+            quantity=1,
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=self.other_meal,
+            name=self.other_meal.name,
+            price=self.other_meal.price,
+            quantity=1,
+        )
+        response = self.client.get(reverse("cook_earnings"))
+        self.assertEqual(
+            response.context["total_sales"],
+            Decimal("180.00"),
+        )
+        self.assertEqual(
+            response.context["completed_orders_count"],
+            1,
+        )
+    def test_recent_transactions_show_only_delivered_orders(self):
+        delivered_order = self.create_order(status="delivery")
+        self.create_order(status="pending")
+        self.create_order(status="delivery",meal=self.other_meal)
+        response=self.client.get(reverse("cook_earnings"))
+        transactions=response.context["recent_transactions"]
+        self.assertEqual(len(transactions), 1)
+        self.assertEqual(
+            transactions[0]["order"].pk,
+            delivered_order.pk,
+        )

@@ -1,4 +1,3 @@
-
 {% extends 'home_cooks/base_home_cooks.html' %}
 
 {% block title %}My Earnings — KitchenStation{% endblock %}
@@ -8,9 +7,10 @@
 <div class="cook-earnings-page">
 
     <!-- Back Navigation -->
-    <nav class="cook-earnings-back mb-4" aria-label="Dashboard navigation">
+    <nav class="cook-earnings-back mb-4"
+        aria-label="Dashboard navigation">
         <a href="{% url 'cook_dashboard' %}">
-            <span aria-hidden="true">←</span>
+            <span aria-hidden="true">&larr;</span>
             Back to Dashboard
         </a>
     </nav>
@@ -20,62 +20,77 @@
         <span class="ks-eyebrow">YOUR KITCHEN'S PERFORMANCE</span>
         <h1 class="mt-2 mb-3">My Earnings</h1>
         <p class="cook-earnings-intro mb-0">
-            Track your income from homemade meals and completed orders.
+            Track sales from delivered meals and monitor your order activity.
         </p>
     </header>
 
-    <!-- Earnings Overview -->
+    <!-- Database-driven Sales Summary -->
     <section class="cook-earnings-summary mb-5"
-             aria-label="Earnings summary">
+            aria-label="Sales summary">
 
         <article class="earnings-card">
             <div class="earnings-card-top">
-                <span>Total Earnings</span>
-                <span class="earnings-card-icon" aria-hidden="true">₹</span>
+                <span>Total Delivered Sales</span>
+                <span class="earnings-card-icon"
+                    aria-hidden="true">&#8377;
+                </span>
             </div>
 
-            <h2 class="earnings-amount">₹12,450</h2>
+            <h2 class="earnings-amount">
+                &#8377;{{ total_sales|floatformat:2 }}
+            </h2>
+
             <p class="earnings-card-caption mb-0">
-                Sample lifetime earnings
+                Meal sales from delivered orders
             </p>
         </article>
 
         <article class="earnings-card">
             <div class="earnings-card-top">
                 <span>This Month</span>
-                <span class="earnings-card-icon" aria-hidden="true">↗</span>
+                <span class="earnings-card-icon"
+                    aria-hidden="true">&#8635;
+                </span>
             </div>
 
-            <h2 class="earnings-amount">₹3,600</h2>
+            <h2 class="earnings-amount">
+                &#8377;{{ monthly_sales|floatformat:2 }}
+            </h2>
+
             <p class="earnings-card-caption mb-0">
-                Sample monthly earnings
+                Delivered sales from orders placed this month
             </p>
         </article>
 
         <article class="earnings-card">
             <div class="earnings-card-top">
                 <span>Completed Orders</span>
-                <span class="earnings-card-icon" aria-hidden="true">✓</span>
+                <span class="earnings-card-icon"
+                    aria-hidden="true">&#10003;
+                </span>
             </div>
 
-            <h2 class="earnings-count">48</h2>
+            <h2 class="earnings-count">
+                {{ completed_orders_count }}
+            </h2>
+
             <p class="earnings-card-caption mb-0">
-                Sample completed order count
+                Orders marked delivered
             </p>
         </article>
 
     </section>
 
-    <!-- Payment Information -->
+    <!-- Sales and Payout Information -->
     <section class="earnings-section-card mb-5">
         <div class="earnings-section-header mb-4">
             <div>
-                <span class="ks-eyebrow">PAYOUT DETAILS</span>
-                <h2 class="mt-2 mb-0">Payment Overview</h2>
+                <span class="ks-eyebrow">SALES INFORMATION</span>
+                <h2 class="mt-2 mb-0">Sales &amp; Payout Overview</h2>
             </div>
 
             <span class="payment-method-indicator">
-                Payment setup pending
+                Payment tracking not configured
             </span>
         </div>
 
@@ -84,14 +99,16 @@
             <div class="payment-overview-row">
                 <div>
                     <span class="payment-overview-label">
-                        Pending Settlement
+                        Sales Awaiting Delivery
                     </span>
                     <p class="payment-overview-description mb-0">
-                        Sample amount awaiting settlement
+                        Meal value in pending, preparing, and on-the-way orders
                     </p>
                 </div>
 
-                <strong>₹450</strong>
+                <strong>
+                    &#8377;{{ sales_awaiting_delivery|floatformat:2 }}
+                </strong>
             </div>
 
             <div class="payment-overview-row">
@@ -100,111 +117,105 @@
                         Total Paid Out
                     </span>
                     <p class="payment-overview-description mb-0">
-                        Sample amount already paid
+                        Actual payout records are not tracked yet
                     </p>
                 </div>
 
-                <strong>₹12,000</strong>
+                <strong>Not tracked</strong>
             </div>
 
             <div class="payment-overview-row">
                 <div>
                     <span class="payment-overview-label">
-                        Payment Method
+                        Customer Payment Method
                     </span>
                     <p class="payment-overview-description mb-0">
-                        Add a payment method when setup is available
+                        Cash on Delivery is currently supported
                     </p>
                 </div>
 
                 <span class="payment-method-badge">
-                    Not configured
+                    Cash on Delivery
                 </span>
             </div>
 
         </div>
 
         <p class="payment-overview-notice mb-0">
-            Payment processing and settlement tracking will be
-            implemented later.
+            Sales represent the value of your meals, excluding delivery
+            charges and tax. They are not necessarily your profit or actual
+            payouts. Payment settlement tracking will be implemented later.
         </p>
     </section>
 
-    <!-- Recent Transactions -->
+    <!-- Recent Delivered Orders -->
     <section class="earnings-section-card">
         <div class="earnings-section-header mb-4">
             <div>
                 <span class="ks-eyebrow">RECENT ACTIVITY</span>
-                <h2 class="mt-2 mb-0">Recent Earnings</h2>
+                <h2 class="mt-2 mb-0">Recent Delivered Orders</h2>
             </div>
 
-            <span class="earnings-transaction-count">3 sample transactions</span>
+            <span class="earnings-transaction-count">
+                {{ recent_transactions|length }}
+                {% if recent_transactions|length == 1 %}
+                    order
+                {% else %}
+                    orders
+                {% endif %}
+            </span>
         </div>
 
         <div class="earnings-transactions">
 
-            <!-- Transaction 1 -->
-            <article class="transaction-row">
-                <div class="transaction-main">
-                    <div class="transaction-icon" aria-hidden="true">₹</div>
+            {% for entry in recent_transactions %}
+                <article class="transaction-row">
+                    <div class="transaction-main">
+                        <div class="transaction-icon" aria-hidden="true">
+                            &#8377;
+                        </div>
+                        <div class="transaction-information">
+                            <h3>Order #KS{{ entry_order.pk }}</h3>
+                            {% for item in entry.cook_items %}
+                                <p>
+                                    {{ item.name }} &times; {{ item.quantity }}
+                                </p>
+                            {% endfor %}
+                            <p>
+                                Order date:
+                                {{ entry.order.created_at|date:"d M Y" }}
+                            </p>
+                        </div>
+                    </div>
 
+                    <div class="transaction-result">
+                        <strong class="transaction-amount">
+                            +&#8377;{{ entry.cook_subtotal|floatformat:2 }}
+                        </strong>
+                        <span class="transaction-status transaction-status-completed">
+                            Delivered
+                        </span>
+                    </div>
+                </article>
+
+            {% empty %}
+
+                <div class="transaction-row">
                     <div class="transaction-information">
-                        <h3>Order #KS1003</h3>
-                        <p>Homestyle Paneer Thali</p>
+                        <h3>No delivered orders yet</h3>
+                        <p>Sales from your delivered orders will appear here.</p>
                     </div>
                 </div>
 
-                <div class="transaction-result">
-                    <strong class="transaction-amount">+₹180</strong>
-                    <span class="transaction-status transaction-status-completed">
-                        Completed
-                    </span>
-                </div>
-            </article>
-
-            <!-- Transaction 2 -->
-            <article class="transaction-row">
-                <div class="transaction-main">
-                    <div class="transaction-icon" aria-hidden="true">₹</div>
-
-                    <div class="transaction-information">
-                        <h3>Order #KS1002</h3>
-                        <p>Homemade Veg Pulao</p>
-                    </div>
-                </div>
-
-                <div class="transaction-result">
-                    <strong class="transaction-amount">+₹120</strong>
-                    <span class="transaction-status transaction-status-processing">
-                        Processing
-                    </span>
-                </div>
-            </article>
-
-            <!-- Transaction 3 -->
-            <article class="transaction-row">
-                <div class="transaction-main">
-                    <div class="transaction-icon" aria-hidden="true">₹</div>
-
-                    <div class="transaction-information">
-                        <h3>Order #KS1001</h3>
-                        <p>Homestyle Paneer Thali × 2</p>
-                    </div>
-                </div>
-
-                <div class="transaction-result">
-                    <strong class="transaction-amount">+₹360</strong>
-                    <span class="transaction-status transaction-status-completed">
-                        Completed
-                    </span>
-                </div>
-            </article>
+            {% endfor %}
 
         </div>
 
         <p class="earnings-sample-note mb-0">
-            These transactions are examples, not actual payment records.
+            Figures are calculated from your database records.
+            Actual payouts and expenses are not yet tracked.
         </p>
+
     </section>
 
 </div>

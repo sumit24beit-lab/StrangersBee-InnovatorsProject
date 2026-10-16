@@ -6,6 +6,8 @@ from django.contrib import messages
 from .decorators import home_cook_required
 from .forms import HomeCookForm, MenuForm
 from django.views.decorators.http import require_POST
+from decimal import Decimal
+from django.utils import timezone
 
 # Create your views here.
 def home_cooks_view(request):
@@ -326,4 +328,100 @@ def update_cook_order_status_view(request, order_id):
 
 @home_cook_required
 def cook_earnings_view(request):
-    return render(request, 'home_cooks/cook_earnings.html')
+    cook = HomeCook.objects.filter(user=request.user).first()
+    if cook is None:
+        messages.warning(
+            request,
+            "Please complete your home cook profile first.",
+        )
+        return redirect("my_profile")
+    orders = (
+        Order.objects
+        .filter(items__menu_item__home_cook=cook)
+        .distinct()
+        .prefetch_related(
+            Prefetch(
+                "items",
+                queryset=OrderItem.objects.select_related("menu_item"),
+            )
+        )
+        .order_by("-created_at")
+    )
+    order_entries = []
+    for order in orders:
+        cook_items = [
+            item
+            for item in order.items.all()
+            if (
+                item.menu_item_id is not None
+                and item.menu_item.home_cook_id == cook.pk
+            )
+        ]
+        if not cook_items:
+            continue
+        # Count only this cook's meal value, not delivery charges or tax.
+        cook_subtotal = sum(
+            (
+                item.price * item.quantity
+                for item in cook_items
+            ),
+            Decimal("0.00"),
+        )
+        order_entries.append({
+            "order": order,
+            "cook_items": cook_items,
+            "cook_subtotal": cook_subtotal,
+        })
+    delivered_entries = [
+        entry
+        for entry in order_entries
+        if entry["order"].status == "delivery"
+    ]
+    today = timezone.localdate()
+    monthly_delivered_entries = [
+        entry
+        for entry in delivered_entries
+        if (
+            timezone.localtime(
+                entry["order"].created_at
+            ).year == today.year
+            and timezone.localtime(
+                entry["order"].created_at
+            ).month == today.month
+        )
+    ]
+    total_sales = sum(
+        (entry["cook_subtotal"] for entry in delivered_entries),
+        Decimal("0.00"),
+    )
+    monthly_sales = sum(
+        (
+            entry["cook_subtotal"]
+            for entry in monthly_delivered_entries
+        ),
+        Decimal("0.00"),
+    )
+    sales_awaiting_delivery = sum(
+        (
+            entry["cook_subtotal"]
+            for entry in order_entries
+            if entry["order"].status in {
+                "pending",
+                "preparing",
+                "on_the_way",
+            }
+        ),
+        Decimal("0.00"),
+    )
+    return render(
+        request,
+        'home_cooks/cook_earnings.html',
+        {
+            "total_sales": total_sales,
+            "monthly_sales": monthly_sales,
+            "completed_orders_count": len(delivered_entries),
+            "sales_awaiting_delivery": sales_awaiting_delivery,
+            "recent_transactions": delivered_entries[:5],
+            "payout_tracking_configured": False,
+        },
+    )
