@@ -7,249 +7,292 @@
 
 <div class="cook-orders-page">
 
-    <!-- Back Navigation -->
-    <nav class="cook-orders-back mb-4" aria-label="Dashboard navigation">
+    <nav class="cook-orders-back mb-4"
+         aria-label="Dashboard navigation">
         <a href="{% url 'cook_dashboard' %}">
             <span aria-hidden="true">←</span>
             Back to Dashboard
         </a>
     </nav>
 
-    <!-- Page Header -->
     <header class="cook-orders-header mb-5">
         <span class="ks-eyebrow">ORDER MANAGEMENT</span>
         <h1 class="mt-2 mb-3">My Orders</h1>
         <p class="cook-orders-intro mb-0">
-            Keep track of customer orders and their preparation status.
+            Track customer orders and update their preparation status.
         </p>
     </header>
 
-    <!-- Order Summary -->
+    <!-- Database-driven order summary -->
     <section class="cook-orders-summary mb-5"
              aria-label="Order summary">
 
         <article class="cook-orders-summary-card">
             <div class="cook-orders-summary-top">
                 <span>New Orders</span>
-                <span class="cook-orders-summary-icon" aria-hidden="true">＋</span>
+                <span class="cook-orders-summary-icon"
+                      aria-hidden="true">＋</span>
             </div>
-            <strong>2</strong>
+            <strong>{{ new_orders_count }}</strong>
             <p>Awaiting your response</p>
         </article>
 
         <article class="cook-orders-summary-card">
             <div class="cook-orders-summary-top">
                 <span>Preparing</span>
-                <span class="cook-orders-summary-icon" aria-hidden="true">◷</span>
+                <span class="cook-orders-summary-icon"
+                      aria-hidden="true">◷</span>
             </div>
-            <strong>1</strong>
+            <strong>{{ preparing_orders_count }}</strong>
             <p>Currently being prepared</p>
         </article>
 
         <article class="cook-orders-summary-card">
             <div class="cook-orders-summary-top">
-                <span>Completed Today</span>
-                <span class="cook-orders-summary-icon" aria-hidden="true">✓</span>
+                <span>Delivered</span>
+                <span class="cook-orders-summary-icon"
+                      aria-hidden="true">✓</span>
             </div>
-            <strong>5</strong>
-            <p>Orders marked completed</p>
+            <strong>{{ delivered_orders_count }}</strong>
+            <p>Orders marked delivered</p>
         </article>
 
     </section>
 
-    <!-- Recent Orders -->
+    <!-- Database-driven orders -->
     <section class="cook-orders-list-section">
+
         <div class="cook-orders-section-heading mb-4">
             <div>
                 <span class="ks-eyebrow">CUSTOMER ACTIVITY</span>
                 <h2 class="mt-2 mb-0">Recent Orders</h2>
             </div>
 
-            <span class="cook-orders-count">3 sample orders</span>
+            <span class="cook-orders-count">
+                {{ order_entries|length }}
+                {% if order_entries|length == 1 %}order{% else %}orders{% endif %}
+            </span>
         </div>
 
         <div class="cook-orders-list">
 
-            <!-- Order 1 -->
-            <article class="cook-order-card">
-                <header class="cook-order-header">
-                    <div class="cook-order-heading-content">
-                        <span class="cook-order-eyebrow">ORDER REFERENCE</span>
-                        <h3>#KS1001</h3>
-                        <p>Customer: Rahul Sharma</p>
+            {% for entry in order_entries %}
+                {% with order=entry.order %}
+
+                <article class="cook-order-card">
+
+                    <header class="cook-order-header">
+                        <div class="cook-order-heading-content">
+                            <span class="cook-order-eyebrow">
+                                ORDER REFERENCE
+                            </span>
+
+                            <h3>#KS{{ order.pk }}</h3>
+                            <p>Customer: {{ order.customer.user }}</p>
+
+                            <p>
+                                Placed:
+                                {{ order.created_at|date:"d M Y, h:i A" }}
+                            </p>
+                        </div>
+
+                        <span class="cook-order-status
+                            {% if order.status == 'pending' %}
+                                order-status-new
+                            {% elif order.status == 'preparing' %}
+                                order-status-preparing
+                            {% elif order.status == 'delivery' %}
+                                order-status-completed
+                            {% endif %}">
+
+                            <span class="cook-order-status-dot"
+                                  aria-hidden="true"></span>
+
+                            {% if order.status == 'pending' %}
+                                New Order
+                            {% elif order.status == 'preparing' %}
+                                Preparing
+                            {% elif order.status == 'on_the_way' %}
+                                On the Way
+                            {% elif order.status == 'delivery' %}
+                                Delivered
+                            {% elif order.status == 'cancelled' %}
+                                Cancelled
+                            {% else %}
+                                {{ order.get_status_display }}
+                            {% endif %}
+                        </span>
+                    </header>
+
+                    <div class="cook-order-divider"></div>
+
+                    <div class="cook-order-details">
+
+                        <div class="cook-order-detail cook-order-detail-meal">
+                            <span>Meals in This Order</span>
+
+                            {% for item in entry.cook_items %}
+                                <strong>
+                                    {{ item.name }} × {{ item.quantity }}
+                                </strong>
+                            {% empty %}
+                                <strong>No matching meal items</strong>
+                            {% endfor %}
+                        </div>
+
+                        <div class="cook-order-detail">
+                            <span>Order Total</span>
+                            <strong class="cook-order-total">
+                                ₹{{ order.total|floatformat:2 }}
+                            </strong>
+                        </div>
+
+                        <div class="cook-order-detail cook-order-detail-address">
+                            <span>Delivery Address</span>
+                            <strong>{{ order.address }}</strong>
+                        </div>
+
+                        <div class="cook-order-detail">
+                            <span>Payment</span>
+                            <strong>
+                                {{ order.get_payment_mode_display|default:order.payment_mode }}
+                            </strong>
+                        </div>
+
                     </div>
 
-                    <span class="cook-order-status order-status-new">
-                        <span class="cook-order-status-dot" aria-hidden="true"></span>
-                        New Order
-                    </span>
-                </header>
+                    <footer class="cook-order-footer">
 
-                <div class="cook-order-divider"></div>
+                        {% if order.status == 'pending' %}
+                            <p class="cook-order-action-note">
+                                Review this order and choose whether to accept it.
+                            </p>
 
-                <div class="cook-order-details">
-                    <div class="cook-order-detail cook-order-detail-meal">
-                        <span>Meal</span>
-                        <strong>Homestyle Paneer Thali</strong>
-                    </div>
+                        {% elif order.status == 'preparing' %}
+                            <p class="cook-order-action-note">
+                                Update the order when it is ready for delivery.
+                            </p>
 
-                    <div class="cook-order-detail">
-                        <span>Quantity</span>
-                        <strong>2</strong>
-                    </div>
+                        {% elif order.status == 'on_the_way' %}
+                            <p class="cook-order-action-note">
+                                Confirm when the order has been delivered.
+                            </p>
 
-                    <div class="cook-order-detail">
-                        <span>Order Total</span>
-                        <strong class="cook-order-total">₹360</strong>
-                    </div>
+                        {% elif order.status == 'delivery' %}
+                            <p class="cook-order-action-note">
+                                This order has been delivered.
+                            </p>
 
-                    <div class="cook-order-detail cook-order-detail-address">
-                        <span>Delivery Address</span>
-                        <strong>Pune, Maharashtra</strong>
-                    </div>
+                        {% elif order.status == 'cancelled' %}
+                            <p class="cook-order-action-note">
+                                This order has been cancelled.
+                            </p>
+                        {% endif %}
+
+                        <div class="cook-order-actions">
+
+                            {% if entry.can_manage_status %}
+
+                                {% if order.status == 'pending' %}
+
+                                    <form method="post"
+                                          action="{% url 'update_cook_order_status' order.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden"
+                                               name="status"
+                                               value="preparing">
+                                        <button type="submit"
+                                                class="btn btn-ks-primary">
+                                            Accept Order
+                                        </button>
+                                    </form>
+
+                                    <form method="post"
+                                          action="{% url 'update_cook_order_status' order.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden"
+                                               name="status"
+                                               value="cancelled">
+                                        <button type="submit"
+                                                class="btn cook-order-reject-button">
+                                            Reject Order
+                                        </button>
+                                    </form>
+
+                                {% elif order.status == 'preparing' %}
+
+                                    <form method="post"
+                                          action="{% url 'update_cook_order_status' order.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden"
+                                               name="status"
+                                               value="on_the_way">
+                                        <button type="submit"
+                                                class="btn btn-ks-secondary">
+                                            Mark as Ready for Delivery
+                                        </button>
+                                    </form>
+
+                                {% elif order.status == 'on_the_way' %}
+
+                                    <form method="post"
+                                          action="{% url 'update_cook_order_status' order.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden"
+                                               name="status"
+                                               value="delivery">
+                                        <button type="submit"
+                                                class="btn btn-ks-secondary">
+                                            Mark as Delivered
+                                        </button>
+                                    </form>
+
+                                {% elif order.status == 'delivery' %}
+
+                                    <button type="button"
+                                            class="btn cook-order-completed-button"
+                                            disabled>
+                                        ✓ Delivered
+                                    </button>
+
+                                {% elif order.status == 'cancelled' %}
+
+                                    <button type="button"
+                                            class="btn cook-order-reject-button"
+                                            disabled>
+                                        Order Cancelled
+                                    </button>
+
+                                {% endif %}
+
+                            {% else %}
+
+                                <p class="cook-order-action-note">
+                                    Status updates are unavailable for this order.
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+                    </footer>
+
+                </article>
+
+                {% endwith %}
+            {% empty %}
+
+                <div class="cook-order-card">
+                    <h3>No orders yet</h3>
+                    <p>
+                        Orders containing your available meals will appear here
+                        after customers place them.
+                    </p>
                 </div>
 
-                <footer class="cook-order-footer">
-                    <p class="cook-order-action-note">
-                        Review this request before responding.
-                    </p>
-
-                    <div class="cook-order-actions">
-                        <button type="button"
-                                class="btn btn-ks-primary"
-                                disabled>
-                            Accept Order
-                        </button>
-
-                        <button type="button"
-                                class="btn cook-order-reject-button"
-                                disabled>
-                            Reject Order
-                        </button>
-                    </div>
-                </footer>
-            </article>
-
-            <!-- Order 2 -->
-            <article class="cook-order-card">
-                <header class="cook-order-header">
-                    <div class="cook-order-heading-content">
-                        <span class="cook-order-eyebrow">ORDER REFERENCE</span>
-                        <h3>#KS1002</h3>
-                        <p>Customer: Priya Patil</p>
-                    </div>
-
-                    <span class="cook-order-status order-status-preparing">
-                        <span class="cook-order-status-dot" aria-hidden="true"></span>
-                        Preparing
-                    </span>
-                </header>
-
-                <div class="cook-order-divider"></div>
-
-                <div class="cook-order-details">
-                    <div class="cook-order-detail cook-order-detail-meal">
-                        <span>Meal</span>
-                        <strong>Homemade Veg Pulao</strong>
-                    </div>
-
-                    <div class="cook-order-detail">
-                        <span>Quantity</span>
-                        <strong>1</strong>
-                    </div>
-
-                    <div class="cook-order-detail">
-                        <span>Order Total</span>
-                        <strong class="cook-order-total">₹120</strong>
-                    </div>
-
-                    <div class="cook-order-detail cook-order-detail-address">
-                        <span>Delivery Address</span>
-                        <strong>Pune, Maharashtra</strong>
-                    </div>
-                </div>
-
-                <footer class="cook-order-footer">
-                    <p class="cook-order-action-note">
-                        Update the order once preparation is complete.
-                    </p>
-
-                    <div class="cook-order-actions">
-                        <button type="button"
-                                class="btn btn-ks-secondary"
-                                disabled>
-                            Mark as Ready
-                        </button>
-                    </div>
-                </footer>
-            </article>
-
-            <!-- Order 3 -->
-            <article class="cook-order-card">
-                <header class="cook-order-header">
-                    <div class="cook-order-heading-content">
-                        <span class="cook-order-eyebrow">ORDER REFERENCE</span>
-                        <h3>#KS1003</h3>
-                        <p>Customer: Sneha Joshi</p>
-                    </div>
-
-                    <span class="cook-order-status order-status-completed">
-                        <span class="cook-order-status-dot" aria-hidden="true"></span>
-                        Completed
-                    </span>
-                </header>
-
-                <div class="cook-order-divider"></div>
-
-                <div class="cook-order-details">
-                    <div class="cook-order-detail cook-order-detail-meal">
-                        <span>Meal</span>
-                        <strong>Homestyle Paneer Thali</strong>
-                    </div>
-
-                    <div class="cook-order-detail">
-                        <span>Quantity</span>
-                        <strong>1</strong>
-                    </div>
-
-                    <div class="cook-order-detail">
-                        <span>Order Total</span>
-                        <strong class="cook-order-total">₹180</strong>
-                    </div>
-
-                    <div class="cook-order-detail cook-order-detail-address">
-                        <span>Delivery Address</span>
-                        <strong>Pune, Maharashtra</strong>
-                    </div>
-                </div>
-
-                <footer class="cook-order-footer">
-                    <p class="cook-order-action-note">
-                        This order has been completed.
-                    </p>
-
-                    <div class="cook-order-actions">
-                        <button type="button"
-                                class="btn cook-order-completed-button"
-                                disabled>
-                            ✓ Order Completed
-                        </button>
-                    </div>
-                </footer>
-            </article>
+            {% endfor %}
 
         </div>
     </section>
-
-    <!-- Backend Notice -->
-    <aside class="cook-orders-notice mt-4">
-        <span aria-hidden="true">ⓘ</span>
-        <p class="mb-0">
-            <strong>Sample order data.</strong>
-            Customer orders and status updates will be connected
-            to the database in a later development stage.
-        </p>
-    </aside>
 
 </div>
 

@@ -6,9 +6,9 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import (
-    Address, 
-    CustomerProfile, 
-    Menu, 
+    Address,
+    CustomerProfile,
+    Menu,
     Order,
     OrderItem,
 )
@@ -362,6 +362,22 @@ def place_order_view(request):
             },
             status=400,
         )
+    # Order status is shared by all items in an order.
+    # Require every meal to come from the same home kitchen.
+    cook_ids = {
+        menu_by_id[menu_id].home_cook_id
+        for menu_id in quantities
+    }
+    if len(cook_ids) != 1:
+        return JsonResponse(
+            {
+                "error": (
+                    "Please place separate orders for meals "
+                    "from different home kitchens."
+                )
+            },
+            status=400,
+        )
     try:
         with transaction.atomic():
             profile.primary_mobile_number = digits
@@ -400,7 +416,3 @@ def place_order_view(request):
         },
         status=201,
     )
-
-
-
-

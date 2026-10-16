@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import HomeCook
-from foodapp.models import Menu
+from django.db.models import Prefetch
+from foodapp.models import Menu, Order, OrderItem
 from django.contrib import messages
 from .decorators import home_cook_required
 from .forms import HomeCookForm, MenuForm
@@ -197,7 +198,131 @@ def toggle_meal_availability_view(request, meal_id):
 
 @home_cook_required
 def cook_orders_view(request):
-    return render(request, 'home_cooks/cook_orders.html')
+    cook = HomeCook.objects.filter(user=request.user).first()
+    if cook is None:
+        messages.warning(
+            request,
+            "Please complete your home cook profile first.",
+        )
+        return redirect("my_profile")
+    orders = (
+        Order.objects
+        .filter(items__menu_item__home_cook=cook)
+        .distinct()
+        .select_related("customer", "address")
+        .prefetch_related(
+            Prefetch(
+                "items",
+                queryset=OrderItem.objects.select_related("menu_item"),
+            )
+        )
+        .order_by("-created_at")
+    )
+    order_entries = []
+    for order in orders:
+        all_items = list(order.items.all())
+        cook_items = [
+            item
+            for item in all_items
+            if (
+                item.menu_item_id is not None
+                and item.menu_item.home_cook_id == cook.pk
+            )
+        ]
+        # Order.status is shared by every item in that order.
+        # Do not let one cook update an order containing another
+        # kitchen's meals or items whose cook cannot be identified.
+        can_manage_status = (
+            bool(all_items)
+            and len(cook_items) == len(all_items)
+        )
+        order_entries.append({
+            "order": order,
+            "cook_items": cook_items,
+            "can_manage_status": can_manage_status,
+        })
+    new_orders_count = sum(
+        entry["order"].status == "pending"
+        for entry in order_entries
+    )
+    preparing_orders_count = sum(
+        entry["order"].status == "preparing"
+        for entry in order_entries
+    )
+    delivered_orders_count = sum(
+        entry["order"].status == "delivery"
+        for entry in order_entries
+    )
+    return render(
+        request,
+        'home_cooks/cook_orders.html',
+        {
+            "order_entries": order_entries,
+            "new_orders_count": new_orders_count,
+            "preparing_orders_count": preparing_orders_count,
+            "delivered_orders_count": delivered_orders_count,
+        },
+    )
+
+@home_cook_required
+@require_POST
+def update_cook_order_status_view(request, order_id):
+    cook = HomeCook.objects.filter(user=request.user).first()
+    if cook is None:
+        messages.warning(
+            request,
+            "Please complete your home cook profile first.",
+        )
+        return redirect("my_profile")
+    order = get_object_or_404(
+        Order.objects.filter(
+            items__menu_item__home_cook=cook,
+        ).distinct(),
+        pk=order_id,
+    )
+    items = list(order.items.select_related("menu_item"))
+    # The status belongs to the whole order. Protect other kitchens.
+    if (
+        not items
+        or any(
+            item.menu_item_id is None
+            or item.menu_item.home_cook_id != cook.pk
+            for item in items
+        )
+    ):
+        messages.error(
+            request,
+            "This order cannot be updated because it contains "
+            "items outside your kitchen.",
+        )
+        return redirect("cook_orders")
+    allowed_transitions = {
+        "pending": {"preparing", "cancelled"},
+        "preparing": {"on_the_way"},
+        "on_the_way": {"delivery"},
+        "delivery": set(),
+        "cancelled": set(),
+    }
+    new_status = request.POST.get("status", "")
+    if new_status not in allowed_transitions.get(order.status, set()):
+        messages.error(
+            request,
+            "That status change is not allowed.",
+        )
+        return redirect("cook_orders")
+    order.status = new_status
+    order.save(update_fields=["status"])
+    status_messages = {
+        "preparing": "Order accepted. Preparation can begin.",
+        "cancelled": "Order rejected.",
+        "on_the_way": "Order marked as on the way.",
+        "delivery": "Order marked as delivered",
+    }
+    messages.success(
+        request,
+        status_messages[new_status],
+    )
+    return redirect("cook_orders")
 
 @home_cook_required
 def cook_earnings_view(request):

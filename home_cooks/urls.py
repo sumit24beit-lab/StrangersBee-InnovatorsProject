@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home_cooks_view, cook_profile_view, kitchen_details_view, cook_meals_view, meal_details_view, dashboard_view, my_profile_view, my_meals_view, cook_orders_view, cook_earnings_view, add_meal_view, edit_meal_view, toggle_meal_availability_view
+from .views import home_cooks_view, cook_profile_view, kitchen_details_view, cook_meals_view, meal_details_view, dashboard_view, my_profile_view, my_meals_view, cook_orders_view, cook_earnings_view, add_meal_view, edit_meal_view, toggle_meal_availability_view, update_cook_order_status_view
 
 urlpatterns = [
     path('',home_cooks_view, name='home_cooks'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('my-meals/add/', add_meal_view, name='add_meal'),
     path('my-meals/<int:meal_id>/edit/', edit_meal_view, name="edit_meal",),
     path('my-meals/<int:meal_id>/toggle-availability/', toggle_meal_availability_view, name="toggle_meal_availability",),
+    path('orders/<int:order_id>/status/', update_cook_order_status_view, name='update_cook_order_status'),
 ]

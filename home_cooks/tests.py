@@ -3,7 +3,13 @@ from django.contrib.auth import get_user_model
 from .models import HomeCook
 from decimal import Decimal
 from django.urls import reverse
-from foodapp.models import Menu
+from foodapp.models import (
+    Address,
+    CustomerProfile,
+    Menu,
+    Order,
+    OrderItem,
+)
 from accounts.models import AccountProfile
 
 # Create your tests here.
@@ -432,3 +438,187 @@ class MealOwnershipTests(TestCase):
         self.assertEqual(response.status_code, 404)
         self.other_meal.refresh_from_db()
         self.assertTrue(self.other_meal.available)
+
+class CookOrderManagementTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="asha_order_test",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=self.user,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.cook = HomeCook.objects.create(
+            user=self.user,
+            cook_name="Asha",
+            kitchen_name="Asha's Kitchen",
+            area="Andheri West",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+            is_verified=True,
+        )
+        self.other_user = User.objects.create_user(
+            username="riya_order_test",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=self.other_user,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.other_cook = HomeCook.objects.create(
+            user=self.other_user,
+            cook_name="Riya",
+            kitchen_name="Riya's Kitchen",
+            area="Powai",
+            city="Mumbai",
+            specialty_cuisine="south_indian",
+            is_verified=True,
+        )
+        self.customer = CustomerProfile.objects.create(
+            user="test_customer",
+            first_name="Rahul",
+            last_name="Sharma",
+            email="rahul@example.com",
+        )
+        self.address = Address.objects.create(
+            customer=self.customer,
+            address_line="101 Sample Road",
+            area="Andheri West",
+            city="Mumbai",
+            state="Maharashtra",
+            pincode="400053",
+            address_type="home",
+        )
+        self.own_meal = Menu.objects.create(
+            home_cook=self.cook,
+            name="Asha's Paneer Thali",
+            description="Homemade paneer thali",
+            price=Decimal("180.00"),
+            category="lunch",
+            available=True,
+        )
+        self.other_meal = Menu.objects.create(
+            home_cook=self.other_cook,
+            name="Riya's Vegetable Pulao",
+            description="Homemade vegetable pulao",
+            price=Decimal("120.00"),
+            category="lunch",
+            available=True,
+        )
+        self.client.force_login(self.user)
+    def create_order(self, status="pending", mixed_kitchens=False):
+        order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status=status,
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=self.own_meal,
+            name=self.own_meal.name,
+            price=self.own_meal.price,
+            quantity=1,
+        )
+        if mixed_kitchens:
+            OrderItem.objects.create(
+                order=order,
+                menu_item=self.other_meal,
+                name=self.other_meal.name,
+                price=self.other_meal.price,
+                quantity=1,
+            )
+        return order
+    def test_orders_page_shows_only_orders_containing_own_meals(self):
+        own_order = self.create_order()
+        other_order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status="pending",
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=other_order,
+            menu_item=self.other_meal,
+            name=self.other_meal.name,
+            price=self.other_meal.price,
+            quantity=1,
+        )
+        response = self.client.get(reverse("cook_orders"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f"#KS{own_order.pk}")
+        self.assertNotContains(response, f"#KS{other_order.pk}")
+    def test_cook_can_accept_pending_order(self):
+        order = self.create_order()
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "preparing"},
+        )
+        self.assertRedirects(response, reverse("cook_orders"))
+        order.refresh_from_db()
+        self.assertEqual(order.status, "preparing")
+    def test_cook_can_reject_pending_order(self):
+        order = self.create_order()
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "cancelled"},
+        )
+        self.assertRedirects(response, reverse("cook_orders"))
+        order.refresh_from_db()
+        self.assertEqual(order.status, "cancelled")
+    def test_cook_can_progress_order_to_delivered(self):
+        order = self.create_order(status="preparing")
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "on_the_way"},
+        )
+        self.assertRedirects(response, reverse("cook_orders"))
+        order.refresh_from_db()
+        self.assertEqual(order.status, "on_the_way")
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "delivery"},
+        )
+        self.assertRedirects(response, reverse("cook_orders"))
+        order.refresh_from_db()
+        self.assertEqual(order.status, "delivery")
+    def test_invalid_status_transition_is_rejected(self):
+        order = self.create_order(status="pending")
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "delivery"},
+        )
+        self.assertRedirects(response, reverse("cook_orders"))
+        order.refresh_from_db()
+        self.assertEqual(order.status, "pending")
+    def test_cook_cannot_update_another_kitchens_order(self):
+        order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status="pending",
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=self.other_meal,
+            name=self.other_meal.name,
+            price=self.other_meal.price,
+            quantity=1,
+        )
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "preparing"},
+        )
+        self.assertEqual(response.status_code, 404)
+        order.refresh_from_db()
+        self.assertEqual(order.status, "pending")
+    def test_mixed_kitchen_order_cannot_be_updated(self):
+        order = self.create_order(mixed_kitchens=True)
+        response = self.client.post(
+            reverse("update_cook_order_status", args=[order.pk]),
+            {"status": "preparing"},
+        )
+        self.assertRedirects(response, reverse("cook_orders"))
+        order.refresh_from_db()
+        self.assertEqual(order.status, "pending")
