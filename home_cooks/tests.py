@@ -788,3 +788,183 @@ class CookEarningsViewTests(TestCase):
             transactions[0]["order"].pk,
             delivered_order.pk,
         )
+
+class CookDashboardTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="dashboard_cook",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=self.user,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.cook = HomeCook.objects.create(
+            user=self.user,
+            cook_name="Asha",
+            kitchen_name="Asha's Kitchen",
+            area="Andheri West",
+            city="Mumbai",
+            specialty_cuisine="north_indian",
+            about="Homemade North Indian meals.",
+            is_verified=True,
+        )
+        self.other_user = User.objects.create_user(
+            username="dashboard_other_cook",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=self.other_user,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.other_cook = HomeCook.objects.create(
+            user=self.other_user,
+            cook_name="Riya",
+            kitchen_name="Riya's Kitchen",
+            area="Powai",
+            city="Mumbai",
+            specialty_cuisine="south_indian",
+            about="Homemade South Indian meals.",
+            is_verified=True,
+        )
+        self.customer = CustomerProfile.objects.create(
+            user="dashboard_customer",
+            first_name="Rahul",
+            last_name="Sharma",
+            email="dashboard_customer@example.com",
+        )
+        self.address = Address.objects.create(
+            customer=self.customer,
+            address_line="101 Sample Road",
+            area="Andheri West",
+            city="Mumbai",
+            state="Maharashtra",
+            pincode="400053",
+            address_type="home",
+        )
+        self.meal = Menu.objects.create(
+            home_cook=self.cook,
+            name="Asha's Paneer Thali",
+            description="Paneer, rice and roti",
+            price=Decimal("180.00"),
+            category="lunch",
+            available=True,
+        )
+        self.unavailable_meal = Menu.objects.create(
+            home_cook=self.cook,
+            name="Asha's Special Pulao",
+            description="Homemade vegetable pulao",
+            price=Decimal("120.00"),
+            category="lunch",
+            available=False,
+        )
+        self.other_meal = Menu.objects.create(
+            home_cook=self.other_cook,
+            name="Riya's Vegetable Pulao",
+            description="Homemade vegetable pulao",
+            price=Decimal("120.00"),
+            category="lunch",
+            available=True,
+        )
+        self.client.force_login(self.user)
+    def create_order(self, status, meal=None, quantity=1):
+        meal = meal or self.meal
+        order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status=status,
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=meal,
+            name=meal.name,
+            price=meal.price,
+            quantity=quantity,
+        )
+        return order
+    def test_dashboard_requires_login(self):
+        self.client.logout()
+        response=self.client.get(reverse("cook_dashboard"))
+        self.assertEqual(response.status_code, 302)
+    def test_dashboard_redirects_cook_without_profile(self):
+        user_without_profile = User.objects.create_user(
+            username="dashboard_no_profile",
+            password="test-password-123",
+        )
+        AccountProfile.objects.create(
+            user=user_without_profile,
+            role=AccountProfile.HOME_COOK,
+        )
+        self.client.force_login(user_without_profile)
+        response=self.client.get(reverse("cook_dashboard"))
+        self.assertRedirects(response, reverse("my_profile"))
+    def test_dashboard_displays_database_metrics(self):
+        self.create_order(status="pending")
+        delivered_order = self.create_order(
+            status="delivery",
+            quantity=2,
+        )
+        self.create_order(status="cancelled")
+        other_order=self.create_order(
+            status="pending",
+            meal=self.other_meal,
+        )
+        response=self.client.get(reverse("cook_dashboard"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["cook"], self.cook)
+        self.assertEqual(response.context["total_meals"], 2)
+        self.assertEqual(response.context["available_meals"], 1)
+        self.assertEqual(response.context["new_orders_count"], 1)
+        self.assertEqual(
+            response.context["completed_orders_count"],
+            1,
+        )
+        self.assertTrue(response.context["accepting_orders"])
+        recent_orders = response.context["recent_orders"]
+        recent_order_ids = {
+            entry["order"].pk for entry in recent_orders
+        }
+        self.assertIn(delivered_order.pk, recent_order_ids)
+        self.assertNotIn(other_order.pk, recent_order_ids)
+        delivered_entry = next(
+            entry
+            for entry in recent_orders
+            if entry["order"].pk == delivered_order.pk
+        )
+        self.assertEqual(
+            delivered_entry["cook_subtotal"],
+            Decimal("360.00"),
+        )
+    def test_dashboard_counts_only_own_meal_value_in_mixed_order(self):
+        order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
+            status="delivery",
+            payment_mode="cod",
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=self.meal,
+            name=self.meal.name,
+            price=self.meal.price,
+            quantity=1,
+        )
+        OrderItem.objects.create(
+            order=order,
+            menu_item=self.other_meal,
+            name=self.other_meal.name,
+            price=self.other_meal.price,
+            quantity=1,
+        )
+        response = self.client.get(reverse("cook_dashboard"))
+        self.assertEqual(response.status_code, 200)
+        entry = next(
+            entry
+            for entry in response.context["recent_orders"]
+            if entry["order"].pk == order.pk
+        )
+        self.assertEqual(
+            entry["cook_subtotal"],
+            Decimal("180.00"),
+        )

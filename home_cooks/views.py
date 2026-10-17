@@ -71,7 +71,75 @@ def meal_details_view(request, meal_id=None):
 
 @home_cook_required
 def dashboard_view(request):
-    return render(request, 'home_cooks/dashboard.html')
+    cook = HomeCook.objects.filter(user=request.user).first()
+    if cook is None:
+        messages.warning(
+            request,
+            "Please complete your home cook profile first.",
+        )
+        return redirect("my_profile")
+    meals = Menu.objects.filter(home_cook=cook)
+    total_meals = meals.count()
+    available_meals = meals.filter(available=True).count()
+    orders = (
+        Order.objects
+        .filter(items__menu_item__home_cook=cook)
+        .distinct()
+        .prefetch_related(
+            Prefetch(
+                "items",
+                queryset=OrderItem.objects.select_related("menu_item"),
+            )
+        )
+        .order_by("-created_at")
+    )
+    order_entries = []
+    for order in orders:
+        all_items = list(order.items.all())
+        cook_items = [
+            item
+            for item in all_items
+            if (
+                item.menu_item_id is not None
+                and item.menu_item.home_cook_id == cook.pk
+            )
+        ]
+        if not cook_items:
+            continue
+        cook_subtotal = sum(
+            (
+                item.price * item.quantity
+                for item in cook_items
+            ),
+            Decimal("0.00"),
+        )
+        order_entries.append({
+            "order": order,
+            "cook_items": cook_items,
+            "cook_subtotal": cook_subtotal,
+        })
+    new_orders_count = sum(
+        entry["order"].status == "pending"
+        for entry in order_entries
+    )
+    completed_orders_count = sum(
+        entry["order"].status == "delivery"
+        for entry in order_entries
+    )
+    accepting_orders = cook.is_verified and available_meals > 0
+    return render(
+        request,
+        'home_cooks/dashboard.html',
+        {
+            "cook": cook,
+            "total_meals": total_meals,
+            "available_meals": available_meals,
+            "new_orders_count": new_orders_count,
+            "completed_orders_count": completed_orders_count,
+            "recent_orders": order_entries[:5],
+            "accepting_orders": accepting_orders,
+        },
+    )
 
 @home_cook_required
 def my_profile_view(request):
