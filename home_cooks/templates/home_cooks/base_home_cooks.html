@@ -93,6 +93,14 @@
                        class="btn btn-ks-primary btn-sm">
                         Customer Site
                     </a>
+                    <form method="post"
+                        action="{% url 'accounts_logout' %}"
+                        class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-ks-secondary btn-sm">
+                            Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

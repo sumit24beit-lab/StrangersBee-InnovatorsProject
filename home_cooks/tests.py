@@ -203,7 +203,7 @@ class HomeCookProfileEditTests(TestCase):
             reverse("my_profile")
         )
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse("login"), response.url)
+        self.assertIn(reverse("accounts_login"), response.url)
     def test_logged_in_cook_can_view_profile_form(self):
         self.client.force_login(self.user)
         response = self.client.get(
@@ -308,7 +308,7 @@ class MealManagementTests(TestCase):
     def test_add_meal_requires_login(self):
         response=self.client.get(reverse("add_meal"))
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse("login"), response.url)
+        self.assertIn(reverse("accounts_login"), response.url)
     def test_logged_in_cook_can_open_add_meal_form(self):
         self.client.force_login(self.user)
         response=self.client.get(reverse("add_meal"))

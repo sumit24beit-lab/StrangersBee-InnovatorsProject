@@ -304,9 +304,20 @@
             kitchen into a local favourite.
         </p>
 
-        <a href="#" class="btn btn-ks-primary">
-            Become a Home Cook
-        </a>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'accounts_signup' %}" class="btn btn-ks-primary">
+                Become a Home Cook
+            </a>
+        {% elif user.account_profile.role == "home_cook" %}
+            <a href="{% url 'cook_dashboard' %}" class="btn btn-ks-primary">
+                Go To Your Dashboard
+            </a>
+        {% elif user.account_profile.role == "customer" %}
+            <p class="text-muted mb-0">
+                To create a separate home-cook account, log out first
+                and then register using the Home Cook role.
+            </p>
+        {% endif %}
     </section>
 
 </div>

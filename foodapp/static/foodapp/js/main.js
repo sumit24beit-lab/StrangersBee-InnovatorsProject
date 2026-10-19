@@ -242,98 +242,6 @@ function renderMenu(data = MENU_DATA) {
   });
 }
 
-/* ---------- HOME COOKS / RESTAURANT GRID ---------- */
-
-function renderRestaurantsGrid() {
-  const grid = document.getElementById('restaurantGrid');
-
-  if (!grid) return;
-
-  const cooks = [
-    {
-      name: "Asha's Kitchen",
-      cuisine: 'North Indian',
-      location: 'Andheri West',
-      rating: 4.8,
-      desc: 'Specializes in homemade thalis and parathas.',
-      img: 'thali.jpg'
-    },
-    {
-      name: "Riya's Home Kitchen",
-      cuisine: 'South Indian',
-      location: 'Powai',
-      rating: 4.7,
-      desc: 'Traditional South Indian meals with homemade chutneys.',
-      img: 'food5.jpg'
-    },
-    {
-      name: "Meera's Kitchen",
-      cuisine: 'Homestyle Snacks',
-      location: 'Bandra',
-      rating: 4.9,
-      desc: 'Wholesome everyday meals and snacks prepared with care.',
-      img: 'misalpav.jpg'
-    },
-    {
-      name: "Sunita's Kitchen",
-      cuisine: 'Maharashtrian',
-      location: 'Dadar',
-      rating: 4.9,
-      desc: 'Traditional Maharashtrian delicacies and family recipes.',
-      img: 'puranpoli.jpg'
-    }
-  ];
-
-  grid.innerHTML = '';
-
-  cooks.forEach(cook => {
-    const col = el('div', 'col-md-6 col-lg-4');
-    const card = el('article', 'ks-card h-100 d-flex flex-column text-center');
-
-    const imageWrapper = el(
-      'div',
-      'mb-3 d-flex justify-content-center'
-    );
-
-    const img = el('img', 'ks-avatar');
-    img.src = getMealImagePath(cook.img);
-    img.alt = cook.name;
-    img.loading = 'lazy';
-    imageWrapper.appendChild(img);
-
-    const title = el('h3', 'h4 fw-bold mb-1');
-    title.textContent = cook.name;
-
-    const location = el('p', 'text-muted small mb-2');
-    location.textContent = `⌖ ${cook.location}`;
-
-    const tags = el('div', 'mb-2');
-    const cuisineTag = el('span', 'ks-badge');
-    cuisineTag.textContent = cook.cuisine;
-    tags.appendChild(cuisineTag);
-
-    const description = el('p', 'small mb-3 text-muted');
-    description.textContent = cook.desc;
-
-    const bottom = el(
-      'div',
-      'mt-auto pt-3 border-top d-flex justify-content-between align-items-center'
-    );
-
-    const rating = el('span', 'ks-badge-accent ks-badge');
-    rating.textContent = `★ ${cook.rating}`;
-
-    const link = el('a', 'btn btn-ks-secondary btn-sm');
-    link.href = '/menu/';
-    link.textContent = 'View Menu';
-
-    bottom.append(rating, link);
-    card.append(imageWrapper, title, location, tags, description, bottom);
-    col.appendChild(card);
-    grid.appendChild(col);
-  });
-}
-
 /* ---------- OFFER RENDERING ---------- */
 
 function renderOffers() {
@@ -662,6 +570,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderFeatured();
-  renderRestaurantsGrid();
   renderOffers();
 });

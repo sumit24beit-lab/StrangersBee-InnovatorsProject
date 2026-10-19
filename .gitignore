@@ -23,3 +23,6 @@ db.sqlite3
 
 # Temporary preview helper
 /_preview_home_cooks.py
+
+# Uploaded menu images (local media)
+/menu_items/

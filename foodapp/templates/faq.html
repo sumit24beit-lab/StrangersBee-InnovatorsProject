@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}Frequently Asked Questions | KitchenStation{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-6 fw-bold mb-3">
+            Frequently Asked Questions
+        </h1>
+        <p class="text-muted">
+            Find answers to common questions about ordering homemade meals
+            and using KitchenStation.
+        </p>
+    </div>
+
+    <!-- Ordering and Delivery -->
+    <section class="mb-5">
+        <h2 class="h4 fw-bold mb-3">Orders and Delivery</h2>
+
+        <div class="accordion" id="ordersFAQ">
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="orderQuestion">
+                    <button class="accordion-button" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#orderAnswer"
+                            aria-expanded="true"
+                            aria-controls="orderAnswer">
+                        How do I order a homemade meal?
+                    </button>
+                </h3>
+                <div id="orderAnswer"
+                     class="accordion-collapse collapse show"
+                     aria-labelledby="orderQuestion"
+                     data-bs-parent="#ordersFAQ">
+                    <div class="accordion-body">
+                        Browse the available homemade meals, select a meal
+                        you like, add it to your cart, and follow the
+                        checkout process to place your order.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="deliveryQuestion">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#deliveryAnswer"
+                            aria-expanded="false"
+                            aria-controls="deliveryAnswer">
+                        How can I check my order status?
+                    </button>
+                </h3>
+                <div id="deliveryAnswer"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="deliveryQuestion"
+                     data-bs-parent="#ordersFAQ">
+                    <div class="accordion-body">
+                        Visit your Orders page to review your order history
+                        and check the status information available for
+                        your orders.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="cancelQuestion">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#cancelAnswer"
+                            aria-expanded="false"
+                            aria-controls="cancelAnswer">
+                        Can I cancel an order?
+                    </button>
+                </h3>
+                <div id="cancelAnswer"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="cancelQuestion"
+                     data-bs-parent="#ordersFAQ">
+                    <div class="accordion-body">
+                        If you need to cancel an order or have a question about an
+                        existing order, please contact KitchenStation support for
+                        assistance.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Customers and Meals -->
+    <section class="mb-5">
+        <h2 class="h4 fw-bold mb-3">Meals and Home Cooks</h2>
+
+        <div class="accordion" id="mealsFAQ">
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="cookQuestion">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#cookAnswer"
+                            aria-expanded="false"
+                            aria-controls="cookAnswer">
+                        What is KitchenStation?
+                    </button>
+                </h3>
+                <div id="cookAnswer"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="cookQuestion"
+                     data-bs-parent="#mealsFAQ">
+                    <div class="accordion-body">
+                        KitchenStation connects customers with local home
+                        cooks offering homemade meals. Customers can
+                        explore available meals and place orders through
+                        the platform.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="availabilityQuestion">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#availabilityAnswer"
+                            aria-expanded="false"
+                            aria-controls="availabilityAnswer">
+                        Are all meals available every day?
+                    </button>
+                </h3>
+                <div id="availabilityAnswer"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="availabilityQuestion"
+                     data-bs-parent="#mealsFAQ">
+                    <div class="accordion-body">
+                        Meal availability can vary by home cook. Check the
+                        availability information displayed for a meal
+                        before placing your order.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="joinQuestion">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#joinAnswer"
+                            aria-expanded="false"
+                            aria-controls="joinAnswer">
+                        How can I become a home cook?
+                    </button>
+                </h3>
+                <div id="joinAnswer"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="joinQuestion"
+                     data-bs-parent="#mealsFAQ">
+                    <div class="accordion-body">
+                        Open the Sign Up page and register using the Home Cook role.
+                        If you're currently logged in with a customer account, log out
+                        first so you can create a separate home-cook account.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Support -->
+    <section class="text-center mt-5">
+        <h2 class="h4 fw-bold mb-3">Still need help?</h2>
+        <p class="text-muted">
+            Contact our support team if you have a question that isn't
+            covered here.
+        </p>
+
+        <a href="{% url 'contact' %}" class="btn btn-ks-primary">
+            Contact Support
+        </a>
+    </section>
+
+</div>
+{% endblock %}

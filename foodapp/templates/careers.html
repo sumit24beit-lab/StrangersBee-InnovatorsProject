@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Careers | KitchenStation{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Hero Section -->
+    <section class="text-center mb-5">
+        <p class="text-uppercase fw-semibold text-muted mb-2">
+            Grow with KitchenStation
+        </p>
+
+        <h1 class="display-5 fw-bold mb-3">
+            Be Part of Something Homemade
+        </h1>
+
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            We're building a platform that connects people with local
+            home cooks and makes homemade food easier to discover.
+            Interested in being part of the journey?
+        </p>
+    </section>
+
+    <!-- Opportunities -->
+    <section class="mb-5">
+        <h2 class="h3 fw-bold text-center mb-4">
+            Ways to Get Involved
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="ks-card h-100 p-4">
+                    <div class="fs-1 mb-3" aria-hidden="true">🍲</div>
+
+                    <h3 class="h5 fw-bold">Home Cook Partners</h3>
+
+                    <p class="text-muted mb-4">
+                        Share your cooking with local customers and
+                        explore opportunities to offer homemade meals
+                        through KitchenStation.
+                    </p>
+
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'accounts_signup' %}"
+                        class="btn btn-ks-primary mt-auto">
+                            Get Started
+                        </a>
+                    {% elif user.account_profile.role == "home_cook" %}
+                        <a href="{% url 'cook_dashboard' %}"
+                        class="btn btn-ks-primary mt-auto">
+                            Your Cook Dashboard
+                        </a>
+                    {% elif user.account_profile.role == "customer" %}
+                        <p class="text-muted mb-0">
+                            To register as a home cook, log out first and then
+                            sign up using the Home Cook role.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="ks-card h-100 p-4">
+                    <div class="fs-1 mb-3" aria-hidden="true">💡</div>
+
+                    <h3 class="h5 fw-bold">Technology and Innovation</h3>
+
+                    <p class="text-muted mb-0">
+                        Interested in web development, user experience,
+                        software engineering or building useful digital
+                        services? Get in touch to express your interest.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="ks-card h-100 p-4">
+                    <div class="fs-1 mb-3" aria-hidden="true">🤝</div>
+
+                    <h3 class="h5 fw-bold">Community and Support</h3>
+
+                    <p class="text-muted mb-4">
+                        Help create a welcoming experience for customers
+                        and home cooks through communication, feedback
+                        and community engagement.
+                    </p>
+
+                    <a href="{% url 'contact' %}"
+                       class="btn btn-ks-secondary mt-auto">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Application Information -->
+    <section class="ks-card p-4 p-md-5 text-center">
+        <h2 class="h4 fw-bold mb-3">
+            Interested in Working with Us?
+        </h2>
+
+        <p class="text-muted mx-auto mb-4" style="max-width: 650px;">
+            Tell us about your interests and how you would like to
+            contribute. Contact us for more information about
+            potential opportunities.
+        </p>
+
+        <a href="{% url 'contact' %}" class="btn btn-ks-primary">
+            Get in Touch
+        </a>
+    </section>
+
+    <p class="small text-muted text-center mt-4 mb-0">
+        This page describes potential areas of involvement.
+        It does not list confirmed job vacancies.
+    </p>
+
+</div>
+{% endblock %}

@@ -12,6 +12,7 @@ from .models import (
     Order,
     OrderItem,
 )
+from home_cooks.models import HomeCook
 from django.views.generic import TemplateView
 from .decorators import customer_required
 from django.contrib import messages
@@ -26,12 +27,6 @@ def about_page_view(request):
 
 def home_page_view(request):
     return render(request,'home.html')
-
-def signup_view(request):
-    return render(request,'signup.html')
-
-def login_view(request):
-    return render(request,'login.html')
 
 @customer_required
 def cart_view(request):
@@ -78,7 +73,19 @@ def menu_view(request):
     )
 
 def restaurant_view(request):
-    return render(request,'restaurant.html')
+    home_cooks = (
+        HomeCook.objects
+        .filter(is_verified=True)
+        .select_related("user")
+        .order_by("kitchen_name")
+    )
+    return render(
+        request,
+        'restaurant.html',
+        {
+            "home_cooks": home_cooks,
+        },
+    )
 
 @customer_required
 def delivery_view(request):
@@ -97,6 +104,12 @@ def delivery_view(request):
 
 def contact_view(request):
     return render(request,'contact.html')
+
+def faq_view(request):
+    return render(request, "faq.html")
+
+def careers_view(request):
+    return render(request, "careers.html")
 
 def offers_view(request):
     return render(request,'offers.html')

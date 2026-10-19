@@ -1,14 +1,14 @@
-﻿from django.urls import path
+from django.urls import path
 from .views import (
-    signup_view, 
-    login_view, 
-    home_page_view, 
-    cart_view, 
-    menu_view, 
-    restaurant_view, 
-    delivery_view, 
-    contact_view, 
-    offers_view, 
+    home_page_view,
+    cart_view,
+    menu_view,
+    restaurant_view,
+    delivery_view,
+    contact_view,
+    faq_view,
+    careers_view,
+    offers_view,
     customer_profile_view,
     customer_addresses_view,
     customer_address_add_view,
@@ -19,14 +19,14 @@ from .views import (
 )
 
 urlpatterns = [
-    path('signup/', signup_view, name='signup'),
-    path('login/', login_view, name='login'),
     path('home/', home_page_view, name='home'),
     path('cart/', cart_view, name='cart'),
     path('menu/', menu_view, name='menu'),
     path('restaurant/', restaurant_view, name='restaurant'),
     path('delivery/', delivery_view, name='delivery'),
     path('contact/', contact_view, name='contact'),
+    path('faq/', faq_view, name="faq"),
+    path('careers/', careers_view, name="careers"),
     path('offers/', offers_view, name='offers'),
     path('customer/profile/', customer_profile_view,  name='customer_profile'),
     path('customer/addresses/', customer_addresses_view, name='customer_addresses'),
