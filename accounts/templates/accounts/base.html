@@ -1,0 +1,308 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="KitchenStation account access for customers and home cooks.">
+
+    <title>{% block title %}KitchenStation Accounts{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --account-primary: #5F8D4E;
+            --account-primary-dark: #4b733d;
+            --account-background: #F8F5F0;
+            --account-text: #2D2D2D;
+            --account-muted: #716e67;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--account-text);
+            background: var(--account-background);
+        }
+
+        .account-shell {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .account-header {
+            background: #FFFDF8;
+            border-bottom: 1px solid #e5dfd5;
+            padding: 16px 24px;
+        }
+
+        .account-header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .account-brand {
+            color: var(--account-primary);
+            font-size: 23px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .account-brand:hover {
+            color: var(--account-primary-dark);
+        }
+
+        .account-navigation {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .account-navigation a {
+            color: var(--account-text);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .account-navigation a:hover {
+            color: var(--account-primary);
+        }
+
+        .account-navigation .account-nav-button {
+            padding: 10px 16px;
+            color: white;
+            background: var(--account-primary);
+            border-radius: 9px;
+        }
+
+        .account-navigation .account-nav-button:hover {
+            color: white;
+            background: var(--account-primary-dark);
+        }
+
+        .account-main {
+            flex: 1;
+        }
+
+        .account-footer {
+            padding: 22px 24px;
+            background: #FFFDF8;
+            border-top: 1px solid #e5dfd5;
+        }
+
+        .account-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: var(--account-muted);
+            font-size: 13px;
+        }
+
+        .account-footer a {
+            color: var(--account-primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .account-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .account-header {
+                padding: 14px 16px;
+            }
+
+            .account-brand {
+                font-size: 19px;
+            }
+
+            .account-navigation {
+                gap: 12px;
+            }
+
+            .account-navigation a {
+                font-size: 13px;
+            }
+
+            .account-footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        /* Shared login and signup form styles */
+        .account-page {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 20px;
+            background: var(--account-background, #F8F5F0);
+        }
+
+        .account-card {
+            width: 100%;
+            max-width: 480px;
+            padding: 36px;
+            background: #FFFDF8;
+            border: 1px solid #e5dfd5;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(45, 45, 45, 0.07);
+        }
+
+        .account-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            background: #e7efdf;
+            font-size: 28px;
+        }
+
+        .account-card h1 {
+            color: var(--account-text, #2D2D2D);
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .account-description {
+            color: var(--account-muted, #716e67);
+            margin-bottom: 28px;
+        }
+
+        .account-card .form-label {
+            color: var(--account-text, #2D2D2D);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .account-card .form-control,
+        .account-card .form-select {
+            min-height: 48px;
+            border: 1px solid #d8d1c6;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 12px 14px;
+        }
+
+        .account-card .form-control:focus,
+        .account-card .form-select:focus {
+            border-color: var(--account-primary, #5F8D4E);
+            box-shadow: 0 0 0 3px rgba(95, 141, 78, 0.15);
+        }
+
+        .account-submit {
+            width: 100%;
+            min-height: 48px;
+            border: none;
+            border-radius: 10px;
+            background: var(--account-primary, #5F8D4E);
+            color: white;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .account-submit:hover {
+            background: var(--account-primary-dark, #4b733d);
+            color: white;
+        }
+
+        .account-switch {
+            margin-top: 24px;
+            text-align: center;
+            color: var(--account-muted, #716e67);
+            font-size: 14px;
+        }
+
+        .account-switch a {
+            color: var(--account-primary, #5F8D4E);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .account-switch a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .account-card {
+                padding: 26px 20px;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+<div class="account-shell">
+
+    <header class="account-header">
+        <div class="account-header-inner">
+            <a class="account-brand" href="{% url 'home' %}">
+                KitchenStation
+            </a>
+
+            <nav class="account-navigation" aria-label="Account navigation">
+                <a href="{% url 'home' %}">Home</a>
+
+                {% if request.resolver_match.url_name == 'accounts_login' %}
+                    <a class="account-nav-button"
+                       href="{% url 'accounts_signup' %}">
+                        Create Account
+                    </a>
+                {% else %}
+                    <a class="account-nav-button"
+                       href="{% url 'accounts_login' %}">
+                        Login
+                    </a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="account-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="account-footer">
+        <div class="account-footer-inner">
+            <span>&copy; 2026 KitchenStation. All rights reserved.</span>
+            <a href="{% url 'home' %}">Back to homepage</a>
+        </div>
+    </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

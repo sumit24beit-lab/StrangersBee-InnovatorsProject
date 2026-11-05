@@ -1,0 +1,225 @@
+{% extends 'core/base_public.html' %}
+
+{% block title %}KitchenStation — Homemade Food, Local Kitchens{% endblock %}
+
+{% block content %}
+<div class="container py-4 py-lg-5">
+
+    <!-- Hero Section -->
+    <section class="ks-hero mb-5">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-9 mx-auto text-center">
+
+                <span class="ks-badge d-inline-block mb-3">
+                    Homemade food. Local kitchens. Real connections.
+                </span>
+
+                <h1 class="display-4 fw-bold mb-3">
+                    Discover the Goodness of Homemade Food
+                </h1>
+
+                <p class="lead mb-4">
+                    KitchenStation connects customers with local home cooks
+                    so they can discover homemade meals, explore kitchens
+                    and enjoy food prepared with care.
+                </p>
+
+                {% if user.is_authenticated %}
+                    {% if user.account_profile.role == "home_cook" %}
+                        <a href="{% url 'cook_dashboard' %}"
+                           class="btn btn-ks-primary btn-lg">
+                            Go to Your Dashboard
+                        </a>
+                    {% else %}
+                        <a href="{% url 'home' %}"
+                           class="btn btn-ks-primary btn-lg">
+                            Enter Customer Site
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="{% url 'accounts_signup' %}"
+                           class="btn btn-ks-primary btn-lg">
+                            Get Started
+                        </a>
+
+                        <a href="{% url 'accounts_login' %}"
+                           class="btn btn-ks-secondary btn-lg">
+                            Login
+                        </a>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="mb-5 text-center">
+        <h2 class="h3 fw-bold mb-3">What Is KitchenStation?</h2>
+
+        <p class="text-muted mx-auto" style="max-width: 800px;">
+            KitchenStation is a platform designed to bring customers and
+            home cooks together. Customers can explore available meals
+            and discover local kitchens, while home cooks can showcase
+            their food, manage their menus and handle orders.
+        </p>
+
+        <a href="{% url 'about' %}" class="btn btn-ks-secondary mt-2">
+            Learn About KitchenStation
+        </a>
+    </section>
+
+    <!-- Separate Experiences -->
+    <section class="mb-5">
+        <div class="text-center mb-4">
+            <h2 class="h3 fw-bold">A Platform for Two Communities</h2>
+            <p class="text-muted">
+                Different needs, connected through homemade food.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Customer -->
+            <div class="col-md-6">
+                <div class="ks-card h-100 text-center py-4">
+                    <i class="bi bi-emoji-smile fs-1 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h3 class="h4 fw-bold">For Customers</h3>
+
+                    <p class="text-muted">
+                        Discover local home cooks, browse available meals,
+                        place orders and share feedback about your
+                        food and ordering experience.
+                    </p>
+
+                    <a href="{% url 'restaurant' %}"
+                       class="btn btn-ks-primary">
+                        Explore Home Cooks
+                    </a>
+                </div>
+            </div>
+
+            <!-- Home Cook -->
+            <div class="col-md-6">
+                <div class="ks-card h-100 text-center py-4">
+                    <i class="bi bi-house-heart fs-1 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h3 class="h4 fw-bold">For Home Cooks</h3>
+
+                    <p class="text-muted">
+                        Present your kitchen, manage your homemade meals,
+                        update meal availability and handle customer orders.
+                    </p>
+
+                    {% if user.is_authenticated %}
+                        {% if user.account_profile.role == "home_cook" %}
+                            <a href="{% url 'cook_dashboard' %}"
+                               class="btn btn-ks-primary">
+                                Open Dashboard
+                            </a>
+                        {% else %}
+                            <p class="text-muted mb-0">
+                                To register as a home cook, log out first
+                                and create a separate Home Cook account.
+                            </p>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'accounts_signup' %}"
+                           class="btn btn-ks-primary">
+                            Join as a Home Cook
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="mb-5">
+        <div class="text-center mb-4">
+            <h2 class="h3 fw-bold">How KitchenStation Works</h2>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-search fs-1 mb-3"
+                       aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">01 — Discover</h3>
+                    <p class="text-muted small mb-0">
+                        Explore home cooks and their available meals.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-basket fs-1 mb-3"
+                       aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">02 — Choose</h3>
+                    <p class="text-muted small mb-0">
+                        Browse menus and select the food you want.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-receipt fs-1 mb-3"
+                       aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">03 — Order</h3>
+                    <p class="text-muted small mb-0">
+                        Place your order and follow its status.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-heart fs-1 mb-3"
+                       aria-hidden="true"></i>
+                    <h3 class="h5 fw-bold">04 — Enjoy</h3>
+                    <p class="text-muted small mb-0">
+                        Enjoy homemade food and share your experience.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="ks-card text-center py-5 mb-4">
+        <h2 class="h3 fw-bold mb-3">Ready to Get Started?</h2>
+
+        <p class="text-muted mb-4">
+            Discover local home cooks or join KitchenStation
+            to share your own homemade food.
+        </p>
+
+        {% if not user.is_authenticated %}
+            <a href="{% url 'accounts_signup' %}"
+               class="btn btn-ks-primary btn-lg">
+                Create Your Account
+            </a>
+        {% elif user.account_profile.role == "home_cook" %}
+            <a href="{% url 'cook_dashboard' %}"
+               class="btn btn-ks-primary btn-lg">
+                Visit Your Dashboard
+            </a>
+        {% else %}
+            <a href="{% url 'home' %}"
+               class="btn btn-ks-primary btn-lg">
+                Explore Homemade Meals
+            </a>
+        {% endif %}
+    </section>
+
+</div>
+{% endblock %}

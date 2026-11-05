@@ -1,6 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
-from.models import CustomerProfile, Address, Restaurant, Menu, Offer, Order, OrderItem, Contact
+from .models import (
+    CustomerProfile,
+    Address,
+    Restaurant,
+    Menu,
+    Offer,
+    Order,
+    OrderItem,
+    Contact,
+    FoodReview,
+    CustomerFeedback,
+)
 
 class SignupForm(forms.ModelForm):
     password=forms.CharField(widget=forms.PasswordInput)
@@ -106,3 +117,102 @@ class AddressForm(forms.ModelForm):
                 "class": "form-select",
             }),
         }
+
+class FoodReviewForm(forms.ModelForm):
+    class Meta:
+        model = FoodReview
+        fields = [
+            "menu_item",
+            "rating",
+            "title",
+            "review_text",
+            "photo",
+        ]
+        widgets = {
+            "menu_item": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+            "rating": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Give your review a title",
+                }
+            ),
+            "review_text": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Describe your food experience",
+                    "rows": 4,
+                }
+            ),
+            "photo": forms.ClearableFileInput(
+                attrs={
+                    "class": "form-control",
+                    "accept": "image/*",
+                }
+            ),
+        }
+    def __init__(self, *args, customer_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if customer_profile is None:
+            self.fields["menu_item"].queryset = Menu.objects.none()
+        else:
+            self.fields["menu_item"].queryset = (
+                Menu.objects.filter(
+                    orderitem__order__customer=customer_profile,
+                    orderitem__order__status="delivery",
+                )
+                .distinct()
+                .order_by("name")
+            )
+    def clean_photo(self):
+        photo = self.cleaned_data.get("photo")
+        if photo and photo.size > 5 * 1024 * 1024:
+            raise forms.ValidationError(
+                "The photo must be 5 MB or smaller."
+            )
+        return photo
+
+class CustomerFeedbackForm(forms.ModelForm):
+    class Meta:
+        model = CustomerFeedback
+        fields = [
+            "feedback_type",
+            "subject",
+            "message",
+            "order",
+        ]
+        widgets = {
+            "feedback_type": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+            "subject": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter a subject",
+                }
+            ),
+            "message": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Describe your feedback or complaint",
+                    "rows": 5,
+                }
+            ),
+            "order": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+        }
+    def __init__(self, *args, customer_profile=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["order"].required = False
+        if customer_profile is None:
+            self.fields["order"].queryset = Order.objects.none()
+        else:
+            self.fields["order"].queryset =  (
+                Order.objects.filter(customer=customer_profile)
+                .order_by("-created_at")
+            )

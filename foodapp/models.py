@@ -51,7 +51,7 @@ class CustomerProfile(models.Model):
     last_name = models.CharField(max_length=100,blank=True)
     email=models.EmailField()
     primary_mobile_number = models.CharField(max_length=10,blank=True,null=True)
-    alternate_mobile_number = models.CharField(max_length=10,blank=True, null=True)    
+    alternate_mobile_number = models.CharField(max_length=10,blank=True, null=True)
     date_joined=models.DateTimeField(auto_now_add=True)
     is_active=models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -78,7 +78,7 @@ class Address(models.Model):
     created_at_date=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.address_line}-{self.city}"
-    
+
 class Restaurant(models.Model):
     name=models.CharField(max_length=200)
     address=models.TextField()
@@ -115,12 +115,12 @@ class Menu(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.name}-{self.home_cook.kitchen_name}"
-    
+
 class Offer(models.Model):
     menu_item=models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="offers")
     original_price=models.DecimalField(max_digits=8,decimal_places=2)
     discount_percent=models.PositiveIntegerField(default=0)
-    offer_valid_until=models.DateTimeField(blank=True,null=True)    
+    offer_valid_until=models.DateTimeField(blank=True,null=True)
     def discounted_price(self):
         discount_amount = (
             self.original_price
@@ -166,7 +166,7 @@ class Order(models.Model):
         self.save(update_fields=["subtotal", "tax", "delivery_charge", "total",])
         return self.total
     def __str__(self):
-        return f"Order: {self.id}-{self.customer}" 
+        return f"Order: {self.id}-{self.customer}"
 
 class OrderItem(models.Model):
     order=models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
@@ -178,7 +178,7 @@ class OrderItem(models.Model):
     def line_total(self):
         return round(self.price * self.quantity, 2)
     def __str__(self):
-        return f"{self.quantity} x {self.name}"    
+        return f"{self.quantity} x {self.name}"
 
 class Contact(models.Model):
     customer=models.ForeignKey(CustomerProfile,on_delete=models.CASCADE,related_name='contacts')
@@ -187,3 +187,81 @@ class Contact(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"Contact from {self.customer} - {self.subject}"
+
+class FoodReview(models.Model):
+    RATING_CHOICES = [
+        (1, "1 Stars"),
+        (2, "2 Stars"),
+        (3, "3 Stars"),
+        (4, "4 Stars"),
+        (5, "5 Stars"),
+    ]
+    customer = models.ForeignKey(
+        CustomerProfile,
+        on_delete=models.CASCADE,
+        related_name="food_reviews",
+    )
+    menu_item = models.ForeignKey(
+        Menu,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+    )
+    rating = models.PositiveSmallIntegerField(
+        choices=RATING_CHOICES,
+    )
+    title = models.CharField(
+        max_length=120,
+        blank=True,
+    )
+    review_text = models.TextField()
+    photo = models.ImageField(
+        upload_to="reviews/food_photos/%Y/%m/",
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ["-created_at"]
+    def __str__(self):
+        return f"{self.menu_item.name} - {self.rating}/5"
+
+class CustomerFeedback(models.Model):
+    FEEDBACK_TYPE_CHOICES = [
+        ("feedback", "General Feedback"),
+        ("complaint", "Complaint"),
+    ]
+    STATUS_CHOICES = [
+        ("submitted", "Submitted"),
+        ("reviewing", "Under Review"),
+        ("resolved", "Resolved"),
+    ]
+    customer = models.ForeignKey(
+        CustomerProfile,
+        on_delete=models.CASCADE,
+        related_name="feedback_submissions",
+    )
+    feedback_type = models.CharField(
+        max_length=20,
+        choices=FEEDBACK_TYPE_CHOICES,
+    )
+    subject = models.CharField(max_length=160)
+    message = models.TextField()
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="feedback_reports",
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="submitted",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ["-created_at"]
+    def __str__(self):
+        return f"{self.get_feedback_type_display()} - {self.subject}"

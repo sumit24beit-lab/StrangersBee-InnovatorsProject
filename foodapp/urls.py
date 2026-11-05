@@ -1,6 +1,7 @@
-from django.urls import path
+﻿from django.urls import path
 from .views import (
     home_page_view,
+    reviews_food_stories_view,
     cart_view,
     menu_view,
     restaurant_view,
@@ -20,6 +21,7 @@ from .views import (
 
 urlpatterns = [
     path('home/', home_page_view, name='home'),
+    path('customer/reviews/', reviews_food_stories_view, name='reviews_food_stories'),
     path('cart/', cart_view, name='cart'),
     path('menu/', menu_view, name='menu'),
     path('restaurant/', restaurant_view, name='restaurant'),

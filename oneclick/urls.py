@@ -17,15 +17,14 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
 from django.conf.urls.static import static
 
 urlpatterns=[
     path('admin/', admin.site.urls),
     path('home_cooks/', include('home_cooks.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', lambda request: redirect('home')),
-    path('',include('foodapp.urls')),
+    path('', include('core.urls')),
+    path('', include('foodapp.urls')),
 ]
 
 if settings.DEBUG:

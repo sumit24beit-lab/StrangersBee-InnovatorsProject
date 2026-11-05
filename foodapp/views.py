@@ -5,28 +5,160 @@ from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import (
     Address,
     CustomerProfile,
     Menu,
     Order,
     OrderItem,
+    FoodReview,
+    CustomerFeedback,
 )
+from accounts.models import AccountProfile
 from home_cooks.models import HomeCook
 from django.views.generic import TemplateView
 from .decorators import customer_required
 from django.contrib import messages
-from .forms import CustomerProfileForm, AddressForm
+from .forms import (
+    CustomerProfileForm,
+    AddressForm,
+    FoodReviewForm,
+    CustomerFeedbackForm,
+)
 from django.views.decorators.http import require_POST
 
 # Create your views here.
 # in views.py
 
-def about_page_view(request):
-    return render(request, 'about.html')
-
+@customer_required
 def home_page_view(request):
     return render(request,'home.html')
+
+@login_required
+def reviews_food_stories_view(request):
+    profile = AccountProfile.objects.filter(
+        user=request.user
+    ).only("role").first()
+    if profile is None:
+        messages.error(
+            request,
+            "Your account profile could not be found.",
+        )
+        return redirect("landing")
+    is_customer = profile.role == AccountProfile.CUSTOMER;
+    if profile.role == AccountProfile.HOME_COOK:
+        base_template = "home_cooks/base_home_cooks.html"
+    elif is_customer:
+        base_template = "base.html"
+    else:
+        messages.error(
+            request,
+            "Your account role is not recognized.",
+        )
+        return redirect("landing")
+    customer_profile = (
+        get_or_create_customer_profile(request.user)
+        if is_customer
+        else None
+    )
+    review_form = None
+    feedback_form = None
+    if is_customer:
+        if request.method == "POST":
+            form_type = request.POST.get("form_type")
+            if form_type == "review":
+                review_form = FoodReviewForm(
+                    request.POST,
+                    request.FILES,
+                    customer_profile=customer_profile,
+                )
+                feedback_form = CustomerFeedbackForm(
+                    customer_profile=customer_profile,
+                )
+                if review_form.is_valid():
+                    review = review_form.save(commit=False)
+                    review.customer = customer_profile
+                    review.save()
+                    messages.success(
+                        request,
+                        "Your food review was submitted successfully.",
+                    )
+                    return redirect("reviews_food_stories")
+            elif form_type == "feedback":
+                feedback_form = CustomerFeedbackForm(
+                    request.POST,
+                    customer_profile=customer_profile,
+                )
+                review_form = FoodReviewForm(
+                    customer_profile=customer_profile,
+                )
+                if feedback_form.is_valid():
+                    feedback = feedback_form.save(commit=False)
+                    feedback.customer = customer_profile
+                    feedback.save()
+                    messages.success(
+                        request,
+                        "Your feedback was submitted successfully.",
+                    )
+                    return redirect("reviews_food_stories")
+            else:
+                messages.error(
+                    request,
+                    "Please select a valid submission form.",
+                )
+                review_form = FoodReviewForm(
+                    customer_profile=customer_profile,
+                )
+                feedback_form = CustomerFeedbackForm(
+                    customer_profile=customer_profile,
+                )
+        else:
+            review_form = FoodReviewForm(
+                customer_profile=customer_profile,
+            )
+            feedback_form = CustomerFeedbackForm(
+                customer_profile=customer_profile,
+            )
+    elif request.method == "POST":
+        messages.error(
+            request,
+            "Only customer accounts can submit reviews or feedback.",
+        )
+        return redirect("reviews_food_stories")
+    reviews_queryset = (
+        FoodReview.objects
+        .select_related(
+            "customer",
+            "menu_item",
+            "menu_item__home_cook",
+        )
+        .order_by("-created_at")
+    )
+    if profile.role == AccountProfile.HOME_COOK:
+        reviews_queryset = reviews_queryset.filter(
+            menu_item__home_cook__user=request.user
+        )
+    reviews = reviews_queryset[:20]
+    my_feedback = (
+        CustomerFeedback.objects.filter(
+            customer=customer_profile
+        )[:10]
+        if is_customer
+        else CustomerFeedback.objects.none()
+    )
+    return render(
+        request,
+        'reviews_food_stories.html',
+        {
+            "base_template": base_template,
+            "is_customer": is_customer,
+            "review_form": review_form,
+            "feedback_form": feedback_form,
+            "reviews": reviews,
+            "my_feedback": my_feedback,
+        },
+    )
 
 @customer_required
 def cart_view(request):

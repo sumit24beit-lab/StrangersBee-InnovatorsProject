@@ -135,7 +135,8 @@ class CustomerCartAccessTests(TestCase):
         response = self.client.get(reverse("cart"))
         self.assertRedirects(
             response,
-            reverse("home"),
+            reverse("cook_dashboard"),
+            fetch_redirect_response=False,
         )
     def test_customer_cannot_access_home_cook_management_pages(self):
         self.client.force_login(self.customer)

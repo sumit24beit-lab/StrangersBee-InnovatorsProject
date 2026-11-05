@@ -1,0 +1,282 @@
+{% extends 'core/base_public.html' %}
+
+{% block title %}About KitchenStation{% endblock %}
+
+{% block content %}
+<div class="container py-4 py-lg-5">
+
+    <!-- Page Introduction -->
+    <section class="ks-hero mb-5">
+        <div class="row py-4">
+            <div class="col-lg-9 mx-auto text-center">
+
+                <span class="ks-badge d-inline-block mb-3">
+                    Homemade food. Local kitchens. Real connections.
+                </span>
+
+                <h1 class="display-5 fw-bold mb-3">
+                    About KitchenStation
+                </h1>
+
+                <p class="lead mb-0">
+                    A platform designed to connect people who enjoy
+                    homemade food with home cooks who prepare it.
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="mb-5">
+        <div class="row g-4 align-items-center">
+
+            <div class="col-lg-7">
+                <h2 class="h3 fw-bold mb-3">What Is KitchenStation?</h2>
+
+                <p>
+                    KitchenStation is a home-cooked food marketplace concept
+                    that brings customers and local home cooks together
+                    through one online platform.
+                </p>
+
+                <p>
+                    Customers can explore home cooks, discover available
+                    meals and place orders. Home cooks can present their
+                    kitchens, manage their menus and handle customer orders
+                    through their dedicated workspace.
+                </p>
+
+                <p class="mb-0">
+                    Our aim is to make discovering homemade food more
+                    convenient while giving home cooks an opportunity
+                    to reach people in their local communities.
+                </p>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="ks-card h-100 text-center py-5">
+                    <i class="bi bi-house-heart fs-1 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h3 class="h4 fw-bold">Food Made with Care</h3>
+
+                    <p class="text-muted mb-0">
+                        Bringing local food discovery and home cooking
+                        together through a shared digital platform.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mission and Vision -->
+    <section class="mb-5">
+        <div class="row g-4">
+
+            <div class="col-md-6">
+                <div class="ks-card h-100">
+                    <i class="bi bi-bullseye fs-2 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h2 class="h4 fw-bold">Our Mission</h2>
+
+                    <p class="text-muted mb-0">
+                        To make it easier for customers to discover
+                        homemade meals and for home cooks to present
+                        their food and manage orders online.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="ks-card h-100">
+                    <i class="bi bi-compass fs-2 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h2 class="h4 fw-bold">Our Vision</h2>
+
+                    <p class="text-muted mb-0">
+                        To build a useful local food community where
+                        customers and home cooks can connect, exchange
+                        feedback and develop trusted relationships.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- For Customers -->
+    <section class="mb-5">
+        <div class="ks-card">
+            <div class="row g-4 align-items-center">
+
+                <div class="col-md-2 text-center">
+                    <i class="bi bi-emoji-smile fs-1"
+                       aria-hidden="true"></i>
+                </div>
+
+                <div class="col-md-10">
+                    <h2 class="h4 fw-bold">For Customers</h2>
+
+                    <p class="text-muted">
+                        Customers can explore available home cooks,
+                        compare their meal offerings, select food and
+                        place orders through KitchenStation.
+                    </p>
+
+                    <p class="text-muted mb-3">
+                        As the platform develops, features such as
+                        customer reviews, food photos, nearby-cook
+                        discovery and order tracking can help customers
+                        make more informed decisions.
+                    </p>
+
+                    <a href="{% url 'restaurant' %}"
+                       class="btn btn-ks-primary">
+                        Explore Home Cooks
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- For Home Cooks -->
+    <section class="mb-5">
+        <div class="ks-card">
+            <div class="row g-4 align-items-center">
+
+                <div class="col-md-2 text-center">
+                    <i class="bi bi-house-heart fs-1"
+                       aria-hidden="true"></i>
+                </div>
+
+                <div class="col-md-10">
+                    <h2 class="h4 fw-bold">For Home Cooks</h2>
+
+                    <p class="text-muted">
+                        KitchenStation gives home cooks a dedicated
+                        area to maintain their kitchen profile, add
+                        meals, manage availability, review incoming
+                        orders and monitor their earnings.
+                    </p>
+
+                    <p class="text-muted mb-3">
+                        The goal is to help home cooks present their
+                        food clearly and manage their participation
+                        in the marketplace more conveniently.
+                    </p>
+
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'accounts_signup' %}"
+                           class="btn btn-ks-primary">
+                            Join KitchenStation
+                        </a>
+                    {% elif user.account_profile.role == "home_cook" %}
+                        <a href="{% url 'cook_dashboard' %}"
+                           class="btn btn-ks-primary">
+                            Go to Dashboard
+                        </a>
+                    {% else %}
+                        <p class="text-muted mb-0">
+                            To become a home cook, log out and register
+                            a separate account with the Home Cook role.
+                        </p>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Principles -->
+    <section class="mb-5">
+        <div class="text-center mb-4">
+            <h2 class="h3 fw-bold">What We Want to Encourage</h2>
+
+            <p class="text-muted">
+                The principles guiding KitchenStation's development.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-people fs-2 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h3 class="h5 fw-bold">Community</h3>
+
+                    <p class="text-muted small mb-0">
+                        Connecting customers with home cooks in their
+                        local communities.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-chat-square-heart fs-2 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h3 class="h5 fw-bold">Feedback</h3>
+
+                    <p class="text-muted small mb-0">
+                        Encouraging constructive feedback that can
+                        help customers and cooks improve their experience.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="ks-card h-100 text-center">
+                    <i class="bi bi-shield-check fs-2 mb-3"
+                       aria-hidden="true"></i>
+
+                    <h3 class="h5 fw-bold">Trust</h3>
+
+                    <p class="text-muted small mb-0">
+                        Working towards clear information, responsible
+                        interactions and dependable order handling.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Get Started -->
+    <section class="ks-card text-center py-5">
+        <h2 class="h3 fw-bold mb-3">
+            Be Part of KitchenStation
+        </h2>
+
+        <p class="text-muted mb-4">
+            Whether you are looking for homemade meals or want to
+            share your cooking, start by exploring KitchenStation.
+        </p>
+
+        {% if not user.is_authenticated %}
+            <a href="{% url 'accounts_signup' %}"
+               class="btn btn-ks-primary btn-lg">
+                Create an Account
+            </a>
+        {% elif user.account_profile.role == "home_cook" %}
+            <a href="{% url 'cook_dashboard' %}"
+               class="btn btn-ks-primary btn-lg">
+                Visit Your Dashboard
+            </a>
+        {% else %}
+            <a href="{% url 'home' %}"
+               class="btn btn-ks-primary btn-lg">
+                Explore Homemade Food
+            </a>
+        {% endif %}
+    </section>
+
+</div>
+{% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'foodapp',
     'home_cooks',
     'accounts',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +117,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# Uploaded media files (development configuration)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

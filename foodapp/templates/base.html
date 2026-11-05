@@ -35,7 +35,7 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ksNavbar" aria-controls="ksNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+
       <div class="collapse navbar-collapse" id="ksNavbar">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           <li class="nav-item">
@@ -52,6 +52,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link {% if request.resolver_match.url_name == 'offers' %}active{% endif %}" href="{% url 'offers' %}">Offers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver.url_name == 'reviews_food_stories' %}active{% endif %}"
+              href="{% url 'reviews_food_stories' %}">
+              Reviews &amp; Food Stories
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if request.resolver_match.url_name == 'order_history' %}active{% endif %}" href="{% url 'order_history' %}">Orders</a>

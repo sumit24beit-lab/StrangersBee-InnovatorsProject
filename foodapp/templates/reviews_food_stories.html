@@ -1,0 +1,272 @@
+
+{% extends base_template %}
+
+{% block title %}Reviews & Food Stories | KitchenStation{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+
+    <header class="text-center mb-5">
+        <h1>Reviews &amp; Food Stories</h1>
+        <p class="lead">
+            Share your food experiences, celebrate local home cooks,
+            and help improve KitchenStation.
+        </p>
+    </header>
+
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}"
+             role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if is_customer %}
+        <div class="row g-4 mb-5">
+
+            <!-- Food review form -->
+            <div class="col-lg-7">
+                <div class="card h-100 p-4">
+                    <h2 class="h4 mb-3">Write a Food Review</h2>
+                    <p class="text-muted">
+                        Reviews are available for meals from your delivered orders.
+                    </p>
+
+                    <form method="post"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="review">
+
+                        {% if review_form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ review_form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ review_form.menu_item.id_for_label }}"
+                                   class="form-label">
+                                Meal
+                            </label>
+                            {{ review_form.menu_item }}
+                            {% for error in review_form.menu_item.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ review_form.rating.id_for_label }}"
+                                   class="form-label">
+                                Rating
+                            </label>
+                            {{ review_form.rating }}
+                            {% for error in review_form.rating.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ review_form.title.id_for_label }}"
+                                   class="form-label">
+                                Review title (optional)
+                            </label>
+                            {{ review_form.title }}
+                            {% for error in review_form.title.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ review_form.review_text.id_for_label }}"
+                                   class="form-label">
+                                Your experience
+                            </label>
+                            {{ review_form.review_text }}
+                            {% for error in review_form.review_text.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ review_form.photo.id_for_label }}"
+                                   class="form-label">
+                                Food photo (optional, maximum 5 MB)
+                            </label>
+                            {{ review_form.photo }}
+                            {% for error in review_form.photo.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-ks-primary">
+                            Submit Review
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Feedback and complaint form -->
+            <div class="col-lg-5">
+                <div class="card h-100 p-4">
+                    <h2 class="h4 mb-3">Feedback &amp; Complaints</h2>
+                    <p class="text-muted">
+                        Share a suggestion or report an issue with an order.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="feedback">
+
+                        {% if feedback_form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ feedback_form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.feedback_type.id_for_label }}"
+                                   class="form-label">
+                                Type
+                            </label>
+                            {{ feedback_form.feedback_type }}
+                            {% for error in feedback_form.feedback_type.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.subject.id_for_label }}"
+                                   class="form-label">
+                                Subject
+                            </label>
+                            {{ feedback_form.subject }}
+                            {% for error in feedback_form.subject.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.message.id_for_label }}"
+                                   class="form-label">
+                                Message
+                            </label>
+                            {{ feedback_form.message }}
+                            {% for error in feedback_form.message.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ feedback_form.order.id_for_label }}"
+                                   class="form-label">
+                                Related order (optional)
+                            </label>
+                            {{ feedback_form.order }}
+                            {% for error in feedback_form.order.errors %}
+                                <div class="text-danger small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-ks-primary">
+                            Submit Feedback
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer's own feedback submissions -->
+        <section class="mb-5">
+            <h2 class="h4 mb-3">My Feedback &amp; Complaints</h2>
+
+            {% for feedback in my_feedback %}
+                <div class="card p-3 mb-3">
+                    <div class="d-flex flex-wrap justify-content-between gap-2">
+                        <h3 class="h6 mb-1">{{ feedback.subject }}</h3>
+                        <span class="badge bg-secondary">
+                            {{ feedback.get_status_display }}
+                        </span>
+                    </div>
+                    <p class="mb-1">{{ feedback.get_feedback_type_display }}</p>
+                    <p class="mb-2">{{ feedback.message|linebreaksbr }}</p>
+                    <small class="text-muted">
+                        Submitted {{ feedback.created_at|date:"d M Y, H:i" }}
+                    </small>
+                </div>
+            {% empty %}
+                <p class="text-muted">
+                    You haven't submitted any feedback or complaints yet.
+                </p>
+            {% endfor %}
+        </section>
+    {% else %}
+        <div class="alert alert-info mb-5">
+            You're viewing the community page as a home cook.
+            Customers can submit reviews and feedback from their customer accounts.
+        </div>
+    {% endif %}
+
+    <!-- Community reviews -->
+    <section>
+        <h2 class="h3 mb-4">Community Food Reviews</h2>
+
+        <div class="row g-4">
+            {% for review in reviews %}
+                <div class="col-md-6 col-xl-4">
+                    <article class="card h-100 overflow-hidden">
+
+                        {% if review.photo %}
+                            <img src="{{ review.photo.url }}"
+                                 class="card-img-top"
+                                 alt="Food photo for {{ review.menu_item.name }}"
+                                 loading="lazy"
+                                 style="height: 230px; object-fit: cover;">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between gap-2 mb-2">
+                                <span class="badge bg-warning text-dark">
+                                    {{ review.rating }}/5 stars
+                                </span>
+                                <small class="text-muted">
+                                    {{ review.created_at|date:"d M Y" }}
+                                </small>
+                            </div>
+
+                            {% if review.title %}
+                                <h3 class="h5">{{ review.title }}</h3>
+                            {% else %}
+                                <h3 class="h5">{{ review.menu_item.name }}</h3>
+                            {% endif %}
+
+                            <p class="mb-2">
+                                <strong>Meal:</strong> {{ review.menu_item.name }}
+                            </p>
+                            <p class="mb-2">
+                                <strong>Home kitchen:</strong>
+                                {{ review.menu_item.home_cook.kitchen_name }}
+                            </p>
+                            <p>{{ review.review_text|linebreaksbr }}</p>
+
+                            <small class="text-muted">
+                                Reviewed by {{ review.customer }}
+                            </small>
+                        </div>
+                    </article>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="card p-4 text-center">
+                        <h3 class="h5">No reviews yet</h3>
+                        <p class="mb-0">
+                            When customers share their food experiences,
+                            their reviews will appear here.
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</section>
+{% endblock %}

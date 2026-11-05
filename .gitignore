@@ -26,3 +26,6 @@ db.sqlite3
 
 # Uploaded menu images (local media)
 /menu_items/
+# User-uploaded review photos (local only)
+/media/
+/reviews/
