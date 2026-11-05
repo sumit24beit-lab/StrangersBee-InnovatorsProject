@@ -34,3 +34,6 @@ db.sqlite3
 .env
 .env.*
 !.env.example
+
+# Collected static files
+/staticfiles/
